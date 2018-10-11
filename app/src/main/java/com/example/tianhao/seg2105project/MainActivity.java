@@ -55,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
                             if (dataSnapshot.child(user.getUsername()).exists()) {
                                 Toast.makeText(MainActivity.this, "The Username Already Exist", Toast.LENGTH_SHORT).show();
                             } else {
+                                users.child(user.getUsername()).setValue(user);
                                 Toast.makeText(MainActivity.this, "Success Register", Toast.LENGTH_SHORT).show();
+
                             }
                         }
                         @Override

@@ -15,6 +15,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textSize="36sp" />
+
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
@@ -75,17 +82,10 @@
             android:layout_height="wrap_content"
             android:text="You want to start as:" />
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="185dp"
-            android:layout_height="wrap_content"
-            android:text="Home Owner" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="185dp"
-            android:layout_height="wrap_content"
-            android:text="Service Provider" />
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/buttonSubmit"

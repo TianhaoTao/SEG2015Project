@@ -4,12 +4,12 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private UserType userType;
+    private String userType;
 
     public User() {
     }
 
-    public User(String username, String email, String password, UserType userType) {
+    public User(String username, String email, String password, String userType) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -40,11 +40,11 @@ public class User {
         this.password = password;
     }
 
-    public UserType getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(UserType userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 }

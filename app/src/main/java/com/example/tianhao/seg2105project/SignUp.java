@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 //import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 
@@ -18,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -26,6 +31,8 @@ public class SignUp extends AppCompatActivity {
 //            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}"+"\\@"+"[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}"+"("+
 //                    "\\."+"[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}"+")+"
 //    );
+
+    Spinner dropdownmenu;
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -84,6 +91,28 @@ public class SignUp extends AppCompatActivity {
                         }
                     });
                 }
+        });
+
+        dropdownmenu = findViewById(R.id.spinner);
+        List<String> list = new ArrayList<>();
+        list.add("Administrator");
+        list.add("Service Provider");
+        list.add("Home Owner");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dropdownmenu.setAdapter(adapter);
+        dropdownmenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemvalue = parent.getItemAtPosition(position).toString();
+                Toast.makeText(SignUp.this, "Selected:" + itemvalue, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
     }
 

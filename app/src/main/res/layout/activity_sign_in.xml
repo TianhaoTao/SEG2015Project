@@ -38,7 +38,6 @@
             android:ems="10"
             android:hint="Email Address"
             android:inputType="textPersonName"
-            android:text="Email Address"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_editor_absoluteY="54dp" />
 
@@ -48,8 +47,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
-            android:inputType="textPersonName"
-            android:text="Password" />
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/buttonSubmit"

@@ -1,31 +1,37 @@
 package com.example.tianhao.seg2105project;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-//import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-
 import com.example.tianhao.seg2105project.Login.User;
+import com.example.tianhao.seg2105project.Login.UserType;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
+
+//import android.widget.EditText;
 
 
 public class SignUp extends AppCompatActivity {
-//    public static final Pattern EMAIL_ADDRESS = Pattern.compile(
-//            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}"+"\\@"+"[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}"+"("+
-//                    "\\."+"[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}"+")+"
-//    );
+    public static final Pattern EMAIL_ADDRESS = Pattern.compile(
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}"+"\\@"+"[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}"+"("+
+                    "\\."+"[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}"+")+"
+    );
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -43,6 +49,8 @@ public class SignUp extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference users;
+
+    Spinner dropdownmenu;
 
 //    EditText editUsername, editEmail, editPassword;
     Button buttonSubmit;
@@ -64,26 +72,55 @@ public class SignUp extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener(){
 
                 public void onClick(View view){
-                    final User user = new User(editUsername.getEditText().getText().toString(),
-                            editEmail.getEditText().getText().toString(),
-                            editPassword.getEditText().getText().toString());
+                    if(validateUser()&&validateEmail()){
+                        //Toast.makeText(SignUp.this, "It is true", Toast.LENGTH_SHORT).show();
+                        final User user = new User(editUsername.getEditText().getText().toString(),
+                                editEmail.getEditText().getText().toString(),
+                                editPassword.getEditText().getText().toString(),
+                                UserType.ADMIN);
 
-                    users.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.child(user.getEmail()).exists()) {
-                                Toast.makeText(SignUp.this, "This Email is Already Registered", Toast.LENGTH_SHORT).show();
-                            } else {
-                                users.child(user.getEmail()).setValue(user);
-                                Toast.makeText(SignUp.this, "Success Register", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(SignUp.this, "It is true1", Toast.LENGTH_SHORT).show();
+
+                        users.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.child(user.getUsername()).exists()) {
+                                    Toast.makeText(SignUp.this, "This Username Exists", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(SignUp.this, "It is true", Toast.LENGTH_SHORT).show();
+                                    users.child(user.getUsername()).setValue(user);
+                                    Toast.makeText(SignUp.this, "Success Register", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
+        });
+
+        dropdownmenu = findViewById(R.id.spinner);
+        List<String> list = new ArrayList<>();
+        list.add("Home Owner");
+        list.add("Administrator");
+        list.add("Service Provider");
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dropdownmenu.setAdapter(adapter);
+        dropdownmenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemvalue = parent.getItemAtPosition(position).toString();
+                Toast.makeText(SignUp.this, "Selected:" + itemvalue, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
     }
 

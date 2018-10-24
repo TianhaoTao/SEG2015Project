@@ -30,15 +30,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editEmail"
+            android:id="@+id/editUsername"
             android:layout_width="382dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="169dp"
             android:layout_marginRight="169dp"
             android:ems="10"
-            android:hint="Email Address"
+            android:hint="Username"
             android:inputType="textPersonName"
-            android:text="Email Address"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_editor_absoluteY="54dp" />
 
@@ -48,8 +47,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
-            android:inputType="textPersonName"
-            android:text="Password" />
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/buttonSubmit"

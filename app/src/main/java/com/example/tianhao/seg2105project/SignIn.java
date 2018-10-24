@@ -22,7 +22,7 @@ public class SignIn extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference users;
 
-    EditText editEmail, editPassword;
+    EditText editUsername, editPassword;
     Button buttonSubmit, buttonRegister;
 
     @Override
@@ -33,7 +33,7 @@ public class SignIn extends AppCompatActivity {
         database=FirebaseDatabase.getInstance();
         users=database.getReference("Users");
 
-        editEmail = (EditText)findViewById((R.id.editEmail));
+        editUsername = (EditText)findViewById((R.id.editUsername));
         editPassword = (EditText)findViewById(R.id.editPassword);
 
         buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
@@ -50,28 +50,29 @@ public class SignIn extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(editEmail.getText().toString(),editPassword.getText().toString());
+                signIn(editUsername.getText().toString(),editPassword.getText().toString());
             }
         });
 
     }
 
-    private void signIn(final String email, final String password) {
+    private void signIn(final String username, final String password) {
         users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(email).exists() && !email.isEmpty()){
-                        User login = dataSnapshot.child(email).getValue(User.class);
+                if(dataSnapshot.child(username).exists() && !username.isEmpty()){
+                        User login = dataSnapshot.child(username).getValue(User.class);
                         if(login.getPassword().equals(password)){
                             Toast.makeText(SignIn.this, "Success Login", Toast.LENGTH_SHORT).show();
                             Intent intentWelcome = new Intent(getApplicationContext(), WelcomePage.class);
                             intentWelcome.putExtra("username",login.getUsername());
+                            intentWelcome.putExtra("userType",login.getUserType());
                             startActivity(intentWelcome);
                         }else{
                             Toast.makeText(SignIn.this, "Password is Wrong", Toast.LENGTH_SHORT).show();
                         }
                 }else{
-                    Toast.makeText(SignIn.this, "Email is Not Registered", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignIn.this, "Username does not exist", Toast.LENGTH_SHORT).show();
                 }
             }
 

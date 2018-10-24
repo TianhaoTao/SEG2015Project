@@ -42,8 +42,8 @@ public class SignIn extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent register = new Intent(getApplicationContext(), SignUp.class);
-                startActivity(register);
+                Intent intentSignUp = new Intent(getApplicationContext(), SignUp.class);
+                startActivity(intentSignUp);
             }
         });
 
@@ -64,8 +64,9 @@ public class SignIn extends AppCompatActivity {
                         User login = dataSnapshot.child(email).getValue(User.class);
                         if(login.getPassword().equals(password)){
                             Toast.makeText(SignIn.this, "Success Login", Toast.LENGTH_SHORT).show();
-                           Intent register = new Intent(getApplicationContext(), WelcomePage.class);
-                           startActivity(register);
+                            Intent intentWelcome = new Intent(getApplicationContext(), WelcomePage.class);
+                            intentWelcome.putExtra("username",login.getUsername());
+                            startActivity(intentWelcome);
                         }else{
                             Toast.makeText(SignIn.this, "Password is Wrong", Toast.LENGTH_SHORT).show();
                         }

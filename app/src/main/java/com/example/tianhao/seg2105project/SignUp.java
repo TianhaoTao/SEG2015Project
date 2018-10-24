@@ -95,9 +95,10 @@ public class SignUp extends AppCompatActivity {
 
         dropdownmenu = findViewById(R.id.spinner);
         List<String> list = new ArrayList<>();
+        list.add("Home Owner");
         list.add("Administrator");
         list.add("Service Provider");
-        list.add("Home Owner");
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

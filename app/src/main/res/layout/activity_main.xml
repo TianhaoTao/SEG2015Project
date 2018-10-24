@@ -20,7 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign Up"
-            android:textSize="36sp" />
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/textView_firstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="First Name:" />
 
         <EditText
             android:id="@+id/editText"
@@ -28,8 +34,13 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="First Name"
-            android:inputType="textPersonName"
-            android:text="First Name" />
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView_lastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Last Name:" />
 
         <EditText
             android:id="@+id/editText2"
@@ -37,8 +48,13 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Last Name"
-            android:inputType="textPersonName"
-            android:text="Last Name" />
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView_userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User Name:" />
 
         <EditText
             android:id="@+id/editUsername"
@@ -46,8 +62,13 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="User Name"
-            android:inputType="textPersonName"
-            android:text="User Name" />
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView_emailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email Address:" />
 
         <EditText
             android:id="@+id/editEmail"
@@ -55,8 +76,13 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email Address"
-            android:inputType="textPersonName"
-            android:text="Email Address" />
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password:" />
 
         <EditText
             android:id="@+id/editPassword"
@@ -64,8 +90,13 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
-            android:inputType="textPersonName"
-            android:text="Password" />
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView_confirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm Password" />
 
         <EditText
             android:id="@+id/editText6"
@@ -73,8 +104,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Confirm Password"
-            android:inputType="textPersonName"
-            android:text="Confirm Password" />
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/textView"
@@ -87,11 +117,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/buttonSubmit"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonSignIn"
+                android:layout_width="177dp"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:text="Sign In" />
+
+            <Button
+                android:id="@+id/buttonSubmit"
+                android:layout_width="173dp"
+                android:layout_height="wrap_content"
+                android:text="Submit" />
+        </LinearLayout>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

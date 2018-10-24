@@ -19,8 +19,8 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registration" />
-
+            android:text="Sign Up"
+            android:textSize="32sp" />
         <TextView
             android:id="@+id/textView_firstName"
             android:layout_width="match_parent"

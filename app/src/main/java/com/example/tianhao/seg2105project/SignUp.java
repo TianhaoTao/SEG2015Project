@@ -8,19 +8,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import com.example.tianhao.seg2105project.Login.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class SignUp extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference users;
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sign_up);
 
         database = FirebaseDatabase.getInstance();
         users = database.getReference("Users");
@@ -52,12 +51,11 @@ public class MainActivity extends AppCompatActivity {
                     users.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.child(user.getUsername()).exists()) {
-                                Toast.makeText(MainActivity.this, "The Username Already Exist", Toast.LENGTH_SHORT).show();
+                            if (dataSnapshot.child(user.getEmail()).exists()) {
+                                Toast.makeText(SignUp.this, "This Email is Already Registered", Toast.LENGTH_SHORT).show();
                             } else {
-                                users.child(user.getUsername()).setValue(user);
-                                Toast.makeText(MainActivity.this, "Success Register", Toast.LENGTH_SHORT).show();
-
+                                users.child(user.getEmail()).setValue(user);
+                                Toast.makeText(SignUp.this, "Success Register", Toast.LENGTH_SHORT).show();
                             }
                         }
                         @Override
@@ -70,4 +68,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public boolean validateEmail(String email){
+
+        return false;
+    }
+
+    public boolean validateUser(String username){
+
+        return false;
+    }
+
 }

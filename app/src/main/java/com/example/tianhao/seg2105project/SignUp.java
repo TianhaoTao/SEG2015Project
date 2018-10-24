@@ -1,25 +1,30 @@
 package com.example.tianhao.seg2105project;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-
-import com.example.tianhao.seg2105project.Login.Admin;
 import com.example.tianhao.seg2105project.Login.User;
 import com.example.tianhao.seg2105project.Login.UserType;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
+
+//import android.widget.EditText;
 
 
 public class SignUp extends AppCompatActivity {
@@ -38,11 +43,16 @@ public class SignUp extends AppCompatActivity {
                     "(?=\\S+$)" +           //no white spaces
                     ".{4,}" +               //at least 4 characters
                     "$");
+    private TextInputLayout editEmail;
+    private TextInputLayout editUsername;
+    private TextInputLayout editPassword;
 
     FirebaseDatabase database;
     DatabaseReference users;
 
-    EditText editUsername, editEmail, editPassword;
+    Spinner dropdownmenu;
+
+//    EditText editUsername, editEmail, editPassword;
     Button buttonSubmit;
 
     @Override
@@ -53,9 +63,9 @@ public class SignUp extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         users = database.getReference("Users");
 
-        editUsername = (EditText)findViewById((R.id.editUsername));
-        editPassword = (EditText)findViewById((R.id.editPassword));
-        editEmail = (EditText)findViewById((R.id.editEmail));
+        editUsername = findViewById((R.id.editUsername));
+        editPassword = findViewById((R.id.editPassword));
+        editEmail = findViewById((R.id.editEmail));
 
         buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
 
@@ -64,9 +74,9 @@ public class SignUp extends AppCompatActivity {
                 public void onClick(View view){
                     if(validateUser()&&validateEmail()){
                         //Toast.makeText(SignUp.this, "It is true", Toast.LENGTH_SHORT).show();
-                        final User user = new User(editUsername.getText().toString(),
-                                editEmail.getText().toString(),
-                                editPassword.getText().toString(),
+                        final User user = new User(editUsername.getEditText().getText().toString(),
+                                editEmail.getEditText().getText().toString(),
+                                editPassword.getEditText().getText().toString(),
                                 UserType.ADMIN);
 
                        // Toast.makeText(SignUp.this, "It is true1", Toast.LENGTH_SHORT).show();
@@ -91,10 +101,31 @@ public class SignUp extends AppCompatActivity {
                 }
         });
 
+        dropdownmenu = findViewById(R.id.spinner);
+        List<String> list = new ArrayList<>();
+        list.add("Home Owner");
+        list.add("Administrator");
+        list.add("Service Provider");
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dropdownmenu.setAdapter(adapter);
+        dropdownmenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemvalue = parent.getItemAtPosition(position).toString();
+                Toast.makeText(SignUp.this, "Selected:" + itemvalue, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public boolean validateEmail(){
-        String emailInput = editEmail.getText().toString().trim();
+        String emailInput = editEmail.getEditText().getText().toString().trim();
         if(emailInput.isEmpty()){
             editEmail.setError("Please Enter Email here");
             return false;
@@ -108,7 +139,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     public boolean validateUser(){
-        String usernameInput = editUsername.getText().toString().trim();
+        String usernameInput = editUsername.getEditText().getText().toString().trim();
 
         if (usernameInput.isEmpty()) {
             editUsername.setError("Field can't be empty");
@@ -123,7 +154,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private boolean validatePassword() {
-        String passwordInput = editPassword.getText().toString().trim();
+        String passwordInput = editPassword.getEditText().getText().toString().trim();
 
         if (passwordInput.isEmpty()) {
             editPassword.setError("Field can't be empty");
@@ -136,5 +167,6 @@ public class SignUp extends AppCompatActivity {
             return true;
         }
     }
+
 
 }

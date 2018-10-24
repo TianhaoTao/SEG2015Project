@@ -21,88 +21,182 @@
             android:layout_height="wrap_content"
             android:text="Sign Up"
             android:textSize="32sp" />
-        <TextView
-            android:id="@+id/textView_firstName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="First Name:" />
-        <EditText
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="First Name"
-            android:inputType="textPersonName" />
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:errorEnabled="true">
 
-        <TextView
-            android:id="@+id/textView_lastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Last Name:" />
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:inputType="textPersonName" />
 
-        <EditText
+        </android.support.design.widget.TextInputLayout>
+        <!--<TextView-->
+        <!--android:id="@+id/textView_firstName"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="First Name:" />-->
+        <!--<EditText-->
+        <!--android:id="@+id/editText"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:ems="10"-->
+        <!--android:hint="First Name"-->
+        <!--android:inputType="textPersonName" />-->
+
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Last Name"
-            android:inputType="textPersonName" />
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:errorEnabled="true">
 
-        <TextView
-            android:id="@+id/textView_userName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="User Name:" />
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:inputType="textPersonName" />
 
-        <EditText
+        </android.support.design.widget.TextInputLayout>
+
+        <!--<TextView-->
+        <!--android:id="@+id/textView_lastName"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Last Name:" />-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/editText2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:ems="10"-->
+        <!--android:hint="Last Name"-->
+        <!--android:inputType="textPersonName" />-->
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/editUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="User Name"
-            android:inputType="textPersonName" />
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:errorEnabled="true">
 
-        <TextView
-            android:id="@+id/textView_emailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email Address:" />
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="User Name"
+                android:inputType="textPersonName" />
 
-        <EditText
+        </android.support.design.widget.TextInputLayout>
+
+        <!--<TextView-->
+        <!--android:id="@+id/textView_userName"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="User Name:" />-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/editUsername"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:ems="10"-->
+        <!--android:hint="User Name"-->
+        <!--android:inputType="textPersonName" />-->
+
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/editEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Email Address"
-            android:inputType="textPersonName" />
+            app:errorEnabled="true">
 
-        <TextView
-            android:id="@+id/textView_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Password:" />
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress" />
 
-        <EditText
+        </android.support.design.widget.TextInputLayout>
+
+        <!--<TextView-->
+        <!--android:id="@+id/textView_emailAddress"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Email Address:" />-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/editEmail"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:ems="10"-->
+        <!--android:hint="Email Address"-->
+        <!--android:inputType="textPersonName" />-->
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/editPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPersonName" />
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true">
 
-        <TextView
-            android:id="@+id/textView_confirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Confirm Password" />
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword" />
 
-        <EditText
+        </android.support.design.widget.TextInputLayout>
+
+        <!--<TextView-->
+        <!--android:id="@+id/textView_password"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Password:" />-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/editPassword"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:ems="10"-->
+        <!--android:hint="Password"-->
+        <!--android:inputType="textPersonName" />-->
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/editText6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Confirm Password"
-            android:inputType="textPersonName" />
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm Password"
+                android:inputType="textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!--<TextView-->
+        <!--android:id="@+id/textView_confirmPassword"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Confirm Password" />-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/editText6"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:ems="10"-->
+        <!--android:hint="Confirm Password"-->
+        <!--android:inputType="textPersonName" />-->
 
         <TextView
             android:id="@+id/textView"
@@ -136,3 +230,30 @@
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

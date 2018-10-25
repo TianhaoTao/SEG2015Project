@@ -4,15 +4,17 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private String passwordComfirm;
     private String userType;
 
     public User() {
     }
 
-    public User(String username, String email, String password, String userType) {
+    public User(String username, String email, String password, String passwordComfirm, String userType) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.passwordComfirm=passwordComfirm;
         this.userType = userType;
     }
 
@@ -39,6 +41,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getPasswordComfirm() {return passwordComfirm;}
+
+    public void setpasswordComfirm(String passwordComfirm) {this.passwordComfirm=passwordComfirm;}
 
     public String getUserType() {
         return userType;

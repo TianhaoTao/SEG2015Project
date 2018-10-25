@@ -45,13 +45,14 @@ public class SignUp extends AppCompatActivity {
     private TextInputLayout editEmail;
     private TextInputLayout editUsername;
     private TextInputLayout editPassword;
+    private TextInputLayout editpasswordComfirm;
+
 
     FirebaseDatabase database;
     DatabaseReference users;
 
     Spinner dropdownmenu;
 
-//    EditText editUsername, editEmail, editPassword;
     Button buttonSubmit;
 
     @Override
@@ -64,6 +65,7 @@ public class SignUp extends AppCompatActivity {
 
         editUsername = findViewById((R.id.editUsername));
         editPassword = findViewById((R.id.editPassword));
+        editpasswordComfirm = findViewById((R.id.editpasswordComfirm));
         editEmail = findViewById((R.id.editEmail));
 
         buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
@@ -82,11 +84,13 @@ public class SignUp extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener(){
 
                 public void onClick(View view){
-                    if(validateUser()&&validateEmail()){
+                    if(validateUser()&&validateEmail()&&validatePassword()&&validatePasswordComfirm()){
 
-                        final User user = new User(editUsername.getEditText().getText().toString(),
+                        final User user = new User(
+                                editUsername.getEditText().getText().toString(),
                                 editEmail.getEditText().getText().toString(),
                                 editPassword.getEditText().getText().toString(),
+                                editpasswordComfirm.getEditText().getText().toString(),
                                 dropdownmenu.getSelectedItem().toString());
 
 
@@ -150,7 +154,7 @@ public class SignUp extends AppCompatActivity {
         if (usernameInput.isEmpty()) {
             editUsername.setError("Field can't be empty");
             return false;
-        } else if (usernameInput.length() > 15) {
+        } else if (usernameInput.length() > 10) {
             editUsername.setError("Username too long");
             return false;
         } else {
@@ -170,6 +174,19 @@ public class SignUp extends AppCompatActivity {
             return false;
         } else {
             editPassword.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePasswordComfirm(){
+        String passwordInput = editPassword.getEditText().getText().toString().trim();
+        String passwordComfirmInput = editpasswordComfirm.getEditText().getText().toString().trim();
+
+        if(!passwordInput.equals(passwordComfirmInput)){
+            editpasswordComfirm.setError("Passwords are different");
+            return false;
+        }else{
+            editpasswordComfirm.setError(null);
             return true;
         }
     }

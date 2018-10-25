@@ -42,7 +42,7 @@ public class WelcomePage extends AppCompatActivity {
         welcome=(TextView)findViewById(R.id.textWelcome);
         usernameList=(TextView)findViewById(R.id.textViewUsers);
         welcome.setText("Hello, "+user.getUsername()+
-        "！ You log in as a "+ user.getUserType());
+        "！ You are logged as a "+ user.getUserType());
 
         buttonSignOut=(Button) findViewById(R.id.buttonSignOut);
 

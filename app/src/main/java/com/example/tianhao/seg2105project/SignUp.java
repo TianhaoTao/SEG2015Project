@@ -93,9 +93,23 @@ public class SignUp extends AppCompatActivity {
                         users.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                boolean flag=true;
+                                if(user.getUserType().equals("Administrator")){
+                                    Toast.makeText(SignUp.this, "AdminChecked", Toast.LENGTH_SHORT).show();
+                                    for(DataSnapshot data: dataSnapshot.getChildren()) {
+                                        String userType = data.child("userType").getValue().toString();
+                                        if(userType.equals("Administrator")){
+                                            flag=false;
+                                            Toast.makeText(SignUp.this, "Admin Already Exists", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        }
+                                    }
+                                }
                                 if (dataSnapshot.child(user.getUsername()).exists()) {
                                     Toast.makeText(SignUp.this, "This Username Exists", Toast.LENGTH_SHORT).show();
-                                } else {
+                                    flag=false;
+                                }
+                                if(flag){
                                     users.child(user.getUsername()).setValue(user);
                                     Toast.makeText(SignUp.this, "Success Register", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), SignIn.class);

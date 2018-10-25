@@ -4,7 +4,6 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private String passwordComfirm;
     private String userType;
 
     public User() {

@@ -39,6 +39,8 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:layout_marginBottom="20dip"
                 android:hint="Username"
                 android:inputType="textPersonName" />
 
@@ -53,6 +55,7 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dip"
                 android:hint="Password"
                 android:inputType="textPassword" />
 
@@ -60,14 +63,18 @@
 
         <Button
             android:id="@+id/buttonSubmit"
-            android:layout_width="match_parent"
+            android:layout_width="300dip"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="50dip"
+            android:layout_marginTop="20dip"
             android:text="Submit" />
 
         <Button
             android:id="@+id/buttonRegister"
-            android:layout_width="match_parent"
+            android:layout_width="300dip"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="50dip"
+            android:layout_marginTop="20dip"
             android:text="CREATE NEW ACCOUNT" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

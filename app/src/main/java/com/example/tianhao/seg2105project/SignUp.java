@@ -115,6 +115,7 @@ public class SignUp extends AppCompatActivity {
 
     }
 
+
     public boolean validateEmail(){
         String emailInput = editEmail.getEditText().getText().toString().trim();
         if(emailInput.isEmpty()){

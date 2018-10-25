@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.support.design.widget.TextInputLayout;
 
 
 import com.example.tianhao.seg2105project.Login.User;
@@ -22,7 +23,10 @@ public class SignIn extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference users;
 
-    EditText editUsername, editPassword;
+    private TextInputLayout editEmail;
+    private TextInputLayout editUsername;
+    private TextInputLayout editPassword;
+
     Button buttonSubmit, buttonRegister;
 
     @Override
@@ -33,8 +37,10 @@ public class SignIn extends AppCompatActivity {
         database=FirebaseDatabase.getInstance();
         users=database.getReference("Users");
 
-        editUsername = (EditText)findViewById((R.id.editUsername));
-        editPassword = (EditText)findViewById(R.id.editPassword);
+        editUsername = findViewById((R.id.editUsername));
+        editPassword = findViewById((R.id.editPassword));
+        editEmail = findViewById((R.id.editEmail));
+
 
         buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
         buttonRegister = (Button)findViewById(R.id.buttonRegister);
@@ -50,7 +56,7 @@ public class SignIn extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(editUsername.getText().toString(),editPassword.getText().toString());
+                signIn(editUsername.getEditText().getText().toString(),editPassword.getEditText().getText().toString());
             }
         });
 

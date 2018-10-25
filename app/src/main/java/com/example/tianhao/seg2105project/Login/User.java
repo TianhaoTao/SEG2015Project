@@ -10,11 +10,10 @@ public class User {
     public User() {
     }
 
-    public User(String username, String email, String password, String passwordComfirm, String userType) {
+    public User(String username, String email, String password, String userType) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.passwordComfirm=passwordComfirm;
         this.userType = userType;
     }
 
@@ -41,10 +40,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getPasswordComfirm() {return passwordComfirm;}
-
-    public void setpasswordComfirm(String passwordComfirm) {this.passwordComfirm=passwordComfirm;}
 
     public String getUserType() {
         return userType;

@@ -73,6 +73,8 @@ public class SignIn extends AppCompatActivity {
                             Intent intentWelcome = new Intent(getApplicationContext(), WelcomePage.class);
                             intentWelcome.putExtra("username",login.getUsername());
                             intentWelcome.putExtra("userType",login.getUserType());
+                            intentWelcome.putExtra("email",login.getEmail());
+                            intentWelcome.putExtra("password",login.getPassword());
                             startActivity(intentWelcome);
                         }else{
                             Toast.makeText(SignIn.this, "Password is Wrong", Toast.LENGTH_SHORT).show();

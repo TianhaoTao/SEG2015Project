@@ -45,7 +45,7 @@ public class SignUp extends AppCompatActivity {
     private TextInputLayout editEmail;
     private TextInputLayout editUsername;
     private TextInputLayout editPassword;
-    private TextInputLayout editpasswordComfirm;
+    private TextInputLayout editpasswordConfirm;
 
 
     FirebaseDatabase database;
@@ -65,7 +65,7 @@ public class SignUp extends AppCompatActivity {
 
         editUsername = findViewById((R.id.editUsername));
         editPassword = findViewById((R.id.editPassword));
-        editpasswordComfirm = findViewById((R.id.editpasswordComfirm));
+        editpasswordConfirm = findViewById((R.id.editPasswordConfirm));
         editEmail = findViewById((R.id.editEmail));
 
         buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
@@ -84,13 +84,12 @@ public class SignUp extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener(){
 
                 public void onClick(View view){
-                    if(validateUser()&&validateEmail()&&validatePassword()&&validatePasswordComfirm()){
+                    if(validateUser()&&validateEmail()&&validatePassword()&& validatePasswordConfirm()){
 
                         final User user = new User(
                                 editUsername.getEditText().getText().toString(),
                                 editEmail.getEditText().getText().toString(),
                                 editPassword.getEditText().getText().toString(),
-                                editpasswordComfirm.getEditText().getText().toString(),
                                 dropdownmenu.getSelectedItem().toString());
 
 
@@ -98,8 +97,7 @@ public class SignUp extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 boolean flag=true;
-                                if(user.getUserType().equals("Administrator")){
-                                    Toast.makeText(SignUp.this, "AdminChecked", Toast.LENGTH_SHORT).show();
+                                if(user.getUserType().equals("Administrator")){//ensure only one admin
                                     for(DataSnapshot data: dataSnapshot.getChildren()) {
                                         String userType = data.child("userType").getValue().toString();
                                         if(userType.equals("Administrator")){
@@ -107,6 +105,14 @@ public class SignUp extends AppCompatActivity {
                                             Toast.makeText(SignUp.this, "Admin Already Exists", Toast.LENGTH_SHORT).show();
                                             break;
                                         }
+                                    }
+                                }
+                                for(DataSnapshot data: dataSnapshot.getChildren()) {//ensure no duplicate email
+                                    String userType = data.child("email").getValue().toString();
+                                    if(userType.equals(editEmail.getEditText().getText().toString())){
+                                        flag=false;
+                                        Toast.makeText(SignUp.this, "Email Already Exists", Toast.LENGTH_SHORT).show();
+                                        break;
                                     }
                                 }
                                 if (dataSnapshot.child(user.getUsername()).exists()) {
@@ -178,15 +184,15 @@ public class SignUp extends AppCompatActivity {
         }
     }
 
-    private boolean validatePasswordComfirm(){
+    private boolean validatePasswordConfirm(){
         String passwordInput = editPassword.getEditText().getText().toString().trim();
-        String passwordComfirmInput = editpasswordComfirm.getEditText().getText().toString().trim();
+        String passwordConfirmInput = editpasswordConfirm.getEditText().getText().toString().trim();
 
-        if(!passwordInput.equals(passwordComfirmInput)){
-            editpasswordComfirm.setError("Passwords are different");
+        if(!passwordInput.equals(passwordConfirmInput)){
+            editpasswordConfirm.setError("Passwords are different");
             return false;
         }else{
-            editpasswordComfirm.setError(null);
+            editpasswordConfirm.setError(null);
             return true;
         }
     }

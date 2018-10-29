@@ -46,7 +46,7 @@ public class WelcomePage extends AppCompatActivity {
 
         buttonSignOut=(Button) findViewById(R.id.buttonSignOut);
 
-        if(user.getUserType().equals("Administrator")){
+        if(user.getUserType().equals("Administrator")){//the admin can see the list of house owners and service providers
             users.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

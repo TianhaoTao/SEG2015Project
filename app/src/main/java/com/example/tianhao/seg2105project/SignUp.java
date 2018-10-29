@@ -96,7 +96,7 @@ public class SignUp extends AppCompatActivity {
                         users.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                boolean flag=true;
+                                boolean flag=true;//flag set false when registration is not valid
                                 if(user.getUserType().equals("Administrator")){//ensure only one admin
                                     for(DataSnapshot data: dataSnapshot.getChildren()) {
                                         String userType = data.child("userType").getValue().toString();
@@ -115,7 +115,7 @@ public class SignUp extends AppCompatActivity {
                                         break;
                                     }
                                 }
-                                if (dataSnapshot.child(user.getUsername()).exists()) {
+                                if (dataSnapshot.child(user.getUsername()).exists()) {//no duplicate username
                                     Toast.makeText(SignUp.this, "This Username Exists", Toast.LENGTH_SHORT).show();
                                     flag=false;
                                 }

@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.tianhao.seg2105project.Login.User;
+import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -122,8 +122,7 @@ public class SignUp extends AppCompatActivity {
                                 if(flag){
                                     users.child(user.getUsername()).setValue(user);
                                     Toast.makeText(SignUp.this, "Success Register", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), SignIn.class);
-                                    startActivity(intent);
+                                    finish();
                                 }
                             }
                             @Override

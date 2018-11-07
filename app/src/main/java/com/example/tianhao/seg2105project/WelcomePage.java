@@ -7,10 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import com.example.tianhao.seg2105project.Login.User;
+import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -76,6 +75,7 @@ public class WelcomePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentSignUp = new Intent(getApplicationContext(), SignIn.class);
                 startActivity(intentSignUp);
+                finish();
             }
         });
 

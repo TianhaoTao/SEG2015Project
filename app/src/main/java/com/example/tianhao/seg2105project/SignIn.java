@@ -47,7 +47,7 @@ public class SignIn extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentSignUp = new Intent(getApplicationContext(), AdminHomePage.class);
+                Intent intentSignUp = new Intent(getApplicationContext(), WelcomePage.class);
                 startActivity(intentSignUp);
             }
         });

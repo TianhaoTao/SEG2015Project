@@ -6,12 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 import android.support.design.widget.TextInputLayout;
 
 
-import com.example.tianhao.seg2105project.Login.User;
+import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -48,7 +47,7 @@ public class SignIn extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentSignUp = new Intent(getApplicationContext(), SignUp.class);
+                Intent intentSignUp = new Intent(getApplicationContext(), WelcomePage.class);
                 startActivity(intentSignUp);
             }
         });
@@ -76,6 +75,7 @@ public class SignIn extends AppCompatActivity {
                             intentWelcome.putExtra("email",login.getEmail());
                             intentWelcome.putExtra("password",login.getPassword());
                             startActivity(intentWelcome);
+                            finish();
                         }else{
                             Toast.makeText(SignIn.this, "Password is Wrong", Toast.LENGTH_SHORT).show();
                         }

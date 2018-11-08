@@ -41,8 +41,8 @@ public class WelcomePage extends AppCompatActivity {
     private NavigationView mMainNav;
     private FrameLayout mMainFrame;
     private homeFragment homeFragment;//home page fragment linking to fragment_home.xml
-    private NumAccountFragment usersFragment;//users fragment linking to fragment_num_account.xml
-    private categotyFragment servicesFragment;//services category fragment linking to fragment_category.xml
+    private usersFragment usersFragment;//users fragment linking to fragment_num_account.xml
+    private servicesFragment servicesFragment;//services category fragment linking to fragment_category.xml
 
 
     @Override
@@ -59,8 +59,8 @@ public class WelcomePage extends AppCompatActivity {
         mMainFrame=(FrameLayout) findViewById(R.id.main_fragment);
         mMainNav=(NavigationView) findViewById(R.id.nav_draw);
         homeFragment=new homeFragment();
-        usersFragment=new NumAccountFragment();
-        servicesFragment=new categotyFragment();
+        usersFragment=new usersFragment();
+        servicesFragment=new servicesFragment();
 
         mMainNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

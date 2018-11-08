@@ -6,9 +6,21 @@
     tools:context=".homeFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/textWelcome"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="home fragment" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="21dp"
+        android:text="You are logged as"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textViewUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
 </FrameLayout>

@@ -57,6 +57,7 @@ public class Application {
     }
 
     public void addService(String name, double hourlyRate){
+        if(user.getUserType()!="Administrator") return;
         String id = services.push().getKey();
         services.child(id).setValue(new Service(id,name,hourlyRate));
         Toast.makeText(mContext, "Service Added", Toast.LENGTH_SHORT).show();

@@ -9,7 +9,7 @@
     tools:context=".WelcomePage">
 
     <RelativeLayout
-        android:background="@drawable/admin_backgroud"
+        android:background="@drawable/admin_background"
         android:layout_width="match_parent"
         android:id="@+id/background"
         android:layout_height="match_parent">
@@ -37,24 +37,24 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="284dp"
-            android:layout_marginBottom="57dp"
+            android:layout_marginBottom="0dp"
             android:text="SignOut" />
 
-
+<!--//don't delect this, fot future reference-->
         <!--<android.support.design.widget.BottomNavigationView-->
             <!--android:id="@+id/main_nav"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="56dp"-->
             <!--android:layout_alignParentBottom="true"-->
             <!--android:layout_gravity="bottom"-->
-            <!--app:menu="@menu/nav_items">-->
+            <!--app:menu="@menu/buttons_services_editor">-->
         <!--</android.support.design.widget.BottomNavigationView>-->
 
         <FrameLayout
             android:id="@+id/main_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_above="@+id/buttonSignOut"
             android:layout_below="@+id/textWelcome"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="0dp"
@@ -68,10 +68,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@color/white"
-        app:headerLayout="@layout/nav_header_nevigation_draw"
-        app:itemTextColor="@color/darkgray"
-        app:itemIconTint="@color/darkgray"
-        app:menu="@menu/activity_nevigation_draw_drawer"
+        app:headerLayout="@layout/nav_header_navigation_draw"
+        app:itemTextColor="@color/darkGray"
+        app:itemIconTint="@color/darkGray"
+        app:menu="@menu/activity_navigation_draw_drawer"
         android:layout_gravity="start"
         >
     </android.support.design.widget.NavigationView>

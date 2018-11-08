@@ -23,13 +23,11 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
 
     private Context mContext;
 
-    private ArrayList<Service> serviceArrayList = new ArrayList<>();
-    private ArrayList<String> imageArrayList = new ArrayList<String>();
+    private ArrayList<Service> serviceArrayList;
 
-    public ServiceViewAdapter(Context mContext, ArrayList<Service> serviceArrayList, ArrayList<String> imageArrayList) {
+    public ServiceViewAdapter(Context mContext, ArrayList<Service> serviceArrayList) {
         this.mContext = mContext;
         this.serviceArrayList = serviceArrayList;
-        this.imageArrayList = imageArrayList;
     }
 
     @NonNull
@@ -51,7 +49,8 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: "+serviceArrayList.get(i));
-                Toast.makeText(mContext, i+" is the current position.", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(mContext, i+" is selected.", Toast.LENGTH_SHORT).show();
             }
         });
     }

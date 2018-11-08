@@ -1,0 +1,94 @@
+package com.example.tianhao.seg2105project.Model;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import com.example.tianhao.seg2105project.ServiceViewAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+
+public class Application {
+
+    private Context mContext;
+
+    private ArrayList<Service> serviceArrayList = new ArrayList<>();
+
+    private static Application instance;
+
+    private User user;
+
+    private ServiceViewAdapter adapter;
+
+    FirebaseDatabase database;
+    DatabaseReference services;
+
+    private Application(Context context) {
+        mContext=context;
+        database=FirebaseDatabase.getInstance();
+        services=database.getReference("Services");
+        services.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    serviceArrayList.add(data.getValue(Service.class));
+                }
+                adapter = new ServiceViewAdapter(mContext,serviceArrayList);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public static Application getInstance(Context context) {
+        if(instance == null){
+            instance = new Application(context);
+        }
+        return instance;
+    }
+
+    public void addService(String name, double hourlyRate){
+        String id = services.push().getKey();
+        services.child(id).setValue(new Service(id,name,hourlyRate));
+        Toast.makeText(mContext, "Service Added", Toast.LENGTH_SHORT).show();
+    }
+
+    public void editService(String id, String name, double hourlyRate){
+        DatabaseReference originalService = services.child(id);
+        originalService.setValue(new Service(id, name, hourlyRate));
+        Toast.makeText(mContext, "Service Updated", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void removeService(String id){
+        DatabaseReference originalService = services.child(id);
+        originalService.removeValue();
+        Toast.makeText(mContext, "Service Removed", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public ArrayList<Service> getServiceArrayList() {
+        return serviceArrayList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ServiceViewAdapter getAdapter() {
+        return adapter;
+    }
+}

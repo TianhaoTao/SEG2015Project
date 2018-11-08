@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".SignUp" />
         <activity android:name=".WelcomePage" />
-        <activity android:name=".AdminHomePage"></activity>
+        <activity android:name=".AdminHomePage" />
+        <activity android:name=".EditService"></activity>
     </application>
 
 </manifest>

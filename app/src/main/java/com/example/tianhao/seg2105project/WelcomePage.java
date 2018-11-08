@@ -2,9 +2,11 @@ package com.example.tianhao.seg2105project;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -32,41 +34,49 @@ public class WelcomePage extends AppCompatActivity {
 
     Button buttonSignOut;
 
+    private DrawerLayout mDrawerlayout;
+    private ActionBarDrawerToggle mToggle;
+
     //for navigation bar
-    private BottomNavigationView mMainNav;
+    private NavigationView mMainNav;
     private FrameLayout mMainFrame;
-    private homeFragment homeFreg;
-    private NumAccountFragment numAccountFragment;
-    private categotyFragment cateFreg;
+    private homeFragment homeFragment;//home page fragment linking to fragment_home.xml
+    private NumAccountFragment usersFragment;//users fragment linking to fragment_num_account.xml
+    private categotyFragment servicesFragment;//services category fragment linking to fragment_category.xml
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
+        mDrawerlayout=(DrawerLayout)findViewById(R.id.drawer);
+        mToggle=new ActionBarDrawerToggle(this,mDrawerlayout,R.string.open,R.string.close);
+        mDrawerlayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //for navigation bar
-        mMainFrame=(FrameLayout) findViewById(R.id.main_frame);
-        mMainNav=(BottomNavigationView) findViewById(R.id.main_nav);
-        homeFreg=new homeFragment();
-        numAccountFragment=new NumAccountFragment();
-        cateFreg=new categotyFragment();
+        //for navigation draw
+        mMainFrame=(FrameLayout) findViewById(R.id.main_fragment);
+        mMainNav=(NavigationView) findViewById(R.id.nav_draw);
+        homeFragment=new homeFragment();
+        usersFragment=new NumAccountFragment();
+        servicesFragment=new categotyFragment();
 
-        mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        mMainNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.nav_home:
                         mMainNav.setItemBackgroundResource(R.color.colorPrimary);
-                        setFragment(homeFreg);
+                        setFragment(homeFragment);
                         return true;
-                    case R.id.nav_accNum:
+                    case R.id.nav_users:
                         mMainNav.setItemBackgroundResource(R.color.colorAccent);
-                        setFragment(numAccountFragment);
+                        setFragment(usersFragment);
                         return true;
-                    case R.id.nav_cate:
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
-                        setFragment(cateFreg);
+                    case R.id.nav_post_services:
+                        mMainNav.setItemBackgroundResource(R.color.colorPrimaryDark);
+                        setFragment(servicesFragment);
                         return true;
 
                         default:
@@ -125,10 +135,19 @@ public class WelcomePage extends AppCompatActivity {
 
     }
 
+
+    //menuItem for draw in admin
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(mToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     //setNavigation Fragment
     private void setFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame, fragment);
+        fragmentTransaction.replace(R.id.main_fragment, fragment);
         fragmentTransaction.commit();
     }
 

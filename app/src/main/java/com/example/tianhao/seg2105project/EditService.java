@@ -5,12 +5,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.tianhao.seg2105project.Model.Application;
 import com.example.tianhao.seg2105project.Model.Service;
 
-public class EditService extends AppCompatActivity {
+import java.util.regex.Pattern;
 
+public class EditService extends AppCompatActivity {
+    private static final Pattern HOURLY_RATE =
+            Pattern.compile(
+                    "(?=.*[a-z])" +
+                    "(?=.*[A-Z])"+ "(?=\\S+$)"+"(?=.*[@#$~`!*()_{}|?/>,<%^&+=])");
     private Application application = Application.getInstance(this);
     private TextInputLayout createHourlyRate;
     private TextInputLayout createServiceType;
@@ -64,15 +70,52 @@ public class EditService extends AppCompatActivity {
             public void onClick(View view) {
                 //identify which function to be used
                 if(id.equals("")) {
-                    application.addService(createServiceType.getEditText().getText().toString(),
-                            Double.parseDouble(createHourlyRate.getEditText().getText().toString()));
-                }else {
-                    application.editService(id,createServiceType.getEditText().getText().toString(),
-                            Double.parseDouble(createHourlyRate.getEditText().getText().toString()));
+                    if(validationHourlyRate()&&validationServiceName()){
+                        application.addService(createServiceType.getEditText().getText().toString(),
+                                Double.parseDouble(createHourlyRate.getEditText().getText().toString()));
+                    }else if(!validationHourlyRate()){
+                        Toast.makeText(EditService.this, "invalid Hourly Rate", Toast.LENGTH_SHORT).show();
+                    }else if(!validationServiceName()){
+                        Toast.makeText(EditService.this, "invalid Service Name", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    if(validationHourlyRate()&&validationServiceName()) {
+                        application.editService(id, createServiceType.getEditText().getText().toString(),
+                                Double.parseDouble(createHourlyRate.getEditText().getText().toString()));
+                    }else if(!validationHourlyRate()){
+                        Toast.makeText(EditService.this, "invalid Hourly Rate", Toast.LENGTH_SHORT).show();
+                    }else if(!validationServiceName()){
+                        Toast.makeText(EditService.this, "invalid Service Name", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 finish();
             }
         });
+    }
+
+    public boolean validationServiceName(){
+        String ServiceName = createHourlyRate.getEditText().getText().toString().trim();
+        if(ServiceName.isEmpty()){
+            createHourlyRate.setError("Please Enter Service type");
+            return false;
+        }else{
+            createHourlyRate.setError(null);
+            return true;
+        }
+    }
+
+    public boolean validationHourlyRate() {
+        String hourlyRate = createHourlyRate.getEditText().getText().toString().trim();
+        if (hourlyRate.isEmpty()) {
+            createHourlyRate.setError("Please Enter Hourly rate here");
+            return false;
+        } else if (HOURLY_RATE.matcher(hourlyRate).matches()) {
+            createHourlyRate.setError("HOURLY RATE NOT VALID,SHOULD ONLY NUMBER");
+            return false;
+        } else {
+            createHourlyRate.setError(null);
+            return true;
+        }
     }
 }
 

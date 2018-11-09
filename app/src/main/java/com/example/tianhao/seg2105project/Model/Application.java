@@ -42,7 +42,6 @@ public class Application {
 //                    Toast.makeText(mContext, "lululu", Toast.LENGTH_SHORT).show();
                 }
 //                adapter = new ServiceViewAdapter(mContext,serviceArrayList);
-
             }
 
             @Override

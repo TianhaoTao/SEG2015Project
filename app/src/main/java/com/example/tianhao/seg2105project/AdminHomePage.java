@@ -24,7 +24,6 @@ public class AdminHomePage extends AppCompatActivity {
 
     private Application  application = Application.getInstance(this);
 
-
     Button buttonAdd;
 
     @Override
@@ -33,9 +32,9 @@ public class AdminHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_admin_home_page);
         buttonAdd =(Button)findViewById(R.id.buttonAdd);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(application.getAdapter());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+//        recyclerView.setAdapter(application.getAdapter());
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override

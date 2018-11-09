@@ -32,7 +32,7 @@ public class homeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private Application application;
+    private Application application = Application.getInstance(getActivity());
 
     private RecyclerView recyclerView;
     private Button buttonAdd;
@@ -41,9 +41,10 @@ public class homeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        buttonAdd =(Button)view.findViewById(R.id.buttonAdd);
-
+        buttonAdd =(Button)view.findViewById(R.id.buttonAdd);//button to add service, visible to admin only
+        if(!application.getUser().getUserType().equals("Administrator")) {
+            buttonAdd.setVisibility(View.INVISIBLE);
+        }
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +53,7 @@ public class homeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         recyclerView = view.findViewById(R.id.recycler_view);
 
         // Inflate the layout for this fragment
@@ -60,7 +62,7 @@ public class homeFragment extends Fragment {
 
     @Override
     public void onStart() {
-        super.onStart();
+        super.onStart();//refresh the recylerview every time it is brought to the front
         application = Application.getInstance(getActivity());
         recyclerView.setAdapter(new ServiceViewAdapter(getActivity(),application.getServiceArrayList()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

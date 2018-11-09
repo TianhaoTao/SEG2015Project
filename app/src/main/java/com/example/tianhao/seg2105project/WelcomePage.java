@@ -27,11 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 public class WelcomePage extends AppCompatActivity {
 
     User user;
-    FirebaseDatabase database;
-    DatabaseReference users;
 
     TextView welcome;
-    TextView usernameList;
 
     Button buttonSignOut;
 
@@ -56,6 +53,8 @@ public class WelcomePage extends AppCompatActivity {
 
         application = Application.getInstance(this);
         user = application.getUser();
+
+        //title
         welcome=(TextView)findViewById(R.id.textWelcome);
         welcome.setText("Hello, "+user.getUsername()+
         "！ You are logged as a "+ user.getUserType());
@@ -90,40 +89,8 @@ public class WelcomePage extends AppCompatActivity {
             }
         });
 
-//        database=FirebaseDatabase.getInstance();
-//        users=database.getReference("Users");
-//        welcome=(TextView)findViewById(R.id.textWelcome);
-//        usernameList=(TextView)findViewById(R.id.textViewUsers);
-//        welcome.setText("Hello, "+user.getUsername()+
-//        "！ You are logged as a "+ user.getUserType());
-
+        //signOut
         buttonSignOut=(Button) findViewById(R.id.buttonSignOut);
-
-//        if(user.getUserType().equals("Administrator")){//the admin can see the list of house owners and service providers
-//            users.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    String userList="";
-//                    int counter=0;
-//                    for(DataSnapshot data: dataSnapshot.getChildren()) {
-//                        counter++;
-//                        userList+= counter+"."+data.child("username").getValue().toString()
-//                                +" "+data.child("userType").getValue().toString()
-//                                +"\n";
-//                    }
-//                    usernameList.setText(userList);
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-//        }else{
-//            usernameList.setVisibility(View.INVISIBLE);
-//
-//        }
-
         buttonSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,8 +99,6 @@ public class WelcomePage extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
 
 

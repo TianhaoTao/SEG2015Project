@@ -36,14 +36,23 @@ public class EditService extends AppCompatActivity {
         createServiceType = findViewById((R.id.save_serviceType));
         createHourlyRate = findViewById((R.id.save_hourlyRate));
 
-
         buttonDelete = (Button)findViewById(R.id.delete_service);
-        if(id.equals("")){
+        buttonSave = (Button) findViewById(R.id.save_button);
+        buttonGOBACK = (Button) findViewById(R.id.cancel);
+
+        if(!application.getUser().getUserType().equals("Administrator")){//only available to admin
+            buttonDelete.setVisibility(View.INVISIBLE);
+            buttonSave.setVisibility(View.INVISIBLE);
+        }
+
+        if(id.equals("")){//delete is not shown when the user add a service instead of change the service
             buttonDelete.setVisibility(View.INVISIBLE);
         }else{
             createServiceType.getEditText().setText(getIntent().getStringExtra("name"));
             createHourlyRate.getEditText().setText(getIntent().getStringExtra("hourlyRate"));
         }
+
+        //for deletion
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +62,6 @@ public class EditService extends AppCompatActivity {
         });
 
         //for go back button
-        buttonGOBACK = (Button) findViewById(R.id.cancel);
         buttonGOBACK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +71,6 @@ public class EditService extends AppCompatActivity {
 
 
         //for save button-two functions(edit and post new serv
-        buttonSave = (Button) findViewById(R.id.save_button);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

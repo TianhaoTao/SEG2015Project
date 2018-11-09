@@ -15,12 +15,13 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="21dp"
         android:text="You are logged as"
-        android:textSize="16sp" />
+        android:textSize="50sp" />
 
     <TextView
         android:id="@+id/textViewUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="HomeFragement"
+        android:textSize="50sp"/>
 
 </FrameLayout>

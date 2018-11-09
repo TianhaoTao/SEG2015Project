@@ -43,12 +43,12 @@ public class homeFragment extends Fragment {
 
         database=FirebaseDatabase.getInstance();
         users=database.getReference("Users");
-        user= new User(getIntent().getStringExtra("username"),
-                getIntent().getStringExtra("email"),
-                getIntent().getStringExtra("password"),
-                getIntent().getStringExtra("userType"));
-        welcome=(TextView)findViewById(R.id.textWelcome);
-        usernameList=(TextView)findViewById(R.id.textViewUsers);
+        user= new User(getActivity().getIntent().getStringExtra("username"),
+                getActivity().getIntent().getStringExtra("email"),
+                getActivity().getIntent().getStringExtra("password"),
+                getActivity().getIntent().getStringExtra("userType"));
+        welcome=(TextView)getView().findViewById(R.id.textWelcome);
+        usernameList=(TextView)getView().findViewById(R.id.textViewUsers);
         welcome.setText("Hello, "+user.getUsername()+
                 "！ You are logged as a "+ user.getUserType());
 

@@ -57,13 +57,14 @@ public class Application {
     }
 
     public void addService(String name, double hourlyRate){
-        if(user.getUserType()!="Administrator") return;
+        if(user.getUserType()!="Administrator") {return;}
         String id = services.push().getKey();
         services.child(id).setValue(new Service(id,name,hourlyRate));
         Toast.makeText(mContext, "Service Added", Toast.LENGTH_SHORT).show();
     }
 
     public void editService(String id, String name, double hourlyRate){
+        if(user.getUserType()!="Administrator") {return;}
         DatabaseReference originalService = services.child(id);
         originalService.setValue(new Service(id, name, hourlyRate));
         Toast.makeText(mContext, "Service Updated", Toast.LENGTH_SHORT).show();
@@ -71,6 +72,7 @@ public class Application {
 
 
     public void removeService(String id){
+        if(user.getUserType()!="Administrator") {return;}
         DatabaseReference originalService = services.child(id);
         originalService.removeValue();
         Toast.makeText(mContext, "Service Removed", Toast.LENGTH_SHORT).show();

@@ -79,11 +79,9 @@ public class WelcomePage extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.nav_home:
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
                         setFragment(homeFragment);
                         return true;
                     case R.id.nav_users:
-                        mMainNav.setItemBackgroundResource(R.color.colorAccent);
                         setFragment(usersFragment);
                         return true;
                         default:

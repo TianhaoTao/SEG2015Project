@@ -57,7 +57,7 @@ public class EditService extends AppCompatActivity {
         });
 
 
-        //for save button-two functions(edit and post new service)
+        //for save button-two functions(edit and post new serv
         buttonSave = (Button) findViewById(R.id.save_button);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override

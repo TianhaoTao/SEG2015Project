@@ -13,10 +13,6 @@
             android:id="@+id/nav_users"
             android:icon="@drawable/ic_people"
             android:title="Number Of Users" />
-        <item
-            android:id="@+id/nav_post_services"
-            android:icon="@drawable/ic_post_server"
-            android:title="Server Category" />
     </group>
 
 </menu>

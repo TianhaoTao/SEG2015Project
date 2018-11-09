@@ -28,13 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 public class homeFragment extends Fragment {
 
 
-    User user;
-    FirebaseDatabase database;
-    DatabaseReference users;
-
-    TextView welcome;
-    TextView usernameList;
-
     public homeFragment() {
         // Required empty public constructor
     }
@@ -71,6 +64,5 @@ public class homeFragment extends Fragment {
         application = Application.getInstance(getActivity());
         recyclerView.setAdapter(new ServiceViewAdapter(getActivity(),application.getServiceArrayList()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
     }
 }

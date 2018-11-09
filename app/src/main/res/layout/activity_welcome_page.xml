@@ -21,14 +21,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="21dp"
-            android:text="You are logged as"
+            android:text="Welcome, You are logged as"
             android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textViewUsers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
 
         <Button
             android:id="@+id/buttonSignOut"

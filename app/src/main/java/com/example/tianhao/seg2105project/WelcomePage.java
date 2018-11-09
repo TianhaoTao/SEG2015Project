@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
+import com.example.tianhao.seg2105project.Model.Application;
 import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +35,9 @@ public class WelcomePage extends AppCompatActivity {
 
     Button buttonSignOut;
 
+
+    private Application application;
+
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
 
@@ -49,6 +53,13 @@ public class WelcomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
+
+        application = Application.getInstance(this);
+        user = application.getUser();
+        welcome=(TextView)findViewById(R.id.textWelcome);
+        welcome.setText("Hello, "+user.getUsername()+
+        "！ You are logged as a "+ user.getUserType());
+
         mDrawerlayout=(DrawerLayout)findViewById(R.id.drawer);
         mToggle=new ActionBarDrawerToggle(this,mDrawerlayout,R.string.open,R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
@@ -88,10 +99,6 @@ public class WelcomePage extends AppCompatActivity {
 
 //        database=FirebaseDatabase.getInstance();
 //        users=database.getReference("Users");
-//        user= new User(getIntent().getStringExtra("username"),
-//                getIntent().getStringExtra("email"),
-//                getIntent().getStringExtra("password"),
-//                getIntent().getStringExtra("userType"));
 //        welcome=(TextView)findViewById(R.id.textWelcome);
 //        usernameList=(TextView)findViewById(R.id.textViewUsers);
 //        welcome.setText("Hello, "+user.getUsername()+

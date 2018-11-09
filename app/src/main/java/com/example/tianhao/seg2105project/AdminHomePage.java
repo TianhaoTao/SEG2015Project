@@ -26,13 +26,13 @@ import java.util.ArrayList;
 public class AdminHomePage extends AppCompatActivity {
 
     private static final String TAG = "AdminHomePage";
-//
-    private ArrayList<Service> serviceArrayList;
-//    private ArrayList<String> imageArrayList = new ArrayList<>();
+
+//    private ArrayList<Service> serviceArrayList;
 
     private Application  application;
 
-    Button buttonAdd;
+    private RecyclerView recyclerView;
+    private Button buttonAdd;
 
 
     @Override
@@ -40,7 +40,6 @@ public class AdminHomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home_page);
 
-//        application = Application.getInstance(this);
         buttonAdd =(Button)findViewById(R.id.buttonAdd);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +50,7 @@ public class AdminHomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        recyclerView = findViewById(R.id.recycler_view);
 
     }
 
@@ -60,25 +60,8 @@ public class AdminHomePage extends AppCompatActivity {
         super.onStart();
         application = Application.getInstance(this);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new ServiceViewAdapter(this,application.getServiceArrayList()));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-//
-////    private void initService(){
-//        serviceArrayList.add(new Service("carpet cleaning",20));
-//        serviceArrayList.add(new Service("pest control", 30.50));
-//        serviceArrayList.add(new Service("moving",17.05));
-////        imageArrayList.add("abc");
-//        initRecyclerView();
-//    }
-//
-//    private void initRecyclerView(){
-//        Log.d(TAG, "initRecyclerView: init RecyclerView");
-//        //recyclerView.setAdapter(new ServiceViewAdapter(this,serviceArrayList));
-//        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-//        recyclerView.setAdapter(application.getAdapter());
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//    }
 
 }

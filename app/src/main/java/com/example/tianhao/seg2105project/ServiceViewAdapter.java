@@ -1,6 +1,7 @@
 package com.example.tianhao.seg2105project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -45,11 +46,14 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
         serviceViewHolder.serviceName.setText(serviceArrayList.get(i).getName());
         serviceViewHolder.hourlyRate.setText(String.valueOf(serviceArrayList.get(i).getHourlyRate()));
 
+
         serviceViewHolder.serviceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: "+serviceArrayList.get(i));
-
+                Intent intent = new Intent(mContext, EditService.class);
+                intent.putExtra("id",serviceArrayList.get(i).getId());
+                mContext.startActivity(intent);
                 Toast.makeText(mContext, i+" is selected.", Toast.LENGTH_SHORT).show();
             }
         });

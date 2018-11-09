@@ -34,6 +34,7 @@ public class EditService extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 application.removeService(id);
+                finish();
             }
         });
 
@@ -71,6 +72,7 @@ public class EditService extends AppCompatActivity {
                     application.editService(id,createServiceType.getEditText().getText().toString(),
                             Double.parseDouble(createHourlyRate.getEditText().getText().toString()));
                 }
+                finish();
             }
         });
     }

@@ -19,12 +19,13 @@
         android:textSize="36sp" />
 
     <HorizontalScrollView
-        android:layout_width="match_parent"
         android:id="@+id/editorButtonScroll"
+        android:layout_width="match_parent"
         android:layout_height="450dp"
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="-461dp">
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="10dp">
 
         <LinearLayout
             android:layout_width="wrap_content"

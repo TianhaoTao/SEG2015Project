@@ -32,13 +32,16 @@ public class Application {
         mContext=context;
         database=FirebaseDatabase.getInstance();
         services=database.getReference("Services");
-        services.addListenerForSingleValueEvent(new ValueEventListener() {
+        services.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                serviceArrayList = new ArrayList<>();
                 for(DataSnapshot data : dataSnapshot.getChildren()){
                     serviceArrayList.add(data.getValue(Service.class));
+
+//                    Toast.makeText(mContext, "lululu", Toast.LENGTH_SHORT).show();
                 }
-                adapter = new ServiceViewAdapter(mContext,serviceArrayList);
+//                adapter = new ServiceViewAdapter(mContext,serviceArrayList);
 
             }
 
@@ -57,14 +60,14 @@ public class Application {
     }
 
     public void addService(String name, double hourlyRate){
-        if(user.getUserType()!="Administrator") {return;}
+//        if(user.getUserType()!="Administrator") {return;}
         String id = services.push().getKey();
         services.child(id).setValue(new Service(id,name,hourlyRate));
-        Toast.makeText(mContext, "Service Added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "New Service Added", Toast.LENGTH_SHORT).show();
     }
 
     public void editService(String id, String name, double hourlyRate){
-        if(user.getUserType()!="Administrator") {return;}
+//        if(user.getUserType()!="Administrator") {return;}
         DatabaseReference originalService = services.child(id);
         originalService.setValue(new Service(id, name, hourlyRate));
         Toast.makeText(mContext, "Service Updated", Toast.LENGTH_SHORT).show();
@@ -72,7 +75,8 @@ public class Application {
 
 
     public void removeService(String id){
-        if(user.getUserType()!="Administrator") {return;}
+//        if(user.getUserType()!="Administrator") {return;}
+        if(id.equals(""))return;
         DatabaseReference originalService = services.child(id);
         originalService.removeValue();
         Toast.makeText(mContext, "Service Removed", Toast.LENGTH_SHORT).show();

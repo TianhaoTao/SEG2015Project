@@ -10,6 +10,7 @@ import android.widget.Toast;
 import android.support.design.widget.TextInputLayout;
 
 
+import com.example.tianhao.seg2105project.Model.Application;
 import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,6 +23,8 @@ public class SignIn extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference users;
 
+    private Application application;
+
     private TextInputLayout editEmail;
     private TextInputLayout editUsername;
     private TextInputLayout editPassword;
@@ -32,6 +35,9 @@ public class SignIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        application = Application.getInstance(this);
+
 
         database=FirebaseDatabase.getInstance();
         users=database.getReference("Users");

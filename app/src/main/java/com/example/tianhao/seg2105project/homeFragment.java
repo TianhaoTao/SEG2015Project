@@ -1,15 +1,19 @@
 package com.example.tianhao.seg2105project;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.tianhao.seg2105project.Model.Application;
 import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,51 +39,38 @@ public class homeFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private Application application;
+
+    private RecyclerView recyclerView;
+    private Button buttonAdd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        buttonAdd =(Button)view.findViewById(R.id.buttonAdd);
 
-        database=FirebaseDatabase.getInstance();
-        users=database.getReference("Users");
-        user= new User(getActivity().getIntent().getStringExtra("username"),
-                getActivity().getIntent().getStringExtra("email"),
-                getActivity().getIntent().getStringExtra("password"),
-                getActivity().getIntent().getStringExtra("userType"));
-        welcome=(TextView)getView().findViewById(R.id.textWelcome);
-        usernameList=(TextView)getView().findViewById(R.id.textViewUsers);
-        welcome.setText("Hello, "+user.getUsername()+
-                "！ You are logged as a "+ user.getUserType());
-
-
-        if(user.getUserType().equals("Administrator")){//the admin can see the list of house owners and service providers
-            users.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String userList="";
-                    int counter=0;
-                    for(DataSnapshot data: dataSnapshot.getChildren()) {
-                        counter++;
-                        userList+= counter+"."+data.child("username").getValue().toString()
-                                +" "+data.child("userType").getValue().toString()
-                                +"\n";
-                    }
-                    usernameList.setText(userList);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }else{
-            usernameList.setVisibility(View.INVISIBLE);
-
-        }
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EditService.class);
+                intent.putExtra("id","");
+                startActivity(intent);
+            }
+        });
+        recyclerView = view.findViewById(R.id.recycler_view);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        application = Application.getInstance(getActivity());
+        recyclerView.setAdapter(new ServiceViewAdapter(getActivity(),application.getServiceArrayList()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+    }
 }

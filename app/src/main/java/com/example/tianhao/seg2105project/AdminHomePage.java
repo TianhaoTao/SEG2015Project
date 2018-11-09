@@ -13,14 +13,6 @@ import android.widget.Button;
 import com.example.tianhao.seg2105project.Model.Application;
 import com.example.tianhao.seg2105project.Model.Service;
 
-//
-//import com.example.tianhao.seg2105project.ServiceViewAdapter;
-//import com.google.firebase.database.DatabaseReference;
-//import com.google.firebase.database.FirebaseDatabase;
-//import com.google.firebase.database.ValueEventListener;
-//import com.google.firebase.database.DataSnapshot;
-//import com.google.firebase.database.DatabaseError;
-
 import java.util.ArrayList;
 
 public class AdminHomePage extends AppCompatActivity {
@@ -53,7 +45,6 @@ public class AdminHomePage extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
 
     }
-
 
     @Override
     protected void onStart() {

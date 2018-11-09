@@ -75,11 +75,6 @@ public class WelcomePage extends AppCompatActivity {
                         mMainNav.setItemBackgroundResource(R.color.colorAccent);
                         setFragment(usersFragment);
                         return true;
-                    case R.id.nav_post_services:
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimaryDark);
-                        setFragment(servicesFragment);
-                        return true;
-
                         default:
                             return false;
                 }

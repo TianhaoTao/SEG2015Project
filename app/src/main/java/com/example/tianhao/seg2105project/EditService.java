@@ -48,7 +48,7 @@ public class EditService extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 application.removeService(id);
-                //finish();
+                finish();
             }
         });
 

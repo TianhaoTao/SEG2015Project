@@ -25,7 +25,6 @@ public class EditService extends AppCompatActivity {
 
 
     Button buttonDelete, buttonGOBACK, buttonSave;
-    boolean check=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class EditService extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 application.removeService(id);
-                finish();
+                //finish();
             }
         });
 
@@ -73,6 +72,7 @@ public class EditService extends AppCompatActivity {
                     if(validationHourlyRate()&&validationServiceName()){
                         application.addService(createServiceType.getEditText().getText().toString(),
                                 Double.parseDouble(createHourlyRate.getEditText().getText().toString()));
+                        finish();
                     }else if(!validationHourlyRate()){
                         Toast.makeText(EditService.this, "invalid Hourly Rate", Toast.LENGTH_SHORT).show();
                     }else if(!validationServiceName()){
@@ -82,13 +82,13 @@ public class EditService extends AppCompatActivity {
                     if(validationHourlyRate()&&validationServiceName()) {
                         application.editService(id, createServiceType.getEditText().getText().toString(),
                                 Double.parseDouble(createHourlyRate.getEditText().getText().toString()));
+                        finish();
                     }else if(!validationHourlyRate()){
                         Toast.makeText(EditService.this, "invalid Hourly Rate", Toast.LENGTH_SHORT).show();
                     }else if(!validationServiceName()){
                         Toast.makeText(EditService.this, "invalid Service Name", Toast.LENGTH_SHORT).show();
                     }
                 }
-                finish();
             }
         });
     }

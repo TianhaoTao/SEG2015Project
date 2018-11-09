@@ -30,6 +30,9 @@ public class EditService extends AppCompatActivity {
         id = getIntent().getStringExtra("id");
 
         buttonDelete = (Button)findViewById(R.id.delete_service);
+        if(id.equals("")){
+            buttonDelete.setVisibility(View.INVISIBLE);
+        }
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

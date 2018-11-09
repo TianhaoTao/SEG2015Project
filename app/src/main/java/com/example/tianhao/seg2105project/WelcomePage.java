@@ -85,43 +85,43 @@ public class WelcomePage extends AppCompatActivity {
             }
         });
 
-        database=FirebaseDatabase.getInstance();
-        users=database.getReference("Users");
-        user= new User(getIntent().getStringExtra("username"),
-                getIntent().getStringExtra("email"),
-                getIntent().getStringExtra("password"),
-                getIntent().getStringExtra("userType"));
-        welcome=(TextView)findViewById(R.id.textWelcome);
-        usernameList=(TextView)findViewById(R.id.textViewUsers);
-        welcome.setText("Hello, "+user.getUsername()+
-        "！ You are logged as a "+ user.getUserType());
+//        database=FirebaseDatabase.getInstance();
+//        users=database.getReference("Users");
+//        user= new User(getIntent().getStringExtra("username"),
+//                getIntent().getStringExtra("email"),
+//                getIntent().getStringExtra("password"),
+//                getIntent().getStringExtra("userType"));
+//        welcome=(TextView)findViewById(R.id.textWelcome);
+//        usernameList=(TextView)findViewById(R.id.textViewUsers);
+//        welcome.setText("Hello, "+user.getUsername()+
+//        "！ You are logged as a "+ user.getUserType());
 
         buttonSignOut=(Button) findViewById(R.id.buttonSignOut);
 
-        if(user.getUserType().equals("Administrator")){//the admin can see the list of house owners and service providers
-            users.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String userList="";
-                    int counter=0;
-                    for(DataSnapshot data: dataSnapshot.getChildren()) {
-                        counter++;
-                        userList+= counter+"."+data.child("username").getValue().toString()
-                                +" "+data.child("userType").getValue().toString()
-                                +"\n";
-                    }
-                    usernameList.setText(userList);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }else{
-            usernameList.setVisibility(View.INVISIBLE);
-
-        }
+//        if(user.getUserType().equals("Administrator")){//the admin can see the list of house owners and service providers
+//            users.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    String userList="";
+//                    int counter=0;
+//                    for(DataSnapshot data: dataSnapshot.getChildren()) {
+//                        counter++;
+//                        userList+= counter+"."+data.child("username").getValue().toString()
+//                                +" "+data.child("userType").getValue().toString()
+//                                +"\n";
+//                    }
+//                    usernameList.setText(userList);
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
+//        }else{
+//            usernameList.setVisibility(View.INVISIBLE);
+//
+//        }
 
         buttonSignOut.setOnClickListener(new View.OnClickListener() {
             @Override

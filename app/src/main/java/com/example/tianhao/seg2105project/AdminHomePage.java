@@ -18,7 +18,7 @@ public class AdminHomePage extends AppCompatActivity {
 //    private ArrayList<Service> serviceArrayList = new ArrayList<>();
 //    private ArrayList<String> imageArrayList = new ArrayList<>();
 
-    private Application application = Application.getInstance(this);;
+    private Application  application = Application.getInstance(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

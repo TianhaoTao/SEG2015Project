@@ -56,7 +56,7 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
                 intent.putExtra("name",serviceArrayList.get(i).getName());
                 intent.putExtra("hourlyRate",Double.toString(serviceArrayList.get(i).getHourlyRate()));
                 mContext.startActivity(intent);
-                Toast.makeText(mContext, i+" is selected.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, serviceArrayList.get(i).getName()+" is selected.", Toast.LENGTH_SHORT).show();
             }
         });
     }

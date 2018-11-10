@@ -101,7 +101,7 @@ public class EditService extends AppCompatActivity {
     }
 
     public boolean validationServiceName(){
-        String ServiceName = createHourlyRate.getEditText().getText().toString().trim();
+        String ServiceName = createServiceType.getEditText().getText().toString().trim();
         if(ServiceName.isEmpty()){
             createHourlyRate.setError("Please Enter Service type");
             return false;

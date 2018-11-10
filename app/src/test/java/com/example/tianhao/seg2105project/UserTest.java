@@ -17,4 +17,14 @@ public class UserTest {
         User user = new User("username", "email", "password", "userType");
         assertEquals("check the email of user", "email", user.getEmail());
     }
+
+    public void checkPassword(){
+        User user = new User("username", "email", "password","userType");
+        assertEquals("check the password of user", "password", user.getPassword());
+    }
+
+    public void checkuserType(){
+        User user = new User("username", "email", "password","userType");
+        assertEquals("check the usertype of user", "userType", user.getUserType());
+    }
 }

@@ -18,7 +18,7 @@ public class ServiceTest{
     @Test
     public void checkhourlyRate(){
         Service service = new Service("id", "name", 12.5);
-        assertEquals("check the hourlyrate of service", 12.5, service.getHourlyRate());
+        assertEquals("check the hourlyrate of service", 12.5, service.getHourlyRate(), 0.001);
     }
 
 

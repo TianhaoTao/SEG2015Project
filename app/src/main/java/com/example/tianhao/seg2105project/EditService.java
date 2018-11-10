@@ -1,5 +1,6 @@
 package com.example.tianhao.seg2105project;
 
+import android.media.MediaPlayer;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ public class EditService extends AppCompatActivity {
     private Application application = Application.getInstance(this);
     private TextInputLayout createHourlyRate;
     private TextInputLayout createServiceType;
-
+    MediaPlayer buttonSound1,buttonSound2,buttonSound3;
     private String id;
 
 
@@ -30,6 +31,9 @@ public class EditService extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_service);
+        buttonSound1=MediaPlayer.create(EditService.this,R.raw.allgood);
+        buttonSound2=MediaPlayer.create(EditService.this,R.raw.happy);
+        buttonSound3=MediaPlayer.create(EditService.this,R.raw.sound);
 
 //      id of current service;
         id = getIntent().getStringExtra("id");
@@ -56,6 +60,7 @@ public class EditService extends AppCompatActivity {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonSound1.start();
                 application.removeService(id);
                 finish();
             }
@@ -65,6 +70,7 @@ public class EditService extends AppCompatActivity {
         buttonGOBACK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonSound2.start();
                 finish();
             }
         });
@@ -74,6 +80,7 @@ public class EditService extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                buttonSound3.start();
                 //identify which function to be used
                 if(id.equals("")) {
                     if(validationHourlyRate()&&validationServiceName()){
@@ -103,10 +110,10 @@ public class EditService extends AppCompatActivity {
     public boolean validationServiceName(){
         String ServiceName = createServiceType.getEditText().getText().toString().trim();
         if(ServiceName.isEmpty()){
-            createHourlyRate.setError("Please Enter Service type");
+            createServiceType.setError("Please Enter Service type");
             return false;
         }else{
-            createHourlyRate.setError(null);
+            createServiceType.setError(null);
             return true;
         }
     }

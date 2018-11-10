@@ -1,6 +1,7 @@
 package com.example.tianhao.seg2105project;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,7 @@ public class WelcomePage extends AppCompatActivity {
     TextView welcome;
 
     Button buttonSignOut;
+    MediaPlayer buttonSound;
 
 
     private Application application;
@@ -50,6 +52,7 @@ public class WelcomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
+        buttonSound=MediaPlayer.create(WelcomePage.this,R.raw.niu);
 
         application = Application.getInstance(this);
         user = application.getUser();
@@ -94,6 +97,7 @@ public class WelcomePage extends AppCompatActivity {
         buttonSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonSound.start();
                 Intent intentSignUp = new Intent(getApplicationContext(), SignIn.class);
                 startActivity(intentSignUp);
                 finish();

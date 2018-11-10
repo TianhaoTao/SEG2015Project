@@ -1,6 +1,7 @@
 package com.example.tianhao.seg2105project;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -46,6 +47,7 @@ public class SignUp extends AppCompatActivity {
     private TextInputLayout editUsername;
     private TextInputLayout editPassword;
     private TextInputLayout editpasswordConfirm;
+    MediaPlayer buttonSound;
 
 
     FirebaseDatabase database;
@@ -59,6 +61,7 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        buttonSound=MediaPlayer.create(SignUp.this,R.raw.happy);
 
         database = FirebaseDatabase.getInstance();
         users = database.getReference("Users");
@@ -84,6 +87,7 @@ public class SignUp extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener(){
 
                 public void onClick(View view){
+                    buttonSound.start();
                     if(validateUser()&&validateEmail()&&validatePassword()&& validatePasswordConfirm()){
 
                         final User user = new User(

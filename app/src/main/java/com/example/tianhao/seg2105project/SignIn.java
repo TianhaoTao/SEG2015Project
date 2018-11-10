@@ -1,6 +1,7 @@
 package com.example.tianhao.seg2105project;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import android.support.design.widget.TextInputLayout;
+import android.media.MediaPlayer;
 
 
 import com.example.tianhao.seg2105project.Model.Application;
@@ -20,12 +22,14 @@ import com.google.firebase.database.DatabaseError;
 
 public class SignIn extends AppCompatActivity {
 
+    //sound
+    MediaPlayer buttonSound1, buttonSound2;
+
     FirebaseDatabase database;
     DatabaseReference users;
 
     private Application application;
 
-    private TextInputLayout editEmail;
     private TextInputLayout editUsername;
     private TextInputLayout editPassword;
 
@@ -35,6 +39,9 @@ public class SignIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        //sound
+        buttonSound1=MediaPlayer.create(SignIn.this,R.raw.sound);
+        buttonSound2=MediaPlayer.create(SignIn.this,R.raw.allgood);
 
         application = Application.getInstance(this);
 
@@ -44,7 +51,6 @@ public class SignIn extends AppCompatActivity {
 
         editUsername = findViewById((R.id.editUsername));
         editPassword = findViewById((R.id.editPassword));
-        editEmail = findViewById((R.id.editEmail));
 
 
         buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
@@ -53,6 +59,7 @@ public class SignIn extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonSound1.start();
                 Intent intentSignUp = new Intent(getApplicationContext(),SignUp.class);
                 startActivity(intentSignUp);
             }
@@ -61,6 +68,7 @@ public class SignIn extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonSound2.start();
                 signIn(editUsername.getEditText().getText().toString(),editPassword.getEditText().getText().toString());
             }
         });

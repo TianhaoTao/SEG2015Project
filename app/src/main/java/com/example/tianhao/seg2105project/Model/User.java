@@ -1,4 +1,4 @@
-package com.example.tianhao.seg2105project.Login;
+package com.example.tianhao.seg2105project.Model;
 
 public class User {
     private String username;

@@ -17,7 +17,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUp" />
-        <activity android:name=".WelcomePage"></activity>
+        <activity android:name=".WelcomePage" />
+        <activity android:name=".EditService"></activity>
+        <activity
+            android:name=".NavigationDraw"
+            android:label="@string/title_activity_nevigation_draw"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

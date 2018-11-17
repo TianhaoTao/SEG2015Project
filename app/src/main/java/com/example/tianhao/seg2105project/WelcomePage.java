@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.example.tianhao.seg2105project.Model.User;
 public class WelcomePage extends AppCompatActivity {
 
     User user;
+    NavigationView navigationView;
 
     TextView welcome;
 
@@ -48,9 +50,9 @@ public class WelcomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
         buttonSound=MediaPlayer.create(WelcomePage.this,R.raw.button_sound);
-
         application = Application.getInstance(this);
         user = application.getUser();
+        hideProfileItem();
 
         //title
         welcome=(TextView)findViewById(R.id.textWelcome);
@@ -81,7 +83,6 @@ public class WelcomePage extends AppCompatActivity {
                     case R.id.nav_users:
                         setFragment(usersFragment);
                         return true;
-
                     case R.id.nav_profile:
                         setFragment(profileFragment);
                         return true;
@@ -104,6 +105,14 @@ public class WelcomePage extends AppCompatActivity {
         });
     }
 
+    //hide profile in navigation draw
+    private void hideProfileItem(){
+        navigationView =findViewById(R.id.nav_draw);
+        Menu nav_Menu = navigationView.getMenu();
+        if(!application.getUser().getUserType().equals("Service Provider")){
+            nav_Menu.findItem(R.id.nav_profile).setVisible(false);
+        }
+    }
 
     //menuItem for draw in admin
     public boolean onOptionsItemSelected(MenuItem item){

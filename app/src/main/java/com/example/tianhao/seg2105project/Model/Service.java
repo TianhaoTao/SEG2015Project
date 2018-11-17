@@ -14,6 +14,9 @@ public class Service {
     private String name;
     private double hourlyRate;
 
+    public Service() {
+    }
+
     public Service(String name, double hourlyRate) {
         this.name = name;
         this.hourlyRate = hourlyRate;

@@ -1,6 +1,7 @@
 package com.example.tianhao.seg2105project;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -42,10 +43,12 @@ public class SignUp extends AppCompatActivity {
                     "(?=\\S+$)" +           //no white spaces
                     ".{4,}" +               //at least 4 characters
                     "$");
+    private static final Pattern USER_NAME= Pattern.compile("(?=.*[a-zA-Z])");
     private TextInputLayout editEmail;
     private TextInputLayout editUsername;
     private TextInputLayout editPassword;
     private TextInputLayout editpasswordConfirm;
+    MediaPlayer buttonSound;
 
 
     FirebaseDatabase database;
@@ -59,6 +62,7 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        buttonSound=MediaPlayer.create(SignUp.this,R.raw.button_sound);
 
         database = FirebaseDatabase.getInstance();
         users = database.getReference("Users");
@@ -84,6 +88,7 @@ public class SignUp extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener(){
 
                 public void onClick(View view){
+                    buttonSound.start();
                     if(validateUser()&&validateEmail()&&validatePassword()&& validatePasswordConfirm()){
 
                         final User user = new User(
@@ -144,7 +149,7 @@ public class SignUp extends AppCompatActivity {
         if(emailInput.isEmpty()){
             editEmail.setError("Please Enter Email here");
             return false;
-        }else if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+        }else if(!EMAIL_ADDRESS.matcher(emailInput).matches()){
             editEmail.setError("Invalid email address");
             return false;
         }else{
@@ -155,14 +160,16 @@ public class SignUp extends AppCompatActivity {
 
     public boolean validateUser(){
         String usernameInput = editUsername.getEditText().getText().toString().trim();
-
         if (usernameInput.isEmpty()) {
             editUsername.setError("Field can't be empty");
             return false;
         } else if (usernameInput.length() > 10) {
             editUsername.setError("Username too long");
             return false;
-        } else {
+        } else if(!USER_NAME.matcher(usernameInput).matches()){
+            editUsername.setError("At least one letter");
+            return false;
+        }else {
             editUsername.setError(null);
             return true;
         }

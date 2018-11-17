@@ -6,22 +6,29 @@
     tools:context=".homeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-        android:id="@+id/textWelcome"
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="21dp"
-        android:text="You are logged as"
-        android:textSize="50sp" />
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp" />
 
-    <TextView
-        android:id="@+id/textViewUsers"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/buttonAdd"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HomeFragement"
-        android:textSize="50sp"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="240dp"
+        android:layout_marginBottom="0dp"
+        android:text="Add New Service" />
+
 
 </FrameLayout>

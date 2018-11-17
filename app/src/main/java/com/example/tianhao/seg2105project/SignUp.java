@@ -43,7 +43,6 @@ public class SignUp extends AppCompatActivity {
                     "(?=\\S+$)" +           //no white spaces
                     ".{4,}" +               //at least 4 characters
                     "$");
-    private static final Pattern USER_NAME= Pattern.compile("(?=.*[a-zA-Z])");
     private TextInputLayout editEmail;
     private TextInputLayout editUsername;
     private TextInputLayout editPassword;
@@ -165,9 +164,6 @@ public class SignUp extends AppCompatActivity {
             return false;
         } else if (usernameInput.length() > 10) {
             editUsername.setError("Username too long");
-            return false;
-        } else if(!USER_NAME.matcher(usernameInput).matches()){
-            editUsername.setError("At least one letter");
             return false;
         }else {
             editUsername.setError(null);

@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.system.ErrnoException;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,7 +19,6 @@ public class EditService extends AppCompatActivity {
             Pattern.compile(
                     "(?=.*[a-z])" +
                     "(?=.*[A-Z])"+ "(?=\\S+$)"+"(?=.*[@#$~`!*()_{}|?/>,<%^&+=])");
-    private static final Pattern SERVICE_NAME= Pattern.compile("(?=.*[a-zA-Z])");
     private Application application = Application.getInstance(this);
     private TextInputLayout createHourlyRate;
     private TextInputLayout createServiceType;
@@ -113,13 +113,24 @@ public class EditService extends AppCompatActivity {
         if(ServiceName.isEmpty()){
             createServiceType.setError("Please Enter Service type");
             return false;
-        }else if(!SERVICE_NAME.matcher(ServiceName).matches()){
+        }else if(!validationNameNotBeNumber(ServiceName)){
             createServiceType.setError("At least one letter");
             return false;
         }else{
             createServiceType.setError(null);
             return true;
         }
+    }
+
+    public boolean validationNameNotBeNumber(String name){
+        boolean result=false;
+        try{
+            name = name.replaceAll("\\s","");
+            Double.parseDouble(name);
+        }catch(NumberFormatException e){
+            result=true;
+        }
+        return result;
     }
 
     public boolean validationHourlyRate() {

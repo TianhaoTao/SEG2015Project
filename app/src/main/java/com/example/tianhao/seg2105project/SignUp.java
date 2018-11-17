@@ -165,23 +165,10 @@ public class SignUp extends AppCompatActivity {
         } else if (usernameInput.length() > 10) {
             editUsername.setError("Username too long");
             return false;
-        } else if(!validationNameNotBeNumber(usernameInput)){
-            editUsername.setError("At least one letter");
-            return false;
         }else {
             editUsername.setError(null);
             return true;
         }
-    }
-    public boolean validationNameNotBeNumber(String name){
-        boolean result=false;
-        try{
-            name = name.replaceAll("\\s","");
-            Double.parseDouble(name);
-        }catch(NumberFormatException e){
-            result=true;
-        }
-        return result;
     }
 
     private boolean validatePassword() {

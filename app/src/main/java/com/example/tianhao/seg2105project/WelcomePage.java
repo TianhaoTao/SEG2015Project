@@ -19,11 +19,6 @@ import android.widget.TextView;
 
 import com.example.tianhao.seg2105project.Model.Application;
 import com.example.tianhao.seg2105project.Model.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class WelcomePage extends AppCompatActivity {
 
@@ -45,14 +40,14 @@ public class WelcomePage extends AppCompatActivity {
     private FrameLayout mMainFrame;
     private homeFragment homeFragment;//home page fragment linking to fragment_home.xml
     private usersFragment usersFragment;//users fragment linking to fragment_num_account.xml
-    private servicesFragment servicesFragment;//services category fragment linking to fragment_category.xml
+    private profileFragment profileFragment;//profile fragment linking to fragment_profile.xml
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
-        buttonSound=MediaPlayer.create(WelcomePage.this,R.raw.niu);
+        buttonSound=MediaPlayer.create(WelcomePage.this,R.raw.button_sound);
 
         application = Application.getInstance(this);
         user = application.getUser();
@@ -73,7 +68,7 @@ public class WelcomePage extends AppCompatActivity {
         mMainNav=(NavigationView) findViewById(R.id.nav_draw);
         homeFragment=new homeFragment();
         usersFragment=new usersFragment();
-        servicesFragment=new servicesFragment();
+        profileFragment =new profileFragment();
         setFragment(homeFragment);
 
         mMainNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

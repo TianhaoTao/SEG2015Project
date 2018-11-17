@@ -40,8 +40,8 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         //sound
-        buttonSound1=MediaPlayer.create(SignIn.this,R.raw.sound);
-        buttonSound2=MediaPlayer.create(SignIn.this,R.raw.allgood);
+        buttonSound1=MediaPlayer.create(SignIn.this,R.raw.button_sound);
+        buttonSound2=MediaPlayer.create(SignIn.this,R.raw.button_sound);
 
         application = Application.getInstance(this);
 

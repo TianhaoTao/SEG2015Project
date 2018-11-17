@@ -18,6 +18,7 @@ public class EditService extends AppCompatActivity {
             Pattern.compile(
                     "(?=.*[a-z])" +
                     "(?=.*[A-Z])"+ "(?=\\S+$)"+"(?=.*[@#$~`!*()_{}|?/>,<%^&+=])");
+    private static final Pattern SERVICE_NAME= Pattern.compile("(?=.*[a-zA-Z])");
     private Application application = Application.getInstance(this);
     private TextInputLayout createHourlyRate;
     private TextInputLayout createServiceType;
@@ -31,9 +32,9 @@ public class EditService extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_service);
-        buttonSound1=MediaPlayer.create(EditService.this,R.raw.allgood);
-        buttonSound2=MediaPlayer.create(EditService.this,R.raw.happy);
-        buttonSound3=MediaPlayer.create(EditService.this,R.raw.sound);
+        buttonSound1=MediaPlayer.create(EditService.this,R.raw.button_sound);
+        buttonSound2=MediaPlayer.create(EditService.this,R.raw.button_sound);
+        buttonSound3=MediaPlayer.create(EditService.this,R.raw.button_sound);
 
 //      id of current service;
         id = getIntent().getStringExtra("id");
@@ -111,6 +112,9 @@ public class EditService extends AppCompatActivity {
         String ServiceName = createServiceType.getEditText().getText().toString().trim();
         if(ServiceName.isEmpty()){
             createServiceType.setError("Please Enter Service type");
+            return false;
+        }else if(!SERVICE_NAME.matcher(ServiceName).matches()){
+            createServiceType.setError("At least one letter");
             return false;
         }else{
             createServiceType.setError(null);

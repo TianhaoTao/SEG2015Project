@@ -81,6 +81,10 @@ public class WelcomePage extends AppCompatActivity {
                     case R.id.nav_users:
                         setFragment(usersFragment);
                         return true;
+
+                    case R.id.nav_profile:
+                        setFragment(profileFragment);
+                        return true;
                         default:
                             return false;
                 }

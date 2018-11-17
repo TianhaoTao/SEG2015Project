@@ -84,6 +84,8 @@ public class NavigationDraw extends AppCompatActivity
             // Handle the home action
         } else if (id == R.id.nav_users) {
             //Handle users action
+        } else if (id ==R.id.nav_profile){
+            //Handle profile action
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

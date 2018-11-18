@@ -6,6 +6,15 @@
     <string name="ServiceCategory">Category</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string-array name="aWeek">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

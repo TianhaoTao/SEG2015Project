@@ -95,6 +95,9 @@ public class WelcomePage extends AppCompatActivity {
 
         //profile for service provider only
         buttonProfile = findViewById(R.id.buttonProviderProfile);
+        if(user.getUserType().equals("Service Provider")){
+            buttonProfile.setVisibility(View.VISIBLE);
+        }
         buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

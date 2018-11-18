@@ -36,7 +36,7 @@ public class AddServiceToProfile extends AppCompatActivity implements
 
     //all initial
     int hour,hourFinal, minute,minuteFinal;
-    String[] pickDate;
+    String[] pickDate;//Monday to Sunday
     boolean[] checkPickedDate;
     ArrayList<Integer> pickedDate = new ArrayList<>();
     ArrayList<String> day=new ArrayList<>();
@@ -111,6 +111,7 @@ public class AddServiceToProfile extends AppCompatActivity implements
                     public void onClick(DialogInterface dialogInterface, int which) {
                         for(int i=0; i<checkPickedDate.length; i++){
                             checkPickedDate[i]=false;
+                            day.clear();
                             pickedDate.clear();
                             profile.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override

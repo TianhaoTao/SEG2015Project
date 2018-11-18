@@ -29,6 +29,7 @@ public class WelcomePage extends AppCompatActivity {
     TextView welcome;
 
     Button buttonSignOut;
+    Button buttonProfile;
     MediaPlayer buttonSound;
 
 
@@ -91,6 +92,17 @@ public class WelcomePage extends AppCompatActivity {
                 }
             }
         });
+
+        //profile for service provider only
+        buttonProfile = findViewById(R.id.buttonProviderProfile);
+        buttonProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonSound.start();
+                startActivity(new Intent(getApplicationContext(), ServiceProviderProfile.class));
+            }
+        });
+
 
         //signOut
         buttonSignOut=(Button) findViewById(R.id.buttonSignOut);

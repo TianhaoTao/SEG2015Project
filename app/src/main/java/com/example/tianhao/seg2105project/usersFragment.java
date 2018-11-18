@@ -50,11 +50,7 @@ public class usersFragment extends Fragment {
         users=database.getReference("Users");
         application = Application.getInstance(getActivity());
         user = application.getUser();
-//        welcome=(TextView)view.findViewById(R.id.textHello);
         usernameList=(TextView)view.findViewById(R.id.textUsers);
-//        welcome.setText("Hello, "+user.getUsername()+
-//        "！ You are logged as a "+ user.getUserType());
-
 
         if(user.getUserType().equals("Administrator")){//the admin can see the list of house owners and service providers
             users.addListenerForSingleValueEvent(new ValueEventListener() {

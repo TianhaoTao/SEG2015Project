@@ -93,7 +93,7 @@ public class AddServiceToProfile extends AppCompatActivity implements
                         profile.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                profile.child(user).child("Available_Time").setValue(day);
+                                profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").setValue(day);
                                 Toast.makeText(AddServiceToProfile.this, "Day set successfully", Toast.LENGTH_SHORT).show();
                             }
                             @Override

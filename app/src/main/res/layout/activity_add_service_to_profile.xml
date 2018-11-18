@@ -21,15 +21,15 @@
     <HorizontalScrollView
         android:id="@+id/editorButtonScroll"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="match_parent"
             android:gravity="top|left"
             android:orientation="horizontal">
 
@@ -46,7 +46,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginRight="20dp"
                     android:drawableTop="@drawable/ic_build_black_24dp"
                     android:text="save edited service" />
@@ -63,7 +63,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginRight="50dp"
                     android:drawableTop="@drawable/ic_arrow_back_black"
                     android:text="go back to last page" />
@@ -77,7 +77,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="50dp"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/ic_delete_forever_black"
@@ -85,44 +85,47 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/save_hourlyRate"
+    <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginBottom="139dp" />
+
+    <Button
+        android:id="@+id/datePicker"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginBottom="39dp"
-        app:errorEnabled="true">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/hourlyRate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/save_hourlyRate"
-            android:layout_marginTop="30dip"
-            android:hint="hourlyRate"
-            android:inputType="numberDecimal" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/save_serviceType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginBottom="122dp"
-        app:errorEnabled="true">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/serviceType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dip"
-            android:hint="serviceType"
-            android:inputType="textLongMessage" />
-    </android.support.design.widget.TextInputLayout>
+        android:layout_marginLeft="104dp"
+        android:layout_marginBottom="0dp"
+        android:text="available Time picker" />
 
 </RelativeLayout>
 

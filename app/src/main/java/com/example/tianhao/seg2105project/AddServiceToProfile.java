@@ -15,6 +15,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.tianhao.seg2105project.Model.Application;
+import com.example.tianhao.seg2105project.Model.ProvidedService;
 import com.example.tianhao.seg2105project.Model.Service;
 import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +33,8 @@ public class AddServiceToProfile extends AppCompatActivity{
     FirebaseDatabase database;
     DatabaseReference profile;
     private Application application;
-    String user;
+    private String user;
+
 
 
     //all initial
@@ -139,12 +141,19 @@ public class AddServiceToProfile extends AppCompatActivity{
                 mDialog.show();
             }
         });
+
         buttonGOBACK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        
+
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }

@@ -12,7 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ServiceProviderProfile {
+public class Profile {
 
     private ServiceProvider serviceProvider;
     private String address, phone, companyName, description;
@@ -25,7 +25,7 @@ public class ServiceProviderProfile {
     FirebaseDatabase database;
     DatabaseReference ProvidedServices;
 
-    public ServiceProviderProfile(Context mContext, final String username) {
+    public Profile(Context mContext, final String username) {
 
         database=FirebaseDatabase.getInstance();
         ProvidedServices=database.getReference("ProvidedServices");
@@ -43,7 +43,7 @@ public class ServiceProviderProfile {
 
             }
         });
-        serviceProvider.setServiceProviderProfile(this);
+        serviceProvider.setProfile(this);
 
         ProvidedServices.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -63,8 +63,8 @@ public class ServiceProviderProfile {
 
     }
 
-    public void addServiceToProfile(String serviceId,String serviceName,ArrayList<String> timeSlots){
-        String id = ProvidedServices.push().getKey();
+    public void saveServiceToProfile(String serviceId,String serviceName,ArrayList<String> timeSlots){
+        String id = serviceId+serviceProvider.getUsername();
         ProvidedServices.child(id).setValue(new ProvidedService(id,serviceProvider.getUsername(),
                 serviceId,serviceName,timeSlots));
         Toast.makeText(mContext, "The Service is added to the profile", Toast.LENGTH_SHORT).show();

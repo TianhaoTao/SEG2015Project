@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.tianhao.seg2105project.Model.Application;
+import com.example.tianhao.seg2105project.Model.ProvidedService;
 import com.example.tianhao.seg2105project.Model.Service;
 import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +34,7 @@ public class AddServiceToProfile extends AppCompatActivity implements
     FirebaseDatabase database;
     DatabaseReference profile;
     private Application application;
+    private RecyclerView recyclerView;
     String user;
 
 
@@ -43,14 +47,25 @@ public class AddServiceToProfile extends AppCompatActivity implements
     TextView tv_result;
     Button buttonDelete, buttonGOBACK, buttonSave, dateTimePicker;
 
+    ProvidedService providedService;
+    Service service;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_service_to_profile);
 
+        //recyclerView
+        recyclerView = findViewById(R.id.recycler_view);
+
         //about firebase
         application = Application.getInstance(this);
+
+        //new
+        providedService = new ProvidedService(this,);
+
+        //
         user = application.getUser().getUsername();
         database = FirebaseDatabase.getInstance();
         profile = database.getReference("Service_Provider_Profile");
@@ -87,13 +102,19 @@ public class AddServiceToProfile extends AppCompatActivity implements
                 mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which){
+                        day.clear();
                         for(int i=0; i<pickedDate.size(); i++){
                             day.add(pickDate[pickedDate.get(i)]);
                         }
+                        recyclerView.setAdapter(new ServiceViewAdapter(getApplicationContext(),application.getServiceArrayList()));
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        pickedDate.clear();
                         profile.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").removeValue();
                                 profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").setValue(day);
+                                profile.child(user).child(getIntent().getStringExtra("name")).child("id").setValue(getIntent().getStringExtra("id"));
                                 Toast.makeText(AddServiceToProfile.this, "Day set successfully", Toast.LENGTH_SHORT).show();
                             }
                             @Override
@@ -116,7 +137,7 @@ public class AddServiceToProfile extends AppCompatActivity implements
                             profile.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    profile.child(user).child("Available_Time").removeValue();
+                                    profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").removeValue();
                                     Toast.makeText(AddServiceToProfile.this, "Day cleared successfully", Toast.LENGTH_SHORT).show();
                                 }
                                 @Override
@@ -132,13 +153,24 @@ public class AddServiceToProfile extends AppCompatActivity implements
                 mDialog.show();
             }
         });
+
         buttonGOBACK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProvidedService
+            }
+        });
+
     }
+
+
 
     //date and time setter goes here
     @Override

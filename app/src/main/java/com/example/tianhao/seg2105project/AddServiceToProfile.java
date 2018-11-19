@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,8 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class AddServiceToProfile extends AppCompatActivity implements
-        TimePickerDialog.OnTimeSetListener {
+public class AddServiceToProfile extends AppCompatActivity{
 
     //about firebase
     FirebaseDatabase database;
@@ -40,8 +41,9 @@ public class AddServiceToProfile extends AppCompatActivity implements
     int hour,hourFinal, minute,minuteFinal;
     String[] pickDate;//Monday to Sunday
     boolean[] checkPickedDate;
-    ArrayList<String> availableTime=new ArrayList<>();
+    ArrayList<String> availableTime;
     Button buttonDelete, buttonGOBACK, buttonSave, dateTimePicker;
+    private RecyclerView recyclerView;
 
 
     @Override
@@ -134,6 +136,7 @@ public class AddServiceToProfile extends AppCompatActivity implements
 //                        }
                     }
                 });
+
                 mBuilder.setView(mview_day);
                 AlertDialog mDialog=mBuilder.create();
                 mDialog.show();
@@ -146,12 +149,11 @@ public class AddServiceToProfile extends AppCompatActivity implements
             }
         });
     }
-
-    //date and time setter goes here
-    @Override
-    public void onTimeSet(TimePicker timePicker, int i, int i1){
-        hourFinal = i;
-        minute = i1;
-
+    public void onStart() {
+        super.onStart();//refresh the recylerview every time it is brought to the front
+        RecyclerView recyclerView=findViewById(R.id.recycler_view_available_time);
+        AvailableTimeViewAdapter adapter = new AvailableTimeViewAdapter(availableTime,AddServiceToProfile.this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }

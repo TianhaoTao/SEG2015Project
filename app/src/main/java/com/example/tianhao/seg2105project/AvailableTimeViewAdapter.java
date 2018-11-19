@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class AvailableTimeViewAdapter extends  RecyclerView.Adapter<AvailableTim
     private ArrayList<String> mAvailableTime;
     private Context mContext;
     Dialog myDialog;
+    Button delete,back;
 
 
     public AvailableTimeViewAdapter(ArrayList<String> mavailableTime, Context context){
@@ -39,9 +41,7 @@ public class AvailableTimeViewAdapter extends  RecyclerView.Adapter<AvailableTim
     @Override
     public void onBindViewHolder(@NonNull TimeViewHolder timeViewHolder, final int position) {
 
-        Intent intent = new Intent(mContext,AddServiceToProfile.class);
-        intent.putExtra("TimeSlot",mAvailableTime.get(position));
-        mContext.startActivity(intent);
+        timeViewHolder.day.setText(mAvailableTime.get(position));
         Toast.makeText(mContext, mAvailableTime.get(position) + " is selected.", Toast.LENGTH_SHORT).show();
         //Dialog initial
         myDialog = new Dialog(mContext);
@@ -51,6 +51,23 @@ public class AvailableTimeViewAdapter extends  RecyclerView.Adapter<AvailableTim
             public void onClick(View view) {
                 Toast.makeText(mContext, mAvailableTime.get(position), Toast.LENGTH_SHORT).show();
                 myDialog.show();
+                delete = myDialog.findViewById(R.id.delete_time_slot);
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mAvailableTime.remove(position);
+                        notifyDataSetChanged();
+                        myDialog.dismiss();
+                    }
+                });
+                back = myDialog.findViewById(R.id.go_back);
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+
             }
         });
     }
@@ -65,6 +82,7 @@ public class AvailableTimeViewAdapter extends  RecyclerView.Adapter<AvailableTim
         CircleImageView image_availableTime;
         TextView day;
         ConstraintLayout AvailableTime_layout;
+
         public TimeViewHolder(@NonNull View itemView) {
             super(itemView);
             image_availableTime = itemView.findViewById(R.id.image_time);

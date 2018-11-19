@@ -6,16 +6,15 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.tianhao.seg2105project.Model.Application;
-import com.example.tianhao.seg2105project.Model.ProvidedService;
 import com.example.tianhao.seg2105project.Model.Service;
 import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DataSnapshot;
@@ -27,14 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class AddServiceToProfile extends AppCompatActivity implements
-        TimePickerDialog.OnTimeSetListener {
+public class AddServiceToProfile extends AppCompatActivity{
 
     //about firebase
     FirebaseDatabase database;
     DatabaseReference profile;
     private Application application;
-    private RecyclerView recyclerView;
     String user;
 
 
@@ -42,13 +39,8 @@ public class AddServiceToProfile extends AppCompatActivity implements
     int hour,hourFinal, minute,minuteFinal;
     String[] pickDate;//Monday to Sunday
     boolean[] checkPickedDate;
-    ArrayList<Integer> pickedDate = new ArrayList<>();
-    ArrayList<String> day=new ArrayList<>();
-    TextView tv_result;
+    ArrayList<String> availableTime=new ArrayList<>();
     Button buttonDelete, buttonGOBACK, buttonSave, dateTimePicker;
-
-    ProvidedService providedService;
-    Service service;
 
 
     @Override
@@ -56,16 +48,8 @@ public class AddServiceToProfile extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_service_to_profile);
 
-        //recyclerView
-        recyclerView = findViewById(R.id.recycler_view);
-
         //about firebase
         application = Application.getInstance(this);
-
-        //new
-        providedService = new ProvidedService(this,);
-
-        //
         user = application.getUser().getUsername();
         database = FirebaseDatabase.getInstance();
         profile = database.getReference("Service_Provider_Profile");
@@ -75,7 +59,6 @@ public class AddServiceToProfile extends AppCompatActivity implements
         buttonDelete = (Button)findViewById(R.id.delete_service);
         buttonSave = (Button) findViewById(R.id.save_button);
         buttonGOBACK = (Button) findViewById(R.id.cancel);
-        tv_result=(TextView) findViewById(R.id.tv_result);
         pickDate = getResources().getStringArray(R.array.aWeek);
         checkPickedDate = new boolean[pickDate.length];
 
@@ -85,36 +68,42 @@ public class AddServiceToProfile extends AppCompatActivity implements
             @Override
             public void onClick(View view){
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddServiceToProfile.this);
-                mBuilder.setTitle("Select Your Available day");
-                mBuilder.setMultiChoiceItems(pickDate, checkPickedDate, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, final int position, boolean isChecked) {
-                        if(isChecked){
-                            if(!pickedDate.contains(position)){
-                                pickedDate.add(position);
-                            }else{
-                                pickedDate.remove(position);
-                            }
-                        }
-                    }
-                });
-                mBuilder.setCancelable(false);
+                mBuilder.setTitle("Select Your Available day and time");
+                View mview_day = getLayoutInflater().inflate(R.layout.dialog_day_spinner,null);
+                final Spinner mSpinner_day =(Spinner) mview_day.findViewById(R.id.spinner_day);
+                final Spinner mSpinner_time = (Spinner) mview_day.findViewById(R.id.spinner_time);
+                ArrayAdapter<String> adapter_day=new ArrayAdapter<String>(AddServiceToProfile.this,
+                        android.R.layout.simple_spinner_item,
+                        getResources().getStringArray(R.array.aWeek));
+                ArrayAdapter<String> adapter_time=new ArrayAdapter<String>(AddServiceToProfile.this,
+                        android.R.layout.simple_spinner_item,
+                        getResources().getStringArray(R.array.time_day));
+                adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                adapter_time.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mSpinner_day.setAdapter(adapter_day);
+                mSpinner_time.setAdapter(adapter_time);
+
                 mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which){
-                        day.clear();
-                        for(int i=0; i<pickedDate.size(); i++){
-                            day.add(pickDate[pickedDate.get(i)]);
+                        if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")){
+                            Toast.makeText(AddServiceToProfile.this,
+                                    mSpinner_day.getSelectedItem().toString(),
+                                    Toast.LENGTH_SHORT).show();
+                            dialogInterface.dismiss();
                         }
-                        recyclerView.setAdapter(new ServiceViewAdapter(getApplicationContext(),application.getServiceArrayList()));
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        pickedDate.clear();
+                        if(!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
+                            Toast.makeText(AddServiceToProfile.this,
+                                    mSpinner_time.getSelectedItem().toString(),
+                                    Toast.LENGTH_SHORT).show();
+                            dialogInterface.dismiss();
+                        }
+                        availableTime.add(
+                                mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString());
                         profile.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").removeValue();
-                                profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").setValue(day);
-                                profile.child(user).child(getIntent().getStringExtra("name")).child("id").setValue(getIntent().getStringExtra("id"));
+                                profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").setValue(availableTime);
                                 Toast.makeText(AddServiceToProfile.this, "Day set successfully", Toast.LENGTH_SHORT).show();
                             }
                             @Override
@@ -122,65 +111,39 @@ public class AddServiceToProfile extends AppCompatActivity implements
 
                             }
                         });
-//                        tv_result.setText(day);
                     }
                 });
 
 
-                mBuilder.setNegativeButton("Clear all", new DialogInterface.OnClickListener() {
+                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int which) {
-                        for(int i=0; i<checkPickedDate.length; i++){
-                            checkPickedDate[i]=false;
-                            day.clear();
-                            pickedDate.clear();
-                            profile.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").removeValue();
-                                    Toast.makeText(AddServiceToProfile.this, "Day cleared successfully", Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                            tv_result.setText("");
-                        }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+//                            profile.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                    profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").removeValue();
+//                                    Toast.makeText(AddServiceToProfile.this, "Day cleared successfully", Toast.LENGTH_SHORT).show();
+//                                }
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                }
+//                            });
+//                        }
                     }
                 });
+
+                mBuilder.setView(mview_day);
                 AlertDialog mDialog=mBuilder.create();
                 mDialog.show();
             }
         });
-
         buttonGOBACK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProvidedService
-            }
-        });
-
-    }
-
-
-
-    //date and time setter goes here
-    @Override
-    public void onTimeSet(TimePicker timePicker, int i, int i1){
-        hourFinal = i;
-        minute = i1;
-
-        tv_result.setText(
-                " hour: "+hourFinal+"/"+
-                " minute: "+minuteFinal
-        );
     }
 }

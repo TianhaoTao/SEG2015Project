@@ -48,4 +48,40 @@ public class ServiceProviderProfile extends AppCompatActivity {
         int radioButtonId = radioGroup.getCheckedRadioButtonId();
         radioButton = (RadioButton) findViewById(radioButtonId);
     }
+
+    public boolean validateAddress(){
+        String addressInput = editAddress.getEditText().getText().toString().trim();
+        if (addressInput.isEmpty()) {
+            editAddress.setError("Please enter an address");
+            return false;
+        }else {
+            editAddress.setError(null);
+            return true;
+        }
+    }
+
+    public boolean validatePhone(){
+        String phoneInput = editPhone.getEditText().getText().toString().trim();
+        if (phoneInput.isEmpty()) {
+            editPhone.setError("Please enter a phone number");
+            return false;
+        } else if (phoneInput.length() != 10) {
+            editPhone.setError("Please enter a correct phone number");
+            return false;
+        }else {
+            editPhone.setError(null);
+            return true;
+        }
+    }
+
+    public boolean validateCompany(){
+        String companyInput = editCompany.getEditText().getText().toString().trim();
+        if (companyInput.isEmpty()) {
+            editPhone.setError("Please enter a company");
+            return false;
+        }else {
+            editCompany.setError(null);
+            return true;
+        }
+    }
 }

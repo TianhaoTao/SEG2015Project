@@ -94,7 +94,7 @@ public class WelcomePage extends AppCompatActivity {
         });
 
         //profile for service provider only
-        buttonProfile = findViewById(R.id.buttonProviderProfile);
+        buttonProfile = (Button)findViewById(R.id.buttonProviderProfile);
         if(!user.getUserType().equals("Service Provider")){
             buttonProfile.setVisibility(View.INVISIBLE);
         }
@@ -102,7 +102,7 @@ public class WelcomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonSound.start();
-                startActivity(new Intent(getApplicationContext(), ServiceProviderProfile.class));
+                openProfileActivity();
             }
         });
 
@@ -118,6 +118,11 @@ public class WelcomePage extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void openProfileActivity(){
+        Intent intentProfile = new Intent(WelcomePage.this, ServiceProviderProfile.class);
+        startActivity(intentProfile);
     }
 
     //hide profile in navigation draw

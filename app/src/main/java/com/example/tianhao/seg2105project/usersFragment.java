@@ -78,18 +78,18 @@ public class usersFragment extends Fragment {
             });
         }else if (user.getUserType().equals("Service Provider")){//the Service Provider can see the timeSlot
             providedServices.addListenerForSingleValueEvent(new ValueEventListener() {  //may be a problem
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String timeSlot = "";
-                        int counter=0;
-                        for (DataSnapshot data : dataSnapshot.getChildren()) {
-                            if(data.child("serviceProviderName").getValue().toString().equals(application.getUser().getUsername())){
-                                counter++;
-                                timeSlot += counter+": "+data.child("timeSlots").getValue().toString()+"\n";
-                            }
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String timeSlot = "";
+                    int counter=0;
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if(data.child("serviceProviderName").getValue().toString().equals(application.getUser().getUsername())){
+                            counter++;
+                            timeSlot += counter+": "+data.child("timeSlots").getValue().toString()+"\n";
                         }
-                        usernameList.setText(timeSlot);//here username should be named as 'timeslotList'
                     }
+                    usernameList.setText(timeSlot);//here username should be named as 'timeslotList'
+                }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {

@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 
 public class ServiceProviderProfile extends AppCompatActivity {
 
+
     TextInputLayout editAddress;
     TextInputLayout editPhone;
     TextInputLayout editCompany;
@@ -25,10 +26,10 @@ public class ServiceProviderProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_provider_profile);
 
-        editAddress = findViewById(R.id.editAddress);
-        editPhone = findViewById(R.id.editPhone);
-        editCompany = findViewById(R.id.editCompany);
-        editDescription = findViewById(R.id.editDescription);
+        editAddress = findViewById((R.id.editAddress));
+        editPhone = findViewById((R.id.editPhone));
+        editCompany = findViewById((R.id.editCompany));
+        editDescription = findViewById((R.id.editDescription));
         radioGroup = findViewById(R.id.radioGroup);
 
         ButtonSubmit = (Button)findViewById(R.id.buttonSubmit2);

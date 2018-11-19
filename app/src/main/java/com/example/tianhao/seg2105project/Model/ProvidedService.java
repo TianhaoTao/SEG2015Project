@@ -10,9 +10,12 @@ public class ProvidedService {
     private String serviceId;
     private String serviceName;
 
-    private ArrayList<String> TimeSlots;
+    private String TimeSlots;
 
-    public ProvidedService(String id, String serviceProviderName, String serviceId, String serviceName, ArrayList<String> timeSlots) {
+    public ProvidedService() {
+    }
+
+    public ProvidedService(String id, String serviceProviderName, String serviceId, String serviceName, String timeSlots) {
         this.id = id;
         this.serviceProviderName = serviceProviderName;
         this.serviceId = serviceId;
@@ -52,11 +55,11 @@ public class ProvidedService {
         this.serviceId = serviceId;
     }
 
-    public ArrayList<String> getTimeSlots() {
+    public String getTimeSlots() {
         return TimeSlots;
     }
 
-    public void setTimeSlots(ArrayList<String> timeSlots) {
+    public void setTimeSlots(String timeSlots) {
         TimeSlots = timeSlots;
     }
 }

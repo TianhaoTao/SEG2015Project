@@ -1,7 +1,6 @@
 package com.example.tianhao.seg2105project;
 
 import android.app.AlertDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +11,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.tianhao.seg2105project.Model.Application;
-import com.example.tianhao.seg2105project.Model.ProvidedService;
-import com.example.tianhao.seg2105project.Model.Service;
-import com.example.tianhao.seg2105project.Model.User;
+import com.example.tianhao.seg2105project.Model.*;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,16 +28,16 @@ public class AddServiceToProfile extends AppCompatActivity{
     //about firebase
     FirebaseDatabase database;
     DatabaseReference profile;
-    private Application application;
-    private String user;
-
+    private Application application=Application.getInstance(this);;
+    private String username;
+    private ServiceProvider serviceProvider = (ServiceProvider)application.getUser();
 
 
     //all initial
     int hour,hourFinal, minute,minuteFinal;
     String[] pickDate;//Monday to Sunday
     boolean[] checkPickedDate;
-    ArrayList<String> availableTime;
+    ArrayList<String> availableTime = new ArrayList<>();
     Button buttonDelete, buttonGOBACK, buttonSave, dateTimePicker;
     private RecyclerView recyclerView;
 
@@ -54,8 +48,7 @@ public class AddServiceToProfile extends AppCompatActivity{
         setContentView(R.layout.activity_add_service_to_profile);
 
         //about firebase
-        application = Application.getInstance(this);
-        user = application.getUser().getUsername();
+        username = application.getUser().getUsername();
         database = FirebaseDatabase.getInstance();
         profile = database.getReference("Service_Provider_Profile");
 
@@ -66,6 +59,8 @@ public class AddServiceToProfile extends AppCompatActivity{
         buttonGOBACK = (Button) findViewById(R.id.cancel);
         pickDate = getResources().getStringArray(R.array.aWeek);
         checkPickedDate = new boolean[pickDate.length];
+
+        recyclerView=findViewById(R.id.recycler_view_available_time);
 
 
         //group of clickListener goes here
@@ -108,7 +103,7 @@ public class AddServiceToProfile extends AppCompatActivity{
                         profile.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").setValue(availableTime);
+                                profile.child(username).child(getIntent().getStringExtra("name")).child("Available_Time").setValue(availableTime);
                                 Toast.makeText(AddServiceToProfile.this, "Day set successfully", Toast.LENGTH_SHORT).show();
                             }
                             @Override
@@ -127,7 +122,7 @@ public class AddServiceToProfile extends AppCompatActivity{
 //                            profile.addListenerForSingleValueEvent(new ValueEventListener() {
 //                                @Override
 //                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                    profile.child(user).child(getIntent().getStringExtra("name")).child("Available_Time").removeValue();
+//                                    profile.child(username).child(getIntent().getStringExtra("name")).child("Available_Time").removeValue();
 //                                    Toast.makeText(AddServiceToProfile.this, "Day cleared successfully", Toast.LENGTH_SHORT).show();
 //                                }
 //                                @Override
@@ -154,14 +149,26 @@ public class AddServiceToProfile extends AppCompatActivity{
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String timeslots = new String();
+                for(String time : availableTime){
+                    timeslots = timeslots+time+",";
+                }
+                serviceProvider.saveServiceToProfile(getIntent().getStringExtra("id"),
+                        getIntent().getStringExtra("name"),
+                        timeslots);
+            }
+        });
 
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceProvider.removeServiceFromProfile(getIntent().getStringExtra("id"));
             }
         });
 
     }
     public void onStart() {
         super.onStart();//refresh the recylerview every time it is brought to the front
-        RecyclerView recyclerView=findViewById(R.id.recycler_view_available_time);
         AvailableTimeViewAdapter adapter = new AvailableTimeViewAdapter(availableTime,AddServiceToProfile.this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -36,8 +36,10 @@ public class ServiceProviderProfile extends AppCompatActivity {
         ButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int radioButtonId = radioGroup.getCheckedRadioButtonId();
-                radioButton = (RadioButton) findViewById(radioButtonId);
+                if(validateAddress()&&validatePhone()&&validateCompany()) {
+                    int radioButtonId = radioGroup.getCheckedRadioButtonId();
+                    radioButton = (RadioButton) findViewById(radioButtonId);
+                }
 
             }
         });

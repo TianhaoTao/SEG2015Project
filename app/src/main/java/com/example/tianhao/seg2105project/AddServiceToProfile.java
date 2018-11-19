@@ -100,17 +100,18 @@ public class AddServiceToProfile extends AppCompatActivity{
                         }
                         availableTime.add(
                                 mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString());
-                        profile.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                profile.child(username).child(getIntent().getStringExtra("name")).child("Available_Time").setValue(availableTime);
-                                Toast.makeText(AddServiceToProfile.this, "Day set successfully", Toast.LENGTH_SHORT).show();
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+//                        profile.addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                profile.child(username).child(getIntent().getStringExtra("name")).child("Available_Time").setValue(availableTime);
+//                                Toast.makeText(AddServiceToProfile.this, "Day set successfully", Toast.LENGTH_SHORT).show();
+//                            }
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                            }
+//                        });
+                        initAdapter();
                     }
                 });
 
@@ -137,6 +138,7 @@ public class AddServiceToProfile extends AppCompatActivity{
                 mBuilder.setView(mview_day);
                 AlertDialog mDialog=mBuilder.create();
                 mDialog.show();
+
             }
         });
 
@@ -173,8 +175,7 @@ public class AddServiceToProfile extends AppCompatActivity{
         });
 
     }
-    public void onStart() {
-        super.onStart();//refresh the recylerview every time it is brought to the front
+    public void initAdapter() {
         AvailableTimeViewAdapter adapter = new AvailableTimeViewAdapter(availableTime,AddServiceToProfile.this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

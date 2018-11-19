@@ -35,6 +35,7 @@ public class usersFragment extends Fragment {
     User user;
     FirebaseDatabase database;
     DatabaseReference users;
+    DatabaseReference providedServices;
 
     private Application application;
 
@@ -48,6 +49,7 @@ public class usersFragment extends Fragment {
 
         database=FirebaseDatabase.getInstance();
         users=database.getReference("Users");
+        providedServices=database.getReference("ProvidedServices");
         application = Application.getInstance(getActivity());
         user = application.getUser();
         usernameList=(TextView)view.findViewById(R.id.textUsers);
@@ -58,11 +60,13 @@ public class usersFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String userList="";
                     int counter=0;
-                    for(DataSnapshot data: dataSnapshot.getChildren()) {
-                        counter++;
-                        userList+= counter+"."+data.child("username").getValue().toString()
-                                +" "+data.child("userType").getValue().toString()
-                                +"\n";
+                    if(application.getUser().getUserType().equals("Administrator")){
+                        for(DataSnapshot data: dataSnapshot.getChildren()) {
+                            counter++;
+                            userList+= counter+": "+data.child("username").getValue().toString()
+                                    +" "+data.child("userType").getValue().toString()
+                                    +"\n";
+                        }
                     }
                     usernameList.setText(userList);
                 }
@@ -72,9 +76,28 @@ public class usersFragment extends Fragment {
 
                 }
             });
+        }else if (user.getUserType().equals("Service Provider")){//the Service Provider can see the timeSlot
+            providedServices.addListenerForSingleValueEvent(new ValueEventListener() {  //may be a problem
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String timeSlot = "";
+                        int counter=0;
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            if(data.child("serviceProviderName").getValue().toString().equals(application.getUser().getUsername())){
+                                counter++;
+                                timeSlot += counter+": "+data.child("timeSlots").getValue().toString()+"\n";
+                            }
+                        }
+                        usernameList.setText(timeSlot);//here username should be named as 'timeslotList'
+                    }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }else{
             usernameList.setVisibility(View.INVISIBLE);
-
         }
 
         // Inflate the layout for this fragment

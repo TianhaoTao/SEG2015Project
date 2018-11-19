@@ -24,7 +24,7 @@ public class ServiceProvider extends User {
 
     private ArrayList<ProvidedService> serviceArrayList = new ArrayList<>();
 
-    public ServiceProvider(Context context,User user) {
+    public ServiceProvider(Context context, User user) {
         mContext=context;
         if(user.getUserType().equals("Service Provider")){
             this.setUsername(user.getUsername());
@@ -72,10 +72,9 @@ public class ServiceProvider extends User {
 
     }
 
-    public void saveServiceToProfile(String serviceId,String serviceName,String timeSlots){
-        String id = serviceId+this.getUsername();
-        ProvidedServices.child(id).setValue(new ProvidedService(id,this.getUsername(),
-                serviceId,serviceName,timeSlots));
+    public void saveServiceToProfile(Service service,String timeSlots){
+        String id = service.getId()+this.getUsername();
+        ProvidedServices.child(id).setValue(new ProvidedService(id,service,this.getUsername(),timeSlots));
         Toast.makeText(mContext, "The Service is saved to the profile", Toast.LENGTH_SHORT).show();
     }
 

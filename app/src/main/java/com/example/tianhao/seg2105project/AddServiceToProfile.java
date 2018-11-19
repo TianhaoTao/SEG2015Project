@@ -150,12 +150,18 @@ public class AddServiceToProfile extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 String timeslots = new String();
-                for(String time : availableTime){
-                    timeslots = timeslots+time+",";
-                }
-                serviceProvider.saveServiceToProfile(getIntent().getStringExtra("id"),
+                Service service = new Service(getIntent().getStringExtra("id"),
                         getIntent().getStringExtra("name"),
-                        timeslots);
+                        Double.valueOf(getIntent().getStringExtra("hourlyRate")));
+                for(int i=0;i<availableTime.size();i++){
+                    if(i==0){
+                        timeslots=availableTime.get(i);
+                    }else{
+
+                        timeslots = timeslots+","+availableTime.get(i);
+                    }
+                }
+                serviceProvider.saveServiceToProfile(service,timeslots);
             }
         });
 

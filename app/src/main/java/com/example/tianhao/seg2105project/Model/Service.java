@@ -43,4 +43,13 @@ public class Service {
     public void setHourlyRate(double hourlyRate) {
         this.hourlyRate = hourlyRate;
     }
+
+    @Override
+    public String toString() {
+        return "Service{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", hourlyRate=" + hourlyRate +
+                '}';
+    }
 }

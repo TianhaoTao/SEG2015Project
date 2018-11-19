@@ -6,30 +6,30 @@ import java.util.ArrayList;
 public class ProvidedService {
 
     private String id;
+    private Service service;
     private String serviceProviderName;
-    private String serviceId;
-    private String serviceName;
-
     private String TimeSlots;
+
 
     public ProvidedService() {
     }
 
-    public ProvidedService(String id, String serviceProviderName, String serviceId, String serviceName, String timeSlots) {
+    public ProvidedService(String id, Service service, String serviceProviderName, String timeSlots) {
         this.id = id;
+        this.service = service;
         this.serviceProviderName = serviceProviderName;
-        this.serviceId = serviceId;
-        this.serviceName = serviceName;
         TimeSlots = timeSlots;
     }
 
-    public String getServiceName() {
-        return serviceName;
+
+    public Service getService() {
+        return service;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public void setService(Service service) {
+        this.service = service;
     }
+
 
     public String getId() {
         return id;
@@ -45,14 +45,6 @@ public class ProvidedService {
 
     public void setServiceProviderName(String serviceProviderName) {
         this.serviceProviderName = serviceProviderName;
-    }
-
-    public String getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
     }
 
     public String getTimeSlots() {

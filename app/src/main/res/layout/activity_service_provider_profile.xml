@@ -19,7 +19,9 @@
             android:id="@+id/profile_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Address *" />
+            android:hint="Address *"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -35,7 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Phone Number *"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -50,7 +54,9 @@
             android:id="@+id/profile_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name of the Company *" />
+            android:hint="Name of the Company *"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -65,7 +71,9 @@
             android:id="@+id/profile_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Description" />
+            android:hint="Description"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
     </android.support.design.widget.TextInputLayout>
 
     <TextView
@@ -79,7 +87,7 @@
         android:layout_marginLeft="2dp"
         android:layout_marginBottom="223dp"
         android:text="Licensed: "
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 
     <RadioGroup
@@ -100,7 +108,8 @@
             android:layout_weight="1"
             android:checked="true"
             android:onClick="checkButton"
-            android:text="true" />
+            android:text="true"
+            android:textColor="@color/white" />
 
         <RadioButton
             android:id="@+id/radioButtonNo"
@@ -108,7 +117,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="checkButton"
-            android:text="false" />
+            android:text="false"
+            android:textColor="@color/white" />
     </RadioGroup>
 
     <TextView
@@ -121,7 +131,8 @@
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginBottom="159dp"
-        android:text="* is Mandatory Information" />
+        android:text="* is Mandatory Information"
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/buttonSubmit2"

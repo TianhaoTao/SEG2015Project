@@ -6,6 +6,9 @@ public class Profile {
     private String address, phone, companyName, description;
     private boolean hasLicensed;
 
+    public Profile() {
+    }
+
     public Profile(String serviceProviderName, String address, String phone, String companyName, String description, boolean hasLicensed) {
         this.serviceProviderName = serviceProviderName;
         this.address = address;

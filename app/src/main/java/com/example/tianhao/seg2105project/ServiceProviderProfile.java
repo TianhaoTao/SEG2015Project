@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ServiceProviderProfile extends AppCompatActivity {
 
-    User user;
+    private User user;
     private Application application;
 
     TextInputLayout editAddress;

@@ -122,33 +122,27 @@ public class AddServiceToProfile extends AppCompatActivity{
                 mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which){
-                        if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")
-                                &&!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
-                            String time =mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString();
-                            if(allAvailableTime.contains(time)){
-                                Toast.makeText(AddServiceToProfile.this,
-                                        "This time slot is occupied by some service you provide", Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(AddServiceToProfile.this,time,
-                                        Toast.LENGTH_SHORT).show();
-                                allAvailableTime.add(time);
-                                availableTime.add(time);
-                                initAdapter();
-                                dialogInterface.dismiss();
+
+                        if(mSpinner_day.getSelectedItem().toString().equals("Please choose a day...")||mSpinner_time.getSelectedItem().toString().equals("Please choose a time...")){
+                            //do nothing
+                            Toast.makeText(AddServiceToProfile.this,"Invalid day",Toast.LENGTH_SHORT).show();
+                        }else{
+                            if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")
+                                    &&!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
+                                String time =mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString();
+                                if(allAvailableTime.contains(time)){
+                                    Toast.makeText(AddServiceToProfile.this,
+                                            "This time slot is occupied by some service you provide", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(AddServiceToProfile.this,time,
+                                            Toast.LENGTH_SHORT).show();
+                                    allAvailableTime.add(time);
+                                    availableTime.add(time);
+                                    initAdapter();
+                                    dialogInterface.dismiss();
+                                }
                             }
                         }
-
-//                        profile.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                profile.child(username).child(getIntent().getStringExtra("name")).child("Available_Time").setValue(availableTime);
-//                                Toast.makeText(AddServiceToProfile.this, "Day set successfully", Toast.LENGTH_SHORT).show();
-//                            }
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                            }
-//                        });
                     }
                 });
 
@@ -157,18 +151,6 @@ public class AddServiceToProfile extends AppCompatActivity{
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-//                            profile.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                    profile.child(username).child(getIntent().getStringExtra("name")).child("Available_Time").removeValue();
-//                                    Toast.makeText(AddServiceToProfile.this, "Day cleared successfully", Toast.LENGTH_SHORT).show();
-//                                }
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                }
-//                            });
-//                        }
                     }
                 });
 

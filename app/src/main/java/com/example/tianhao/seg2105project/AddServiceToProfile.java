@@ -20,9 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class AddServiceToProfile extends AppCompatActivity{
@@ -41,7 +39,7 @@ public class AddServiceToProfile extends AppCompatActivity{
     String[] pickDate;//Monday to Sunday
     boolean[] checkPickedDate;
     ArrayList<String> availableTime = new ArrayList<>();
-    ArrayList<String> allAvailableTime = new ArrayList<>();
+    ArrayList<String> otherAvailableTime = new ArrayList<>();
     Button buttonDelete, buttonGOBACK, buttonSave, dateTimePicker;
     private RecyclerView recyclerView;
 
@@ -74,18 +72,18 @@ public class AddServiceToProfile extends AppCompatActivity{
                 for(DataSnapshot data : dataSnapshot.getChildren()){
                     if(data.child("serviceProviderName").getValue().toString().equals(username)){
                         String[] timeslots = data.child("timeSlots").getValue().toString().split(",");
-                        for(int i = 0; i<timeslots.length ; i++){
-                            allAvailableTime.add(timeslots[i]);
-                        }
                         if(data.child("service").child("id").getValue().toString()
                                 .equals(getIntent().getStringExtra("id"))){
                             //Toast.makeText(AddServiceToProfile.this, "why", Toast.LENGTH_SHORT).show();
                             String[] parts = data.child("timeSlots").getValue().toString().split(",");
                             for(int i = 0; i<parts.length ; i++){
                                 availableTime.add(parts[i]);
+                                initAdapter();
                             }
-                            initAdapter();
-                            break;
+                        }else{
+                            for(int i = 0; i<timeslots.length ; i++){
+                                otherAvailableTime.add(timeslots[i]);
+                            }
                         }
                     }
                 }
@@ -130,13 +128,12 @@ public class AddServiceToProfile extends AppCompatActivity{
                             if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")
                                     &&!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
                                 String time =mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString();
-                                if(allAvailableTime.contains(time)){
+                                if(otherAvailableTime.contains(time) || availableTime.contains(time)){
                                     Toast.makeText(AddServiceToProfile.this,
                                             "This time slot is occupied by some service you provide", Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(AddServiceToProfile.this,time,
                                             Toast.LENGTH_SHORT).show();
-                                    allAvailableTime.add(time);
                                     availableTime.add(time);
                                     initAdapter();
                                     dialogInterface.dismiss();

@@ -42,7 +42,7 @@ public class AvailableTimeViewAdapter extends  RecyclerView.Adapter<AvailableTim
     public void onBindViewHolder(@NonNull TimeViewHolder timeViewHolder, final int position) {
 
         timeViewHolder.day.setText(mAvailableTime.get(position));
-        Toast.makeText(mContext, mAvailableTime.get(position) + " is selected.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mContext, mAvailableTime.get(position) + " is selected.", Toast.LENGTH_SHORT).show();
         //Dialog initial
         myDialog = new Dialog(mContext);
         myDialog.setContentView(R.layout.dialog_delete_timeslot);

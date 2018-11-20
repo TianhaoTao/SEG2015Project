@@ -85,7 +85,9 @@ public class usersFragment extends Fragment {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         if(data.child("serviceProviderName").getValue().toString().equals(application.getUser().getUsername())){
                             counter++;
-                            timeSlot += counter+": "+data.child("timeSlots").getValue().toString()+"\n";
+                            timeSlot += counter+"."
+                                    + data.child("service").child("name").getValue().toString()
+                                    +": "+data.child("timeSlots").getValue().toString()+"\n";
                         }
                     }
                     usernameList.setText(timeSlot);//here username should be named as 'timeslotList'

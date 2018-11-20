@@ -20,7 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class AddServiceToProfile extends AppCompatActivity{
@@ -28,6 +30,7 @@ public class AddServiceToProfile extends AppCompatActivity{
     //about firebase
     FirebaseDatabase database;
     DatabaseReference profile;
+    DatabaseReference providedServices;
     private Application application=Application.getInstance(this);;
     private String username;
     private ServiceProvider serviceProvider = (ServiceProvider)application.getUser();
@@ -38,6 +41,7 @@ public class AddServiceToProfile extends AppCompatActivity{
     String[] pickDate;//Monday to Sunday
     boolean[] checkPickedDate;
     ArrayList<String> availableTime = new ArrayList<>();
+    ArrayList<String> allAvailableTime = new ArrayList<>();
     Button buttonDelete, buttonGOBACK, buttonSave, dateTimePicker;
     private RecyclerView recyclerView;
 
@@ -51,6 +55,7 @@ public class AddServiceToProfile extends AppCompatActivity{
         username = application.getUser().getUsername();
         database = FirebaseDatabase.getInstance();
         profile = database.getReference("Service_Provider_Profile");
+        providedServices = database.getReference("ProvidedServices");
 
         //assign the id for button
         dateTimePicker=(Button) findViewById(R.id.datePicker);
@@ -61,6 +66,37 @@ public class AddServiceToProfile extends AppCompatActivity{
         checkPickedDate = new boolean[pickDate.length];
 
         recyclerView=findViewById(R.id.recycler_view_available_time);
+        //get the available time from database
+        providedServices.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int count =0;
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    if(data.child("serviceProviderName").getValue().toString().equals(username)){
+                        String[] timeslots = data.child("timeSlots").getValue().toString().split(",");
+                        for(int i = 0; i<timeslots.length ; i++){
+                            allAvailableTime.add(timeslots[i]);
+                        }
+                        if(data.child("service").child("id").getValue().toString()
+                                .equals(getIntent().getStringExtra("id"))){
+                            //Toast.makeText(AddServiceToProfile.this, "why", Toast.LENGTH_SHORT).show();
+                            String[] parts = data.child("timeSlots").getValue().toString().split(",");
+                            for(int i = 0; i<parts.length ; i++){
+                                availableTime.add(parts[i]);
+                            }
+                            initAdapter();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
         //group of clickListener goes here
@@ -86,20 +122,22 @@ public class AddServiceToProfile extends AppCompatActivity{
                 mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which){
-                        if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")){
-                            Toast.makeText(AddServiceToProfile.this,
-                                    mSpinner_day.getSelectedItem().toString(),
-                                    Toast.LENGTH_SHORT).show();
-                            dialogInterface.dismiss();
+                        if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")
+                                &&!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
+                            String time =mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString();
+                            if(allAvailableTime.contains(time)){
+                                Toast.makeText(AddServiceToProfile.this,
+                                        "This time slot is occupied by some service you provide", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(AddServiceToProfile.this,time,
+                                        Toast.LENGTH_SHORT).show();
+                                allAvailableTime.add(time);
+                                availableTime.add(time);
+                                initAdapter();
+                                dialogInterface.dismiss();
+                            }
                         }
-                        if(!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
-                            Toast.makeText(AddServiceToProfile.this,
-                                    mSpinner_time.getSelectedItem().toString(),
-                                    Toast.LENGTH_SHORT).show();
-                            dialogInterface.dismiss();
-                        }
-                        availableTime.add(
-                                mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString());
+
 //                        profile.addListenerForSingleValueEvent(new ValueEventListener() {
 //                            @Override
 //                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -111,7 +149,6 @@ public class AddServiceToProfile extends AppCompatActivity{
 //
 //                            }
 //                        });
-                        initAdapter();
                     }
                 });
 
@@ -151,19 +188,24 @@ public class AddServiceToProfile extends AppCompatActivity{
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String timeslots = new String();
-                Service service = new Service(getIntent().getStringExtra("id"),
-                        getIntent().getStringExtra("name"),
-                        Double.valueOf(getIntent().getStringExtra("hourlyRate")));
-                for(int i=0;i<availableTime.size();i++){
-                    if(i==0){
-                        timeslots=availableTime.get(i);
-                    }else{
+                if (!availableTime.isEmpty()) {
+                    String timeslots = new String();
+                    Service service = new Service(getIntent().getStringExtra("id"),
+                            getIntent().getStringExtra("name"),
+                            Double.valueOf(getIntent().getStringExtra("hourlyRate")));
+                    for (int i = 0; i < availableTime.size(); i++) {
+                        if (i == 0) {
+                            timeslots = availableTime.get(i);
+                        } else {
 
-                        timeslots = timeslots+","+availableTime.get(i);
+                            timeslots = timeslots + "," + availableTime.get(i);
+                        }
                     }
+                    serviceProvider.saveServiceToProfile(service, timeslots);
+                    finish();
+                } else {
+                    Toast.makeText(AddServiceToProfile.this, "Please input at least one time slot", Toast.LENGTH_SHORT).show();
                 }
-                serviceProvider.saveServiceToProfile(service,timeslots);
             }
         });
 
@@ -171,10 +213,12 @@ public class AddServiceToProfile extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 serviceProvider.removeServiceFromProfile(getIntent().getStringExtra("id"));
+                finish();
             }
         });
 
     }
+
     public void initAdapter() {
         AvailableTimeViewAdapter adapter = new AvailableTimeViewAdapter(availableTime,AddServiceToProfile.this);
         recyclerView.setAdapter(adapter);

@@ -4,18 +4,18 @@ public class Profile {
 
     private String serviceProviderName;
     private String address, phone, companyName, description;
-    private boolean hasLicensed;
+    private boolean Licensed;
 
     public Profile() {
     }
 
-    public Profile(String serviceProviderName, String address, String phone, String companyName, String description, boolean hasLicensed) {
+    public Profile(String serviceProviderName, String address, String phone, String companyName, String description, boolean Licensed) {
         this.serviceProviderName = serviceProviderName;
         this.address = address;
         this.phone = phone;
         this.companyName = companyName;
         this.description = description;
-        this.hasLicensed = hasLicensed;
+        this.Licensed = Licensed;
     }
 
     public String getServiceProviderName() {
@@ -58,11 +58,11 @@ public class Profile {
         this.description = description;
     }
 
-    public boolean isHasLicensed() {
-        return hasLicensed;
+    public boolean isLicensed() {
+        return Licensed;
     }
 
-    public void setHasLicensed(boolean hasLicensed) {
-        this.hasLicensed = hasLicensed;
+    public void setLicensed(boolean licensed) {
+        this.Licensed = licensed;
     }
 }

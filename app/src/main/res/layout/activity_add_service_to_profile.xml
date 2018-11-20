@@ -8,21 +8,21 @@
     android:background="@drawable/admin_background">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="73dp"
         android:layout_marginTop="0dp"
-        android:text="Add to Profile"
-        android:textSize="36sp" />
+        android:text="title"
+        android:textSize="30sp" />
 
     <HorizontalScrollView
         android:id="@+id/editorButtonScroll"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/textTitle"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp">
@@ -49,7 +49,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="20dp"
                     android:drawableTop="@drawable/ic_build_black_24dp"
-                    android:text="save edited service" />
+                    android:text="save service to profile" />
             </LinearLayout>
 
             <LinearLayout
@@ -81,7 +81,7 @@
                 android:layout_marginRight="50dp"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/ic_delete_forever_black"
-                android:text="delete service" />
+                android:text="delete service from profile" />
         </LinearLayout>
     </HorizontalScrollView>
 

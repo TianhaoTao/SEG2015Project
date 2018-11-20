@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tianhao.seg2105project.Model.*;
@@ -42,6 +43,7 @@ public class AddServiceToProfile extends AppCompatActivity{
     ArrayList<String> otherAvailableTime = new ArrayList<>();
     Button buttonDelete, buttonGOBACK, buttonSave, dateTimePicker;
     private RecyclerView recyclerView;
+    private TextView title;
 
 
     @Override
@@ -62,6 +64,7 @@ public class AddServiceToProfile extends AppCompatActivity{
         buttonGOBACK = (Button) findViewById(R.id.cancel);
         pickDate = getResources().getStringArray(R.array.aWeek);
         checkPickedDate = new boolean[pickDate.length];
+        title = findViewById(R.id.textTitle);
 
         recyclerView=findViewById(R.id.recycler_view_available_time);
         //get the available time from database
@@ -95,6 +98,9 @@ public class AddServiceToProfile extends AppCompatActivity{
             }
         });
 
+        //the title of the activity
+        title.setText("Service:"+getIntent().getStringExtra("name")+
+                "\n"+"Hourly Rate:"+getIntent().getStringExtra("hourlyRate"));
 
 
         //group of clickListener goes here
@@ -198,7 +204,7 @@ public class AddServiceToProfile extends AppCompatActivity{
 
     }
 
-    private void initAdapter() {
+    private void initAdapter() {//refresh adapter
         AvailableTimeViewAdapter adapter = new AvailableTimeViewAdapter(availableTime,AddServiceToProfile.this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

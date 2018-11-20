@@ -80,15 +80,20 @@ public class WelcomePage extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.nav_home:
                         setFragment(homeFragment);
+                        welcome.setText("Hello, "+user.getUsername()+
+                                "！ You are logged as a "+ user.getUserType());
                         return true;
                     case R.id.nav_users:
+                        welcome.setText("This is the list of all users");
                         setFragment(usersFragment);
                         return true;
                     case R.id.nav_timeslot:
+                        welcome.setText("This is the list of your available time");
                         setFragment(usersFragment);//here should be as know as timeslotFragment, but ok to use this name
                         return true;
                     case R.id.nav_profile:
                         setFragment(profileFragment);
+                        welcome.setText("This is the list of services you provide");
                         return true;
                         default:
                             return false;

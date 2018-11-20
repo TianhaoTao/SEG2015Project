@@ -18,11 +18,22 @@
         android:text="title"
         android:textSize="30sp" />
 
+    <TextView
+        android:id="@+id/textInstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_below="@+id/textTitle"
+        android:text="You can delete your time slots by pressing it"
+        android:textSize="19sp" />
+
     <HorizontalScrollView
         android:id="@+id/editorButtonScroll"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_below="@+id/textTitle"
+        android:layout_below="@+id/textInstruction"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp">

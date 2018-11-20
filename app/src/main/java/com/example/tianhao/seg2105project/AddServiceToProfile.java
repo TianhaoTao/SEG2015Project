@@ -86,31 +86,25 @@ public class AddServiceToProfile extends AppCompatActivity{
                 mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which){
-                        if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")){
-                            Toast.makeText(AddServiceToProfile.this,
-                                    mSpinner_day.getSelectedItem().toString(),
-                                    Toast.LENGTH_SHORT).show();
-                            dialogInterface.dismiss();
+                        if(mSpinner_day.getSelectedItem().toString().equals("Please choose a day...")||mSpinner_time.getSelectedItem().toString().equals("Please choose a time...")){
+                            //do nothing
+                            Toast.makeText(AddServiceToProfile.this,"Invalid day",Toast.LENGTH_SHORT).show();
+                        }else{
+                            if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")){
+                                Toast.makeText(AddServiceToProfile.this,
+                                        mSpinner_day.getSelectedItem().toString(),
+                                        Toast.LENGTH_SHORT).show();
+                                dialogInterface.dismiss();
+                            }
+                            if(!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
+                                Toast.makeText(AddServiceToProfile.this,
+                                        mSpinner_time.getSelectedItem().toString(),
+                                        Toast.LENGTH_SHORT).show();
+                                dialogInterface.dismiss();
+                            }
+                            availableTime.add(
+                                    mSpinner_day.getSelectedItem().toString()+"\n"+mSpinner_time.getSelectedItem().toString());
                         }
-                        if(!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
-                            Toast.makeText(AddServiceToProfile.this,
-                                    mSpinner_time.getSelectedItem().toString(),
-                                    Toast.LENGTH_SHORT).show();
-                            dialogInterface.dismiss();
-                        }
-                        availableTime.add(
-                                mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString());
-//                        profile.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                profile.child(username).child(getIntent().getStringExtra("name")).child("Available_Time").setValue(availableTime);
-//                                Toast.makeText(AddServiceToProfile.this, "Day set successfully", Toast.LENGTH_SHORT).show();
-//                            }
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                            }
-//                        });
                         initAdapter();
                     }
                 });
@@ -120,18 +114,6 @@ public class AddServiceToProfile extends AppCompatActivity{
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-//                            profile.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                    profile.child(username).child(getIntent().getStringExtra("name")).child("Available_Time").removeValue();
-//                                    Toast.makeText(AddServiceToProfile.this, "Day cleared successfully", Toast.LENGTH_SHORT).show();
-//                                }
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                }
-//                            });
-//                        }
                     }
                 });
 

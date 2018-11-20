@@ -84,6 +84,9 @@ public class WelcomePage extends AppCompatActivity {
                     case R.id.nav_users:
                         setFragment(usersFragment);
                         return true;
+                    case R.id.nav_timeslot:
+                        setFragment(usersFragment);//here should be as know as timeslotFragment, but ok to use this name
+                        return true;
                     case R.id.nav_profile:
                         setFragment(profileFragment);
                         return true;
@@ -131,6 +134,12 @@ public class WelcomePage extends AppCompatActivity {
         Menu nav_Menu = navigationView.getMenu();
         if(!application.getUser().getUserType().equals("Service Provider")){
             nav_Menu.findItem(R.id.nav_profile).setVisible(false);
+        }
+        if(!application.getUser().getUserType().equals("Administrator")){
+            nav_Menu.findItem(R.id.nav_users).setVisible(false);
+        }
+        if(!application.getUser().getUserType().equals("Service Provider")){
+            nav_Menu.findItem(R.id.nav_timeslot).setVisible(false);
         }
     }
 

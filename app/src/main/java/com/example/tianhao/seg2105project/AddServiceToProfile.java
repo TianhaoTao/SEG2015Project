@@ -198,7 +198,7 @@ public class AddServiceToProfile extends AppCompatActivity{
 
     }
 
-    public void initAdapter() {
+    private void initAdapter() {
         AvailableTimeViewAdapter adapter = new AvailableTimeViewAdapter(availableTime,AddServiceToProfile.this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

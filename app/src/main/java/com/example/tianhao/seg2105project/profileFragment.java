@@ -10,6 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tianhao.seg2105project.Model.Application;
+import com.example.tianhao.seg2105project.Model.ProvidedService;
+import com.example.tianhao.seg2105project.Model.Service;
+import com.example.tianhao.seg2105project.Model.ServiceProvider;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 /**
@@ -22,6 +28,10 @@ public class profileFragment extends Fragment {
         // Required empty public constructor
     }
     private Application application = Application.getInstance(getActivity());
+    private ServiceProvider serviceProvider;
+
+    private ArrayList<Service> services;
+    private ArrayList<ProvidedService> providedServices;
 
     private RecyclerView recyclerView;
 
@@ -32,14 +42,28 @@ public class profileFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view);
 
+        if(application.getUser().getUserType().equals("Service Provider")){
+            serviceProvider = (ServiceProvider)application.getUser();
+        }
+
         return view;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();//refresh the recylerview every time it is brought to the front
+    public void onResume() {
+        super.onResume();
+        initAdapter();
+    }
+
+    private void initAdapter(){
+        services = new ArrayList<>();
+        providedServices = serviceProvider.getServiceArrayList();
+        for(ProvidedService providedService : providedServices){
+            services.add(providedService.getService());
+        }
+
         application = Application.getInstance(getActivity());
-        recyclerView.setAdapter(new ServiceViewAdapter(getActivity(),application.getServiceArrayList()));
+        recyclerView.setAdapter(new ServiceViewAdapter(getActivity(),services));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

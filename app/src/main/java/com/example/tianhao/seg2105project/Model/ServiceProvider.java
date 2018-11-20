@@ -56,6 +56,7 @@ public class ServiceProvider extends User {
         ProvidedServices.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                serviceArrayList = new ArrayList<>();
                 for(DataSnapshot data : dataSnapshot.getChildren()) {
                     if (data.child("serviceProviderName").getValue().toString().
                             equals(ServiceProvider.this.getUsername())) {
@@ -92,5 +93,9 @@ public class ServiceProvider extends User {
     public void setProfile(Profile profile) {
         this.profile = profile;
         database.getReference("Profile").child(getUsername()).setValue(profile);
+    }
+
+    public ArrayList<ProvidedService> getServiceArrayList() {
+        return serviceArrayList;
     }
 }

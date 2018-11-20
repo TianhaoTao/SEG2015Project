@@ -1,5 +1,7 @@
 package com.example.tianhao.seg2105project;
 
+import android.media.MediaPlayer;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,9 +10,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.example.tianhao.seg2105project.Model.Application;
+import com.example.tianhao.seg2105project.Model.Profile;
+import com.example.tianhao.seg2105project.Model.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ServiceProviderProfile extends AppCompatActivity {
 
+    User user;
+    private Application application;
 
     TextInputLayout editAddress;
     TextInputLayout editPhone;
@@ -19,6 +33,12 @@ public class ServiceProviderProfile extends AppCompatActivity {
     RadioGroup radioGroup;
     RadioButton radioButton;
     Button ButtonSubmit;
+    MediaPlayer buttonSound;
+
+    //firebase init
+    FirebaseDatabase database;
+    DatabaseReference profile_firebase;
+
 
 
     @Override
@@ -26,22 +46,53 @@ public class ServiceProviderProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_provider_profile);
 
+        application = Application.getInstance(this);
+        user = application.getUser();
+
         editAddress = findViewById((R.id.editAddress));
         editPhone = findViewById((R.id.editPhone));
         editCompany = findViewById((R.id.editCompany));
         editDescription = findViewById((R.id.editDescription));
         radioGroup = findViewById(R.id.radioGroup);
-
         ButtonSubmit = (Button)findViewById(R.id.buttonSubmit2);
+        buttonSound=MediaPlayer.create(ServiceProviderProfile.this,R.raw.button_sound);
+
+        //about firebase
+        database = FirebaseDatabase.getInstance();
+        profile_firebase = database.getReference("Profile");
+
 
         ButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonSound.start();
                 if(validateAddress()&&validatePhone()&&validateCompany()) {
                     int radioButtonId = radioGroup.getCheckedRadioButtonId();
                     radioButton = (RadioButton) findViewById(radioButtonId);
-                }
 
+                    final Profile profile = new Profile(
+                            user.getUsername(),
+                            editAddress.getEditText().getText().toString(),
+                            editPhone.getEditText().getText().toString(),
+                            editCompany.getEditText().getText().toString(),
+                            editDescription.getEditText().getText().toString(),
+                            Boolean.parseBoolean(radioButton.getText().toString()));
+
+                    profile_firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            boolean flag=true;//flag set false when profile is not valid
+                            profile_firebase.child(user.getUsername()).setValue(profile);
+                            Toast.makeText(ServiceProviderProfile.this, "Success set profile", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }//if end
             }
         });
 
@@ -50,6 +101,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
     public void checkButton(View v){
         int radioButtonId = radioGroup.getCheckedRadioButtonId();
         radioButton = (RadioButton) findViewById(radioButtonId);
+        Toast.makeText(this,"Selected Radio Button: "+radioButton.getText(),Toast.LENGTH_SHORT).show();
     }
 
     public boolean validateAddress(){

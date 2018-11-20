@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-//import android.widget.EditText;
 
 
 public class SignUp extends AppCompatActivity {
@@ -61,19 +60,21 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        buttonSound=MediaPlayer.create(SignUp.this,R.raw.button_sound);
 
+        //firebase path
         database = FirebaseDatabase.getInstance();
         users = database.getReference("Users");
 
-        editUsername = findViewById((R.id.editUsername));
-        editPassword = findViewById((R.id.editPassword));
-        editpasswordConfirm = findViewById((R.id.editPasswordConfirm));
-        editEmail = findViewById((R.id.editEmail));
-
+        //assign id
+        buttonSound=MediaPlayer.create(SignUp.this,R.raw.button_sound);
+        editUsername = findViewById(R.id.editUsername);
+        editPassword = findViewById(R.id.editPassword);
+        editpasswordConfirm = findViewById(R.id.editPasswordConfirm);
+        editEmail = findViewById(R.id.editEmail);
         buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
-
         dropdownmenu = findViewById(R.id.spinner);
+
+
         List<String> list = new ArrayList<>();
         list.add("Home Owner");
         list.add("Administrator");
@@ -85,7 +86,7 @@ public class SignUp extends AppCompatActivity {
         dropdownmenu.setAdapter(adapter);
 
         buttonSubmit.setOnClickListener(new View.OnClickListener(){
-
+            @Override
                 public void onClick(View view){
                     buttonSound.start();
                     if(validateUser()&&validateEmail()&&validatePassword()&& validatePasswordConfirm()){
@@ -136,11 +137,8 @@ public class SignUp extends AppCompatActivity {
                         });
                     }
                 }
-        });
-
-
-
-    }
+        });//onclick listener end
+    }//oncreate end
 
 
     public boolean validateEmail(){

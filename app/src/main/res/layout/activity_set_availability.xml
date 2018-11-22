@@ -60,7 +60,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="20dp"
                     android:drawableTop="@drawable/ic_build_black_24dp"
-                    android:text="save service to profile" />
+                    android:text="set time slots in profile" />
             </LinearLayout>
 
             <LinearLayout
@@ -82,17 +82,6 @@
 
             </LinearLayout>
 
-            <!--<Button-->
-                <!--android:id="@+id/delete_service"-->
-                <!--style="@style/Widget.AppCompat.Button.Borderless"-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_marginRight="50dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:drawableTop="@drawable/ic_delete_forever_black"-->
-                <!--android:text="delete service from profile" />-->
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -112,7 +101,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="104dp"
         android:layout_marginBottom="0dp"
-        android:text="available Time picker" />
+        android:text="AVailable Time picker" />
 
 </RelativeLayout>
 

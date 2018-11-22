@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tianhao.seg2105project.Model.Application;
+import com.example.tianhao.seg2105project.Model.ServiceProvider;
 import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -77,27 +78,11 @@ public class usersFragment extends Fragment {
                 }
             });
         }else if (user.getUserType().equals("Service Provider")){//the Service Provider can see the timeSlot
-            providedServices.addListenerForSingleValueEvent(new ValueEventListener() {  //may be a problem
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String timeSlot = "";
-                    int counter=0;
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        if(data.child("serviceProviderName").getValue().toString().equals(application.getUser().getUsername())){
-                            counter++;
-                            timeSlot += counter+"."
-                                    + data.child("service").child("name").getValue().toString()
-                                    +": "+data.child("timeSlots").getValue().toString()+"\n";
-                        }
-                    }
-                    usernameList.setText(timeSlot);//here username should be named as 'timeslotList'
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+            ServiceProvider serviceProvider = (ServiceProvider)user;
+            String availableTime =serviceProvider.getProfile().getAvailableTime();
+            availableTime = availableTime.replace(",","\n");
+            availableTime = "The Service Provider is available in the following time slots:\n"+availableTime;
+            usernameList.setText(availableTime);
         }else{
             usernameList.setVisibility(View.INVISIBLE);
         }

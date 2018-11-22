@@ -45,7 +45,7 @@
                 android:layout_marginTop="20dip"
                 android:layout_marginBottom="20dip"
                 android:hint="Username"
-                android:text="123qwe"
+                android:text="TestP2"
                 android:inputType="textPersonName" />
 
         </android.support.design.widget.TextInputLayout>
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dip"
                 android:hint="Password"
-                android:text="123qwe"
+                android:text="TestP2"
                 android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>

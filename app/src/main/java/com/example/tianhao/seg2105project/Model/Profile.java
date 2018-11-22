@@ -6,7 +6,19 @@ public class Profile {
     private String address, phone, companyName, description;
     private boolean Licensed;
 
+    private String availableTime;
+
     public Profile() {
+    }
+
+    public Profile(String serviceProviderName, String address, String phone, String companyName, String description, boolean licensed, String availableTime) {
+        this.serviceProviderName = serviceProviderName;
+        this.address = address;
+        this.phone = phone;
+        this.companyName = companyName;
+        this.description = description;
+        Licensed = licensed;
+        this.availableTime = availableTime;
     }
 
     public Profile(String serviceProviderName, String address, String phone, String companyName, String description, boolean Licensed) {
@@ -16,6 +28,7 @@ public class Profile {
         this.companyName = companyName;
         this.description = description;
         this.Licensed = Licensed;
+
     }
 
     public String getServiceProviderName() {
@@ -64,5 +77,13 @@ public class Profile {
 
     public void setLicensed(boolean licensed) {
         this.Licensed = licensed;
+    }
+
+    public String getAvailableTime() {
+        return availableTime;
+    }
+
+    public void setAvailableTime(String availableTime) {
+        this.availableTime = availableTime;
     }
 }

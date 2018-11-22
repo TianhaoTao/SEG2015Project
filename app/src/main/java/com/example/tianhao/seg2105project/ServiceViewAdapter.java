@@ -67,7 +67,9 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
 
                 }else if (application.getUser().getUserType().equals("Service Provider")){
                     ServiceProvider serviceProvider = (ServiceProvider)application.getUser();
-                    if(serviceProvider.getProfile()==null){
+                    if(serviceProvider.getProfile().getAddress()==null||
+                            serviceProvider.getProfile().getCompanyName()==null||
+                            serviceProvider.getProfile().getPhone()==null){
                         Toast.makeText(mContext, "Please complete your information for profile before adding service", Toast.LENGTH_SHORT).show();
                     }else{
                         Intent intent = new Intent(mContext, AddServiceToProfile.class);

@@ -1,6 +1,7 @@
 package com.example.tianhao.seg2105project.Model;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ServiceProvider extends User {
@@ -24,6 +26,8 @@ public class ServiceProvider extends User {
 
     private ArrayList<ProvidedService> serviceArrayList = new ArrayList<>();
 
+    private ArrayList<Service> serviceArrayList1 = new ArrayList<>();
+
     public ServiceProvider(Context context, User user) {
         mContext=context;
         if(user.getUserType().equals("Service Provider")){
@@ -34,7 +38,7 @@ public class ServiceProvider extends User {
         }
 
         database=FirebaseDatabase.getInstance();
-        ProvidedServices=database.getReference("ProvidedServices");
+        ProvidedServices=database.getReference("ProvidedServicesNew");
 
         //get profile from database if it exist
         database.getReference("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -42,6 +46,8 @@ public class ServiceProvider extends User {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child(ServiceProvider.this.getUsername()).exists()){
                     profile = dataSnapshot.child(ServiceProvider.this.getUsername()).getValue(Profile.class);
+                }else{
+                    profile = new Profile();
                 }
             }
 
@@ -56,11 +62,13 @@ public class ServiceProvider extends User {
         ProvidedServices.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                serviceArrayList = new ArrayList<>();
+                serviceArrayList1 = new ArrayList<>();
                 for(DataSnapshot data : dataSnapshot.getChildren()) {
-                    if (data.child("serviceProviderName").getValue().toString().
-                            equals(ServiceProvider.this.getUsername())) {
-                        serviceArrayList.add(data.getValue(ProvidedService.class));
+                    if (data.getKey().equals(ServiceProvider.this.getUsername())) {
+                        for(DataSnapshot service : data.getChildren()){
+                            serviceArrayList1.add(service.getValue(Service.class));
+                        }
+                        break;
                     }
                 }
             }
@@ -97,5 +105,9 @@ public class ServiceProvider extends User {
 
     public ArrayList<ProvidedService> getServiceArrayList() {
         return serviceArrayList;
+    }
+
+    public ArrayList<Service> getServiceArrayList1() {
+        return serviceArrayList1;
     }
 }

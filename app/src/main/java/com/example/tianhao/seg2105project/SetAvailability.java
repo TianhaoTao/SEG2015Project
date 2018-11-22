@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tianhao.seg2105project.Model.Application;
+import com.example.tianhao.seg2105project.Model.Profile;
 import com.example.tianhao.seg2105project.Model.Service;
 import com.example.tianhao.seg2105project.Model.ServiceProvider;
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +43,7 @@ public class SetAvailability extends AppCompatActivity {
     boolean[] checkPickedDate;
     ArrayList<String> availableTime = new ArrayList<>();
     ArrayList<String> otherAvailableTime = new ArrayList<>();
-    Button buttonDelete, buttonGOBACK, buttonSave, dateTimePicker;
+    Button buttonGOBACK, buttonSave, dateTimePicker;
     private RecyclerView recyclerView;
     private TextView title;
 
@@ -56,11 +57,10 @@ public class SetAvailability extends AppCompatActivity {
         username = application.getUser().getUsername();
         database = FirebaseDatabase.getInstance();
         profile = database.getReference("Service_Provider_Profile");
-        providedServices = database.getReference("ProvidedServices");
+        providedServices = database.getReference("ProvidedServicesNew");
 
         //assign the id for button
         dateTimePicker=(Button) findViewById(R.id.datePicker);
-        buttonDelete = (Button)findViewById(R.id.delete_service);
         buttonSave = (Button) findViewById(R.id.save_button);
         buttonGOBACK = (Button) findViewById(R.id.cancel);
         pickDate = getResources().getStringArray(R.array.aWeek);
@@ -68,40 +68,54 @@ public class SetAvailability extends AppCompatActivity {
         title = findViewById(R.id.textTitle);
 
         recyclerView=findViewById(R.id.recycler_view_available_time);
-        //get the available time from database
-        providedServices.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int count =0;
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    if(data.child("serviceProviderName").getValue().toString().equals(username)){
-                        String[] timeslots = data.child("timeSlots").getValue().toString().split(",");
-                        if(data.child("service").child("id").getValue().toString()
-                                .equals(getIntent().getStringExtra("id"))){
-                            //Toast.makeText(AddServiceToProfile.this, "why", Toast.LENGTH_SHORT).show();
-                            String[] parts = data.child("timeSlots").getValue().toString().split(",");
-                            for(int i = 0; i<parts.length ; i++){
-                                availableTime.add(parts[i]);
-                                initAdapter();
-                            }
-                        }else{
-                            for(int i = 0; i<timeslots.length ; i++){
-                                otherAvailableTime.add(timeslots[i]);
-                            }
-                        }
-                    }
-                }
+
+        try{
+            String[] parts = serviceProvider.getProfile().getAvailableTime().split(",");
+            for(int i = 0; i<parts.length ; i++){
+                availableTime.add(parts[i]);
+                initAdapter();
             }
+        }catch(NullPointerException e){
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
 
-            }
-        });
 
-        //the title of the activity
-        title.setText("Service:"+getIntent().getStringExtra("name")+
-                "\n"+"Hourly Rate:"+getIntent().getStringExtra("hourlyRate"));
+//        //get the available time from database
+//
+////
+////        providedServices.addListenerForSingleValueEvent(new ValueEventListener() {
+////            @Override
+////            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+////                int count =0;
+////                for(DataSnapshot data : dataSnapshot.getChildren()){
+////                    if(data.child("serviceProviderName").getValue().toString().equals(username)){
+////                        String[] timeslots = data.child("timeSlots").getValue().toString().split(",");
+////                        if(data.child("service").child("id").getValue().toString()
+////                                .equals(getIntent().getStringExtra("id"))){
+////                            //Toast.makeText(AddServiceToProfile.this, "why", Toast.LENGTH_SHORT).show();
+////                            String[] parts = data.child("timeSlots").getValue().toString().split(",");
+////                            for(int i = 0; i<parts.length ; i++){
+////                                availableTime.add(parts[i]);
+////                                initAdapter();
+////                            }
+////                        }else{
+////                            for(int i = 0; i<timeslots.length ; i++){
+////                                otherAvailableTime.add(timeslots[i]);
+////                            }
+////                        }
+////                    }
+////                }
+////            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
+//        //the title of the activity
+//        title.setText("Service:"+getIntent().getStringExtra("name")+
+//                "\n"+"Hourly Rate:"+getIntent().getStringExtra("hourlyRate"));
 
 
         //group of clickListener goes here
@@ -137,7 +151,7 @@ public class SetAvailability extends AppCompatActivity {
                                 String time =mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString();
                                 if(otherAvailableTime.contains(time) || availableTime.contains(time)){
                                     Toast.makeText(SetAvailability.this,
-                                            "This time slot is occupied by some service you provide", Toast.LENGTH_SHORT).show();
+                                            "This time slot is selected", Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(SetAvailability.this,time,
                                             Toast.LENGTH_SHORT).show();
@@ -171,14 +185,12 @@ public class SetAvailability extends AppCompatActivity {
                 finish();
             }
         });
+
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!availableTime.isEmpty()) {
                     String timeslots = new String();
-                    Service service = new Service(getIntent().getStringExtra("id"),
-                            getIntent().getStringExtra("name"),
-                            Double.valueOf(getIntent().getStringExtra("hourlyRate")));
                     for (int i = 0; i < availableTime.size(); i++) {
                         if (i == 0) {
                             timeslots = availableTime.get(i);
@@ -187,19 +199,11 @@ public class SetAvailability extends AppCompatActivity {
                             timeslots = timeslots + "," + availableTime.get(i);
                         }
                     }
-                    serviceProvider.saveServiceToProfile(service, timeslots);
+                    serviceProvider.getProfile().setAvailableTime(timeslots);
                     finish();
                 } else {
                     Toast.makeText(SetAvailability.this, "Please input at least one time slot", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                serviceProvider.removeServiceFromProfile(getIntent().getStringExtra("id"));
-                finish();
             }
         });
 

@@ -27,6 +27,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
 
     private ServiceProvider user;
     private Application application;
+    private Profile profile;
 
     TextInputLayout editAddress;
     TextInputLayout editPhone;
@@ -53,6 +54,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
 
         application = Application.getInstance(this);
         user = (ServiceProvider) application.getUser();
+        profile =user.getProfile();
 
         editAddress = findViewById((R.id.editAddress));
         editPhone = findViewById((R.id.editPhone));
@@ -69,14 +71,12 @@ public class ServiceProviderProfile extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         profile_firebase = database.getReference("Profile");
 
-        if(user.getProfile()!=null){
-            editAddress.getEditText().setText(user.getProfile().getAddress());
-            editPhone.getEditText().setText(user.getProfile().getPhone());
-            editCompany.getEditText().setText(user.getProfile().getCompanyName());
-            editDescription.getEditText().setText(user.getProfile().getDescription());
-            radioButtonYes.setChecked(user.getProfile().isLicensed());
-            radioButtonNo.setChecked(!user.getProfile().isLicensed());
-        }
+        editAddress.getEditText().setText(user.getProfile().getAddress());
+        editPhone.getEditText().setText(user.getProfile().getPhone());
+        editCompany.getEditText().setText(user.getProfile().getCompanyName());
+        editDescription.getEditText().setText(user.getProfile().getDescription());
+        radioButtonYes.setChecked(user.getProfile().isLicensed());
+        radioButtonNo.setChecked(!user.getProfile().isLicensed());
 
         ButtonAvailability.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,15 +93,20 @@ public class ServiceProviderProfile extends AppCompatActivity {
                     int radioButtonId = radioGroup.getCheckedRadioButtonId();
                     radioButton = (RadioButton) findViewById(radioButtonId);
 
-                    final Profile profile = new Profile(
-                            user.getUsername(),
-                            editAddress.getEditText().getText().toString(),
-                            editPhone.getEditText().getText().toString(),
-                            editCompany.getEditText().getText().toString(),
-                            editDescription.getEditText().getText().toString(),
-                            Boolean.parseBoolean(radioButton.getText().toString()));
+//                    final Profile profile = new Profile(
+//                            user.getUsername(),
+//                            editAddress.getEditText().getText().toString(),
+//                            editPhone.getEditText().getText().toString(),
+//                            editCompany.getEditText().getText().toString(),
+//                            editDescription.getEditText().getText().toString(),
+//                            Boolean.parseBoolean(radioButton.getText().toString()));
 
-                    user.setProfile(profile);
+                    profile.setServiceProviderName(user.getUsername());
+                    profile.setAddress(editAddress.getEditText().getText().toString());
+                    profile.setPhone(editPhone.getEditText().getText().toString());
+                    profile.setCompanyName(editCompany.getEditText().getText().toString());
+                    profile.setDescription(editDescription.getEditText().getText().toString());
+                    profile.setLicensed((Boolean.parseBoolean(radioButton.getText().toString())));
 
                     profile_firebase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override

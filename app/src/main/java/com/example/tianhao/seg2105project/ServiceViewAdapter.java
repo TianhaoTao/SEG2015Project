@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tianhao.seg2105project.Model.Application;
 import com.example.tianhao.seg2105project.Model.Service;
+import com.example.tianhao.seg2105project.Model.ServiceProvider;
 
 import java.util.ArrayList;
 
@@ -26,9 +28,12 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
 
     private ArrayList<Service> serviceArrayList;
 
+    private Application application;
+
     public ServiceViewAdapter(Context mContext, ArrayList<Service> serviceArrayList) {
         this.mContext = mContext;
         this.serviceArrayList = serviceArrayList;
+         application = Application.getInstance(mContext);
     }
 
     @NonNull
@@ -50,13 +55,30 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
         serviceViewHolder.serviceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: "+serviceArrayList.get(i));
-                Intent intent = new Intent(mContext, EditService.class);
-                intent.putExtra("id",serviceArrayList.get(i).getId());
-                intent.putExtra("name",serviceArrayList.get(i).getName());
-                intent.putExtra("hourlyRate",Double.toString(serviceArrayList.get(i).getHourlyRate()));
-                mContext.startActivity(intent);
-                Toast.makeText(mContext, serviceArrayList.get(i).getName()+" is selected.", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: " + serviceArrayList.get(i));
+
+                if (application.getUser().getUserType().equals("Administrator")) {
+                    Intent intent = new Intent(mContext, EditService.class);
+                    intent.putExtra("id", serviceArrayList.get(i).getId());
+                    intent.putExtra("name", serviceArrayList.get(i).getName());
+                    intent.putExtra("hourlyRate", Double.toString(serviceArrayList.get(i).getHourlyRate()));
+                    mContext.startActivity(intent);
+                    Toast.makeText(mContext, serviceArrayList.get(i).getName() + " is selected.", Toast.LENGTH_SHORT).show();
+
+                }else if (application.getUser().getUserType().equals("Service Provider")){
+                    ServiceProvider serviceProvider = (ServiceProvider)application.getUser();
+                    if(serviceProvider.getProfile()==null){
+                        Toast.makeText(mContext, "Please complete your information for profile before adding service", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Intent intent = new Intent(mContext, AddServiceToProfile.class);
+                        intent.putExtra("id", serviceArrayList.get(i).getId());
+                        intent.putExtra("name", serviceArrayList.get(i).getName());
+                        intent.putExtra("hourlyRate", Double.toString(serviceArrayList.get(i).getHourlyRate()));
+                        mContext.startActivity(intent);
+                        Toast.makeText(mContext, serviceArrayList.get(i).getName() + " is selected.", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
             }
         });
     }

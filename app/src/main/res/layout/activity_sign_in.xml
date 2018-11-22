@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignIn">
+    tools:context=".SignIn"
+    android:layout_gravity="center"
+    android:background="@drawable/log_in_out">
 
     <LinearLayout
         android:layout_width="405dp"
@@ -18,12 +20,13 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="214dp"
+            android:layout_width="380dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="326dp"
-            android:layout_marginRight="326dp"
+            android:layout_marginEnd="426dp"
+            android:layout_marginRight="426dp"
             android:text="Sign In"
-            android:textSize="36sp"
+            android:textSize="38sp"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +45,7 @@
                 android:layout_marginTop="20dip"
                 android:layout_marginBottom="20dip"
                 android:hint="Username"
-                android:text="admin123"
+                android:text="123qwe"
                 android:inputType="textPersonName" />
 
         </android.support.design.widget.TextInputLayout>
@@ -59,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dip"
                 android:hint="Password"
-                android:text="admin123"
+                android:text="123qwe"
                 android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>

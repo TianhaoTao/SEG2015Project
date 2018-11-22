@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.system.ErrnoException;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -31,9 +32,9 @@ public class EditService extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_service);
-        buttonSound1=MediaPlayer.create(EditService.this,R.raw.allgood);
-        buttonSound2=MediaPlayer.create(EditService.this,R.raw.happy);
-        buttonSound3=MediaPlayer.create(EditService.this,R.raw.sound);
+        buttonSound1=MediaPlayer.create(EditService.this,R.raw.button_sound);
+        buttonSound2=MediaPlayer.create(EditService.this,R.raw.button_sound);
+        buttonSound3=MediaPlayer.create(EditService.this,R.raw.button_sound);
 
 //      id of current service;
         id = getIntent().getStringExtra("id");
@@ -112,10 +113,24 @@ public class EditService extends AppCompatActivity {
         if(ServiceName.isEmpty()){
             createServiceType.setError("Please Enter Service type");
             return false;
+        }else if(!validationNameNotBeNumber(ServiceName)){
+            createServiceType.setError("At least one letter");
+            return false;
         }else{
             createServiceType.setError(null);
             return true;
         }
+    }
+
+    public boolean validationNameNotBeNumber(String name){
+        boolean result=false;
+        try{
+            name = name.replaceAll("\\s","");
+            Double.parseDouble(name);
+        }catch(NumberFormatException e){
+            result=true;
+        }
+        return result;
     }
 
     public boolean validationHourlyRate() {

@@ -13,6 +13,7 @@ import android.media.MediaPlayer;
 
 
 import com.example.tianhao.seg2105project.Model.Application;
+import com.example.tianhao.seg2105project.Model.ServiceProvider;
 import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,8 +41,8 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         //sound
-        buttonSound1=MediaPlayer.create(SignIn.this,R.raw.sound);
-        buttonSound2=MediaPlayer.create(SignIn.this,R.raw.allgood);
+        buttonSound1=MediaPlayer.create(SignIn.this,R.raw.button_sound);
+        buttonSound2=MediaPlayer.create(SignIn.this,R.raw.button_sound);
 
         application = Application.getInstance(this);
 
@@ -83,12 +84,15 @@ public class SignIn extends AppCompatActivity {
                         User login = dataSnapshot.child(username).getValue(User.class);
                         if(login.getPassword().equals(password)){
                             Toast.makeText(SignIn.this, "Success Login", Toast.LENGTH_SHORT).show();
-                            application.setUser(login);
+                            switch (login.getUserType()){
+                                case "Service Provider":
+                                    application.setUser(new ServiceProvider(getApplicationContext(),login));
+                                    break;
+                                default:
+                                    application.setUser(login);
+                                    break;
+                            }
                             Intent intentWelcome = new Intent(getApplicationContext(), WelcomePage.class);
-//                            intentWelcome.putExtra("username",login.getUsername());
-//                            intentWelcome.putExtra("userType",login.getUserType());
-//                            intentWelcome.putExtra("email",login.getEmail());
-//                            intentWelcome.putExtra("password",login.getPassword());
                             startActivity(intentWelcome);
                             finish();
                         }else{

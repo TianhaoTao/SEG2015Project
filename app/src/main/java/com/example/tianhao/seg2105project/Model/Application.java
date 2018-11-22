@@ -23,8 +23,6 @@ public class Application {
 
     private User user;
 
-    private ServiceViewAdapter adapter;
-
     FirebaseDatabase database;
     DatabaseReference services;
 
@@ -91,7 +89,4 @@ public class Application {
         this.user = user;
     }
 
-    public ServiceViewAdapter getAdapter() {
-        return adapter;
-    }
 }

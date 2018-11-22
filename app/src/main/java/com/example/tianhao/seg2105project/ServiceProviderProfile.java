@@ -1,5 +1,6 @@
 package com.example.tianhao.seg2105project;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -20,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Set;
+
 public class ServiceProviderProfile extends AppCompatActivity {
 
     private ServiceProvider user;
@@ -34,6 +37,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
     RadioButton radioButtonYes;
     RadioButton radioButtonNo;
     Button ButtonSubmit;
+    Button ButtonAvailability;
     MediaPlayer buttonSound;
 
     //firebase init
@@ -58,6 +62,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
         radioButtonYes = findViewById(R.id.radioButtonYes);
         radioButtonNo = findViewById(R.id.radioButtonNo);
         ButtonSubmit = (Button)findViewById(R.id.buttonSubmit2);
+        ButtonAvailability = findViewById(R.id.buttonTime);
         buttonSound=MediaPlayer.create(ServiceProviderProfile.this,R.raw.button_sound);
 
         //about firebase
@@ -73,6 +78,12 @@ public class ServiceProviderProfile extends AppCompatActivity {
             radioButtonNo.setChecked(!user.getProfile().isLicensed());
         }
 
+        ButtonAvailability.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),SetAvailability.class));
+            }
+        });
 
         ButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

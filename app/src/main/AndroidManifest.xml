@@ -20,7 +20,8 @@
         <activity android:name=".WelcomePage" />
         <activity android:name=".EditService" />
         <activity android:name=".AddServiceToProfile" />
-        <activity android:name=".ServiceProviderProfile"/>
+        <activity android:name=".ServiceProviderProfile" />
+        <activity android:name=".SetAvailability"></activity>
     </application>
 
 </manifest>

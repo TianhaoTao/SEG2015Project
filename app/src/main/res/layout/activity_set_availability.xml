@@ -60,7 +60,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="20dp"
                     android:drawableTop="@drawable/ic_build_black_24dp"
-                    android:text="set time slots in profile" />
+                    android:text="save your availability" />
             </LinearLayout>
 
             <LinearLayout

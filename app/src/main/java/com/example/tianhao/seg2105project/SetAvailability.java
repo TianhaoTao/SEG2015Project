@@ -42,7 +42,7 @@ public class SetAvailability extends AppCompatActivity {
     String[] pickDate;//Monday to Sunday
     boolean[] checkPickedDate;
     ArrayList<String> availableTime = new ArrayList<>();
-    ArrayList<String> otherAvailableTime = new ArrayList<>();
+    ArrayList<String> tempAvailableTime = new ArrayList<>();
     Button buttonGOBACK, buttonSave, dateTimePicker;
     private RecyclerView recyclerView;
     private TextView title;
@@ -51,7 +51,7 @@ public class SetAvailability extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_service_to_profile);
+        setContentView(R.layout.activity_set_availability);
 
         //about firebase
         username = application.getUser().getUsername();
@@ -73,50 +73,12 @@ public class SetAvailability extends AppCompatActivity {
             String[] parts = serviceProvider.getProfile().getAvailableTime().split(",");
             for(int i = 0; i<parts.length ; i++){
                 availableTime.add(parts[i]);
+                tempAvailableTime.add(parts[i]);
                 initAdapter();
             }
         }catch(NullPointerException e){
 
         }
-
-
-//        //get the available time from database
-//
-////
-////        providedServices.addListenerForSingleValueEvent(new ValueEventListener() {
-////            @Override
-////            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-////                int count =0;
-////                for(DataSnapshot data : dataSnapshot.getChildren()){
-////                    if(data.child("serviceProviderName").getValue().toString().equals(username)){
-////                        String[] timeslots = data.child("timeSlots").getValue().toString().split(",");
-////                        if(data.child("service").child("id").getValue().toString()
-////                                .equals(getIntent().getStringExtra("id"))){
-////                            //Toast.makeText(AddServiceToProfile.this, "why", Toast.LENGTH_SHORT).show();
-////                            String[] parts = data.child("timeSlots").getValue().toString().split(",");
-////                            for(int i = 0; i<parts.length ; i++){
-////                                availableTime.add(parts[i]);
-////                                initAdapter();
-////                            }
-////                        }else{
-////                            for(int i = 0; i<timeslots.length ; i++){
-////                                otherAvailableTime.add(timeslots[i]);
-////                            }
-////                        }
-////                    }
-////                }
-////            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
-//        //the title of the activity
-//        title.setText("Service:"+getIntent().getStringExtra("name")+
-//                "\n"+"Hourly Rate:"+getIntent().getStringExtra("hourlyRate"));
-
 
         //group of clickListener goes here
         dateTimePicker.setOnClickListener(new View.OnClickListener(){
@@ -149,7 +111,7 @@ public class SetAvailability extends AppCompatActivity {
                             if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")
                                     &&!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
                                 String time =mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString();
-                                if(otherAvailableTime.contains(time) || availableTime.contains(time)){
+                                if(availableTime.contains(time)){
                                     Toast.makeText(SetAvailability.this,
                                             "This time slot is selected", Toast.LENGTH_SHORT).show();
                                 }else{
@@ -182,6 +144,7 @@ public class SetAvailability extends AppCompatActivity {
         buttonGOBACK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 finish();
             }
         });

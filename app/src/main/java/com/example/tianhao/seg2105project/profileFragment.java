@@ -31,7 +31,6 @@ public class profileFragment extends Fragment {
     private ServiceProvider serviceProvider;
 
     private ArrayList<Service> services;
-    private ArrayList<ProvidedService> providedServices;
 
     private RecyclerView recyclerView;
 
@@ -56,12 +55,7 @@ public class profileFragment extends Fragment {
     }
 
     private void initAdapter(){
-        services = new ArrayList<>();
-        providedServices = serviceProvider.getServiceArrayList();
-        for(ProvidedService providedService : providedServices){
-            services.add(providedService.getService());
-        }
-
+        services = serviceProvider.getServiceArrayList1();
         application = Application.getInstance(getActivity());
         recyclerView.setAdapter(new ServiceViewAdapter(getActivity(),services));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

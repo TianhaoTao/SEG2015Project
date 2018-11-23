@@ -33,6 +33,7 @@ public class AddServiceToProfile extends AppCompatActivity{
     private Application application=Application.getInstance(this);;
     private String username;
     private ServiceProvider serviceProvider = (ServiceProvider)application.getUser();
+    private Service service;
 
 
     //all initial
@@ -50,6 +51,9 @@ public class AddServiceToProfile extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_service_to_profile);
+        service = new Service(getIntent().getStringExtra("id"),
+                getIntent().getStringExtra("name"),
+                Double.valueOf(getIntent().getStringExtra("hourlyRate")));
 
         //about firebase
         username = application.getUser().getUsername();
@@ -66,37 +70,37 @@ public class AddServiceToProfile extends AppCompatActivity{
         checkPickedDate = new boolean[pickDate.length];
         title = findViewById(R.id.textTitle);
 
-        recyclerView=findViewById(R.id.recycler_view_available_time);
-        //get the available time from database
-        providedServices.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int count =0;
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    if(data.child("serviceProviderName").getValue().toString().equals(username)){
-                        String[] timeslots = data.child("timeSlots").getValue().toString().split(",");
-                        if(data.child("service").child("id").getValue().toString()
-                                .equals(getIntent().getStringExtra("id"))){
-                            //Toast.makeText(AddServiceToProfile.this, "why", Toast.LENGTH_SHORT).show();
-                            String[] parts = data.child("timeSlots").getValue().toString().split(",");
-                            for(int i = 0; i<parts.length ; i++){
-                                availableTime.add(parts[i]);
-                                initAdapter();
-                            }
-                        }else{
-                            for(int i = 0; i<timeslots.length ; i++){
-                                otherAvailableTime.add(timeslots[i]);
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        recyclerView=findViewById(R.id.recycler_view_available_time);
+//        //get the available time from database
+//        providedServices.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                int count =0;
+//                for(DataSnapshot data : dataSnapshot.getChildren()){
+//                    if(data.child("serviceProviderName").getValue().toString().equals(username)){
+//                        String[] timeslots = data.child("timeSlots").getValue().toString().split(",");
+//                        if(data.child("service").child("id").getValue().toString()
+//                                .equals(getIntent().getStringExtra("id"))){
+//                            //Toast.makeText(AddServiceToProfile.this, "why", Toast.LENGTH_SHORT).show();
+//                            String[] parts = data.child("timeSlots").getValue().toString().split(",");
+//                            for(int i = 0; i<parts.length ; i++){
+//                                availableTime.add(parts[i]);
+//                                initAdapter();
+//                            }
+//                        }else{
+//                            for(int i = 0; i<timeslots.length ; i++){
+//                                otherAvailableTime.add(timeslots[i]);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
         //the title of the activity
         title.setText("Service:"+getIntent().getStringExtra("name")+
@@ -104,65 +108,65 @@ public class AddServiceToProfile extends AppCompatActivity{
 
 
         //group of clickListener goes here
-        dateTimePicker.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddServiceToProfile.this);
-                mBuilder.setTitle("Select Your Available day and time");
-                View mview_day = getLayoutInflater().inflate(R.layout.dialog_day_spinner,null);
-                final Spinner mSpinner_day =(Spinner) mview_day.findViewById(R.id.spinner_day);
-                final Spinner mSpinner_time = (Spinner) mview_day.findViewById(R.id.spinner_time);
-                ArrayAdapter<String> adapter_day=new ArrayAdapter<String>(AddServiceToProfile.this,
-                        android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.aWeek));
-                ArrayAdapter<String> adapter_time=new ArrayAdapter<String>(AddServiceToProfile.this,
-                        android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.time_day));
-                adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                adapter_time.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                mSpinner_day.setAdapter(adapter_day);
-                mSpinner_time.setAdapter(adapter_time);
-
-                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int which){
-
-                        if(mSpinner_day.getSelectedItem().toString().equals("Please choose a day...")||mSpinner_time.getSelectedItem().toString().equals("Please choose a time...")){
-                            //do nothing
-                            Toast.makeText(AddServiceToProfile.this,"Invalid day",Toast.LENGTH_SHORT).show();
-                        }else{
-                            if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")
-                                    &&!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
-                                String time =mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString();
-                                if(otherAvailableTime.contains(time) || availableTime.contains(time)){
-                                    Toast.makeText(AddServiceToProfile.this,
-                                            "This time slot is occupied by some service you provide", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(AddServiceToProfile.this,time,
-                                            Toast.LENGTH_SHORT).show();
-                                    availableTime.add(time);
-                                    initAdapter();
-                                    dialogInterface.dismiss();
-                                }
-                            }
-                        }
-                    }
-                });
-
-
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                mBuilder.setView(mview_day);
-                AlertDialog mDialog=mBuilder.create();
-                mDialog.show();
-
-            }
-        });
+//        dateTimePicker.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddServiceToProfile.this);
+//                mBuilder.setTitle("Select Your Available day and time");
+//                View mview_day = getLayoutInflater().inflate(R.layout.dialog_day_spinner,null);
+//                final Spinner mSpinner_day =(Spinner) mview_day.findViewById(R.id.spinner_day);
+//                final Spinner mSpinner_time = (Spinner) mview_day.findViewById(R.id.spinner_time);
+//                ArrayAdapter<String> adapter_day=new ArrayAdapter<String>(AddServiceToProfile.this,
+//                        android.R.layout.simple_spinner_item,
+//                        getResources().getStringArray(R.array.aWeek));
+//                ArrayAdapter<String> adapter_time=new ArrayAdapter<String>(AddServiceToProfile.this,
+//                        android.R.layout.simple_spinner_item,
+//                        getResources().getStringArray(R.array.time_day));
+//                adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                adapter_time.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                mSpinner_day.setAdapter(adapter_day);
+//                mSpinner_time.setAdapter(adapter_time);
+//
+//                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int which){
+//
+//                        if(mSpinner_day.getSelectedItem().toString().equals("Please choose a day...")||mSpinner_time.getSelectedItem().toString().equals("Please choose a time...")){
+//                            //do nothing
+//                            Toast.makeText(AddServiceToProfile.this,"Invalid day",Toast.LENGTH_SHORT).show();
+//                        }else{
+//                            if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")
+//                                    &&!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
+//                                String time =mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString();
+//                                if(otherAvailableTime.contains(time) || availableTime.contains(time)){
+//                                    Toast.makeText(AddServiceToProfile.this,
+//                                            "This time slot is occupied by some service you provide", Toast.LENGTH_SHORT).show();
+//                                }else{
+//                                    Toast.makeText(AddServiceToProfile.this,time,
+//                                            Toast.LENGTH_SHORT).show();
+//                                    availableTime.add(time);
+//                                    initAdapter();
+//                                    dialogInterface.dismiss();
+//                                }
+//                            }
+//                        }
+//                    }
+//                });
+//
+//
+//                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//
+//                mBuilder.setView(mview_day);
+//                AlertDialog mDialog=mBuilder.create();
+//                mDialog.show();
+//
+//            }
+//        });
 
         buttonGOBACK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,31 +177,15 @@ public class AddServiceToProfile extends AppCompatActivity{
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!availableTime.isEmpty()) {
-                    String timeslots = new String();
-                    Service service = new Service(getIntent().getStringExtra("id"),
-                            getIntent().getStringExtra("name"),
-                            Double.valueOf(getIntent().getStringExtra("hourlyRate")));
-                    for (int i = 0; i < availableTime.size(); i++) {
-                        if (i == 0) {
-                            timeslots = availableTime.get(i);
-                        } else {
-
-                            timeslots = timeslots + "," + availableTime.get(i);
-                        }
-                    }
-                    serviceProvider.saveServiceToProfile(service, timeslots);
-                    finish();
-                } else {
-                    Toast.makeText(AddServiceToProfile.this, "Please input at least one time slot", Toast.LENGTH_SHORT).show();
-                }
+                serviceProvider.saveServiceToProfile(service);
+                finish();
             }
         });
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serviceProvider.removeServiceFromProfile(getIntent().getStringExtra("id"));
+                serviceProvider.removeServiceFromProfile(service);
                 finish();
             }
         });

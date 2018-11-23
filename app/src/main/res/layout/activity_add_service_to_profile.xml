@@ -103,16 +103,16 @@
         android:layout_below="@+id/editorButtonScroll"
         android:layout_alignParentLeft="true" />
 
-    <Button
-        android:id="@+id/datePicker"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="104dp"
-        android:layout_marginBottom="0dp"
-        android:text="available Time picker" />
+    <!--<Button-->
+        <!--android:id="@+id/datePicker"-->
+        <!--style="@style/Widget.AppCompat.Button.Colored"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginLeft="104dp"-->
+        <!--android:layout_marginBottom="0dp"-->
+        <!--android:text="available Time picker" />-->
 
 </RelativeLayout>
 

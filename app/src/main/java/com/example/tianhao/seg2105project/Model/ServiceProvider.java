@@ -94,6 +94,27 @@ public class ServiceProvider extends User {
         Toast.makeText(mContext, "Service Removed from profile", Toast.LENGTH_SHORT).show();
     }
 
+    public void saveServiceToProfile(Service service){
+        boolean flag = true;
+        for(Service service1 : serviceArrayList1){
+            if(service1.getId().equals(service)){
+                flag = false;
+                break;
+            }
+        }
+        if(flag){
+            serviceArrayList1.add(service);
+            ProvidedServices.child(getUsername()).child(service.getId()).setValue(service);
+            Toast.makeText(mContext, "The Service is saved to the profile", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void removeServiceFromProfile(Service service){
+        serviceArrayList1.remove(service);
+        ProvidedServices.child(getUsername()).child(service.getId()).removeValue();
+        Toast.makeText(mContext, "Service Removed from profile", Toast.LENGTH_SHORT).show();
+    }
+
     public Profile getProfile() {
         return profile;
     }

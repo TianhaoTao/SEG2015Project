@@ -23,6 +23,8 @@ public class Application {
 
     private User user;
 
+    private Fragment fragment;
+
     FirebaseDatabase database;
     DatabaseReference services;
 
@@ -30,6 +32,7 @@ public class Application {
         mContext=context;
         database=FirebaseDatabase.getInstance();
         services=database.getReference("Services");
+        fragment=Fragment.FIRST;
         services.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,6 +79,13 @@ public class Application {
         Toast.makeText(mContext, "Service Removed", Toast.LENGTH_SHORT).show();
     }
 
+    public Fragment getFragment() {
+        return fragment;
+    }
+
+    public void setFragment(Fragment fragment) {
+        this.fragment = fragment;
+    }
 
     public ArrayList<Service> getServiceArrayList() {
         return serviceArrayList;

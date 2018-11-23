@@ -23,9 +23,6 @@ public class ServiceProvider extends User {
 
     private Context mContext;
 
-
-    private ArrayList<ProvidedService> serviceArrayList = new ArrayList<>();
-
     private ArrayList<Service> serviceArrayList1 = new ArrayList<>();
 
     public ServiceProvider(Context context, User user) {
@@ -81,36 +78,13 @@ public class ServiceProvider extends User {
 
     }
 
-    public void saveServiceToProfile(Service service,String timeSlots){
-        String id = service.getId()+this.getUsername();
-        ProvidedServices.child(id).setValue(new ProvidedService(id,service,this.getUsername(),timeSlots));
-        Toast.makeText(mContext, "The Service is saved to the profile", Toast.LENGTH_SHORT).show();
-    }
-
-
-    public void removeServiceFromProfile(String serviceId){
-        String id = serviceId+this.getUsername();
-        ProvidedServices.child(id).removeValue();
-        Toast.makeText(mContext, "Service Removed from profile", Toast.LENGTH_SHORT).show();
-    }
-
     public void saveServiceToProfile(Service service){
-        boolean flag = true;
-        for(Service service1 : serviceArrayList1){
-            if(service1.getId().equals(service)){
-                flag = false;
-                break;
-            }
-        }
-        if(flag){
-            serviceArrayList1.add(service);
             ProvidedServices.child(getUsername()).child(service.getId()).setValue(service);
             Toast.makeText(mContext, "The Service is saved to the profile", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     public void removeServiceFromProfile(Service service){
-        serviceArrayList1.remove(service);
         ProvidedServices.child(getUsername()).child(service.getId()).removeValue();
         Toast.makeText(mContext, "Service Removed from profile", Toast.LENGTH_SHORT).show();
     }
@@ -122,10 +96,6 @@ public class ServiceProvider extends User {
     public void setProfile(Profile profile) {
         this.profile = profile;
         database.getReference("Profile").child(getUsername()).setValue(profile);
-    }
-
-    public ArrayList<ProvidedService> getServiceArrayList() {
-        return serviceArrayList;
     }
 
     public ArrayList<Service> getServiceArrayList1() {

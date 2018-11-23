@@ -163,6 +163,7 @@ public class SetAvailability extends AppCompatActivity {
                         }
                     }
                     serviceProvider.getProfile().setAvailableTime(timeslots);
+                    Toast.makeText(SetAvailability.this, "Time slots saved successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     Toast.makeText(SetAvailability.this, "Please input at least one time slot", Toast.LENGTH_SHORT).show();

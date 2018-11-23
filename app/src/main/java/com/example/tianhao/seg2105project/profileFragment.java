@@ -10,11 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tianhao.seg2105project.Model.Application;
-import com.example.tianhao.seg2105project.Model.ProvidedService;
 import com.example.tianhao.seg2105project.Model.Service;
 import com.example.tianhao.seg2105project.Model.ServiceProvider;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 

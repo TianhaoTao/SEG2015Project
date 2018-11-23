@@ -70,6 +70,15 @@ public class AddServiceToProfile extends AppCompatActivity{
         checkPickedDate = new boolean[pickDate.length];
         title = findViewById(R.id.textTitle);
 
+        switch (application.getFragment()){
+            case FIRST:buttonDelete.setVisibility(View.INVISIBLE);
+                break;
+            case THIRD:buttonSave.setVisibility(View.INVISIBLE);
+                break;
+            default:
+                break;
+        }
+
 //        recyclerView=findViewById(R.id.recycler_view_available_time);
 //        //get the available time from database
 //        providedServices.addListenerForSingleValueEvent(new ValueEventListener() {

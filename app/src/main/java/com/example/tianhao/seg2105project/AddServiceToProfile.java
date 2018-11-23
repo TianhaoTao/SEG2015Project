@@ -37,11 +37,9 @@ public class AddServiceToProfile extends AppCompatActivity{
 
 
     //all initial
-    int hour,hourFinal, minute,minuteFinal;
     String[] pickDate;//Monday to Sunday
     boolean[] checkPickedDate;
     ArrayList<String> availableTime = new ArrayList<>();
-    ArrayList<String> otherAvailableTime = new ArrayList<>();
     Button buttonDelete, buttonGOBACK, buttonSave, dateTimePicker;
     private RecyclerView recyclerView;
     private TextView title;
@@ -79,103 +77,11 @@ public class AddServiceToProfile extends AppCompatActivity{
                 break;
         }
 
-//        recyclerView=findViewById(R.id.recycler_view_available_time);
-//        //get the available time from database
-//        providedServices.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                int count =0;
-//                for(DataSnapshot data : dataSnapshot.getChildren()){
-//                    if(data.child("serviceProviderName").getValue().toString().equals(username)){
-//                        String[] timeslots = data.child("timeSlots").getValue().toString().split(",");
-//                        if(data.child("service").child("id").getValue().toString()
-//                                .equals(getIntent().getStringExtra("id"))){
-//                            //Toast.makeText(AddServiceToProfile.this, "why", Toast.LENGTH_SHORT).show();
-//                            String[] parts = data.child("timeSlots").getValue().toString().split(",");
-//                            for(int i = 0; i<parts.length ; i++){
-//                                availableTime.add(parts[i]);
-//                                initAdapter();
-//                            }
-//                        }else{
-//                            for(int i = 0; i<timeslots.length ; i++){
-//                                otherAvailableTime.add(timeslots[i]);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
         //the title of the activity
         title.setText("Service:"+getIntent().getStringExtra("name")+
                 "\n"+"Hourly Rate:"+getIntent().getStringExtra("hourlyRate"));
 
-
-        //group of clickListener goes here
-//        dateTimePicker.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddServiceToProfile.this);
-//                mBuilder.setTitle("Select Your Available day and time");
-//                View mview_day = getLayoutInflater().inflate(R.layout.dialog_day_spinner,null);
-//                final Spinner mSpinner_day =(Spinner) mview_day.findViewById(R.id.spinner_day);
-//                final Spinner mSpinner_time = (Spinner) mview_day.findViewById(R.id.spinner_time);
-//                ArrayAdapter<String> adapter_day=new ArrayAdapter<String>(AddServiceToProfile.this,
-//                        android.R.layout.simple_spinner_item,
-//                        getResources().getStringArray(R.array.aWeek));
-//                ArrayAdapter<String> adapter_time=new ArrayAdapter<String>(AddServiceToProfile.this,
-//                        android.R.layout.simple_spinner_item,
-//                        getResources().getStringArray(R.array.time_day));
-//                adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                adapter_time.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                mSpinner_day.setAdapter(adapter_day);
-//                mSpinner_time.setAdapter(adapter_time);
-//
-//                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int which){
-//
-//                        if(mSpinner_day.getSelectedItem().toString().equals("Please choose a day...")||mSpinner_time.getSelectedItem().toString().equals("Please choose a time...")){
-//                            //do nothing
-//                            Toast.makeText(AddServiceToProfile.this,"Invalid day",Toast.LENGTH_SHORT).show();
-//                        }else{
-//                            if(!mSpinner_day.getSelectedItem().toString().equalsIgnoreCase("")
-//                                    &&!mSpinner_time.getSelectedItem().toString().equalsIgnoreCase("")){
-//                                String time =mSpinner_day.getSelectedItem().toString()+" "+mSpinner_time.getSelectedItem().toString();
-//                                if(otherAvailableTime.contains(time) || availableTime.contains(time)){
-//                                    Toast.makeText(AddServiceToProfile.this,
-//                                            "This time slot is occupied by some service you provide", Toast.LENGTH_SHORT).show();
-//                                }else{
-//                                    Toast.makeText(AddServiceToProfile.this,time,
-//                                            Toast.LENGTH_SHORT).show();
-//                                    availableTime.add(time);
-//                                    initAdapter();
-//                                    dialogInterface.dismiss();
-//                                }
-//                            }
-//                        }
-//                    }
-//                });
-//
-//
-//                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.dismiss();
-//                    }
-//                });
-//
-//                mBuilder.setView(mview_day);
-//                AlertDialog mDialog=mBuilder.create();
-//                mDialog.show();
-//
-//            }
-//        });
 
         buttonGOBACK.setOnClickListener(new View.OnClickListener() {
             @Override

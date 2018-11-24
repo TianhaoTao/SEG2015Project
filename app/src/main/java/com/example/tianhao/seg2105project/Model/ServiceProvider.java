@@ -61,11 +61,8 @@ public class ServiceProvider extends User {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 serviceArrayList1 = new ArrayList<>();
                 for(DataSnapshot data : dataSnapshot.getChildren()) {
-                    if (data.getKey().equals(ServiceProvider.this.getUsername())) {
-                        for(DataSnapshot service : data.getChildren()){
-                            serviceArrayList1.add(service.getValue(Service.class));
-                        }
-                        break;
+                    if (data.child("provider").getValue().toString().equals(ServiceProvider.this.getUsername())) {
+                            serviceArrayList1.add(data.child("service").getValue(Service.class));
                     }
                 }
             }
@@ -79,13 +76,16 @@ public class ServiceProvider extends User {
     }
 
     public void saveServiceToProfile(Service service){
-            ProvidedServices.child(getUsername()).child(service.getId()).setValue(service);
+            String id = service.getId()+getUsername();
+            ProvidedServices.child(id).child("provider").setValue(getUsername());
+            ProvidedServices.child(id).child("service").setValue(service);
             Toast.makeText(mContext, "The Service is saved to the profile", Toast.LENGTH_SHORT).show();
 
     }
 
     public void removeServiceFromProfile(Service service){
-        ProvidedServices.child(getUsername()).child(service.getId()).removeValue();
+        String id = service.getId()+getUsername();
+        ProvidedServices.child(id).removeValue();
         Toast.makeText(mContext, "Service Removed from profile", Toast.LENGTH_SHORT).show();
     }
 

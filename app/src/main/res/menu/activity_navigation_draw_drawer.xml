@@ -22,6 +22,14 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_account_box_black_24dp"
             android:title="Service Provider Profile"/>
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="Search Provided Service"/>
+        <item
+            android:id="@+id/nav_booking"
+            android:icon="@drawable/ic_book_black_24dp"
+            android:title="Your Booking List"/>
     </group>
 
 </menu>

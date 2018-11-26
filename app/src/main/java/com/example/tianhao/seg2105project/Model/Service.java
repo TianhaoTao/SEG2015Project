@@ -10,9 +10,9 @@ public class Service {
         this.id = id;
     }
 
-    private String id;
-    private String name;
+    private String name,time,id;
     private double hourlyRate;
+    private int rate;
 
     public Service() {
     }
@@ -22,6 +22,11 @@ public class Service {
         this.hourlyRate = hourlyRate;
     }
 
+    public  Service(String name, int rate, String time){
+        this.name = name;
+        this.rate = rate;
+        this.time = time;
+    }
     public Service(String id, String name, double hourlyRate) {
         this.id = id;
         this.name = name;
@@ -43,6 +48,14 @@ public class Service {
     public void setHourlyRate(double hourlyRate) {
         this.hourlyRate = hourlyRate;
     }
+
+    public int getRate(){return rate;}
+
+    public void setRate(int rate){this.rate=rate;}
+
+    public String getTime(){return time;}
+
+    public void setTime(String time){this.time=time;}
 
     @Override
     public String toString() {

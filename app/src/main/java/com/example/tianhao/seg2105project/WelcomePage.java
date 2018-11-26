@@ -1,5 +1,7 @@
 package com.example.tianhao.seg2105project;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
@@ -10,12 +12,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.tianhao.seg2105project.Model.Application;
@@ -25,16 +31,14 @@ public class WelcomePage extends AppCompatActivity {
 
     User user;
     NavigationView navigationView;
-
     TextView welcome;
 
-    Button buttonSignOut;
-    Button buttonProfile;
+    //button give a name
+    Button buttonSignOut,buttonProfile;
     MediaPlayer buttonSound;
 
 
     private Application application;
-
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
 
@@ -44,6 +48,8 @@ public class WelcomePage extends AppCompatActivity {
     private homeFragment homeFragment;//home page fragment linking to fragment_home.xml
     private usersFragment usersFragment;//users fragment linking to fragment_num_account.xml
     private profileFragment profileFragment;//profile fragment linking to fragment_profile.xml
+    private searchFragment searchFragment;
+    private bookingFragment bookingFragment;
 
 
     @Override
@@ -72,8 +78,13 @@ public class WelcomePage extends AppCompatActivity {
         homeFragment=new homeFragment();
         usersFragment=new usersFragment();
         profileFragment =new profileFragment();
-        setFragment(homeFragment);
-
+        bookingFragment=new bookingFragment();
+        searchFragment=new searchFragment();
+        if(!user.getUserType().equals("Home Owner")) {
+            setFragment(homeFragment);
+        }else{
+            setFragment(searchFragment);
+        }
         mMainNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -94,6 +105,14 @@ public class WelcomePage extends AppCompatActivity {
                     case R.id.nav_profile:
                         setFragment(profileFragment);
                         welcome.setText("This is the list of services you provide");
+                        return true;
+                    case R.id.nav_search:
+                        setFragment(searchFragment);
+                        welcome.setText("Search provided services by following");
+                        return true;
+                    case R.id.nav_booking:
+                        setFragment(bookingFragment);
+                        welcome.setText("Your booking list");
                         return true;
                         default:
                             return false;
@@ -146,6 +165,12 @@ public class WelcomePage extends AppCompatActivity {
         if(!application.getUser().getUserType().equals("Service Provider")){
             nav_Menu.findItem(R.id.nav_timeslot).setVisible(false);
         }
+        if(!application.getUser().getUserType().equals("Home Owner")){
+            nav_Menu.findItem(R.id.nav_search).setVisible(false);
+            nav_Menu.findItem(R.id.nav_booking).setVisible(false);
+        }if(application.getUser().getUserType().equals("Home Owner")){
+            nav_Menu.findItem(R.id.nav_home).setVisible(false);
+        }
     }
 
     //menuItem for draw in admin
@@ -162,6 +187,5 @@ public class WelcomePage extends AppCompatActivity {
         fragmentTransaction.replace(R.id.main_fragment, fragment);
         fragmentTransaction.commit();
     }
-
 
 }

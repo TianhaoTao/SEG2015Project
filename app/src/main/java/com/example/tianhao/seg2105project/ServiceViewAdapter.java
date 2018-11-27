@@ -53,7 +53,7 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_list_service, viewGroup, false);
             ServiceViewHolder holder = new ServiceViewHolder(view);
             return holder;
-        }else{
+        }else{//D4
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_list_search_service, viewGroup, false);
             ServiceViewHolder holder = new ServiceViewHolder(view);
             return holder;
@@ -64,8 +64,14 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
     public void onBindViewHolder(@NonNull ServiceViewHolder serviceViewHolder, final int i) {
         Log.d(TAG, "onBindViewHolder: called..");
 
-        serviceViewHolder.serviceName.setText(serviceArrayList.get(i).getName());
-        serviceViewHolder.hourlyRate.setText(String.valueOf(serviceArrayList.get(i).getHourlyRate()));
+        if(!application.getUser().getUserType().equals("Home Owner")) {
+            serviceViewHolder.serviceName.setText(serviceArrayList.get(i).getName());
+            serviceViewHolder.hourlyRate.setText(String.valueOf(serviceArrayList.get(i).getHourlyRate()));
+        }else{//D4
+            serviceViewHolder.serviceName.setText(serviceArrayList.get(i).getName());
+            serviceViewHolder.search_service_rate.setText(String.valueOf(serviceArrayList.get(i).getRate()));
+            serviceViewHolder.search_service_time.setText(String.valueOf(serviceArrayList.get(i).getTime()));
+        }
 
         //about firebase D4
         database=FirebaseDatabase.getInstance();
@@ -78,7 +84,6 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: " + serviceArrayList.get(i));
-
                 if (application.getUser().getUserType().equals("Administrator")) {
                     Intent intent = new Intent(mContext, EditService.class);
                     intent.putExtra("id", serviceArrayList.get(i).getId());
@@ -142,14 +147,17 @@ public class ServiceViewAdapter extends RecyclerView.Adapter<ServiceViewAdapter.
         TextView search_service_time;
         ConstraintLayout serviceLayout;
 
+
         public ServiceViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
             serviceName = itemView.findViewById(R.id.serviceName);
-            hourlyRate = itemView.findViewById(R.id.hourlyRate);
-            search_service_rate=itemView.findViewById(R.id.search_service_rate);
-            search_service_time=itemView.findViewById(R.id.search_service_time);
-            serviceLayout = itemView.findViewById(R.id.service_layout);
+            if(!application.getUser().getUserType().equals("Home owner")) {
+                serviceLayout = itemView.findViewById(R.id.service_layout);
+                hourlyRate = itemView.findViewById(R.id.hourlyRate);
+            }else{serviceLayout = itemView.findViewById(R.id.search_service_layout);
+                search_service_rate=itemView.findViewById(R.id.search_service_rate);
+                search_service_time=itemView.findViewById(R.id.search_service_time);}
         }
     }
 }

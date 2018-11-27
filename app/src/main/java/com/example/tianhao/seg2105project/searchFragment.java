@@ -73,44 +73,9 @@ public class searchFragment extends Fragment {
                     servicesArray.add(data.child("name").getValue().toString());
                 }
             }
-
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
-//        providedService.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(servicesView.isEmpty()) {
-//                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-//                        if (data.child("service").child("name").getValue().toString().equals(service)) {
-//                            int rate = Integer.parseInt(data.child("rate").getValue().toString());
-//                            String time = data.child("timeSlots").getValue().toString();
-//                            servicesView.add(new Service(service, rate, time));
-//                            Toast.makeText(getContext(),"isempt,added",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }else{
-//                    servicesView.clear();
-//                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-//                        if (data.child("service").child("name").getValue().toString().equals(service)) {
-//                            int rate = Integer.parseInt(data.child("rate").getValue().toString());
-//                            String time = data.child("timeSlots").getValue().toString();
-//                            servicesView.add(new Service(service, rate, time));
-//                            Toast.makeText(getContext(),"isnotempt,added",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
         buttonSearchByTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +100,6 @@ public class searchFragment extends Fragment {
                 mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which){
-
                         if(mSpinner_searchbyday.getSelectedItem().toString().equals("Please choose a day...")||mSpinner_searchbytime.getSelectedItem().toString().equals("Please choose a time...")){
                             //do nothing
                             Toast.makeText(getContext(),"Invalid day",Toast.LENGTH_SHORT).show();
@@ -156,7 +120,6 @@ public class searchFragment extends Fragment {
                         dialogInterface.dismiss();
                     }
                 });
-
                 mBuilder.setView(mview_day);
                 AlertDialog mDialog=mBuilder.create();
                 mDialog.show();
@@ -182,6 +145,42 @@ public class searchFragment extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                             dialogInterface.dismiss();
                         }
+                        providedService.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(servicesView.isEmpty()) {
+                                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                        if (data.child("service").child("name").getValue().toString().equals(service)) {
+                                            int rating;
+                                            if(data.child("rate").getValue()==null){ rating=0;}else{
+                                                rating=Integer.parseInt(data.child("rate").getValue().toString());
+                                            }
+                                            String time = data.child("timeSlots").getValue().toString();
+                                            servicesView.add(new Service(service, rating, time));
+                                            Toast.makeText(getContext(),"isempt,added",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }else{
+                                    servicesView.clear();
+                                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                        if (data.child("service").child("name").getValue().toString().equals(service)) {
+                                            int rating;
+                                            if(data.child("rate").getValue()==null){ rating=0;}else{
+                                                rating=Integer.parseInt(data.child("rate").getValue().toString());
+                                            }
+                                            String time = data.child("timeSlots").getValue().toString();
+                                            servicesView.add(new Service(service, rating, time));
+                                            Toast.makeText(getContext(),"isnotempt,added",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {}
+                        });
+
                     }
                 });
                 mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
@@ -246,8 +245,11 @@ public class searchFragment extends Fragment {
     }
 
     public void initAdapter() {
-
         application = Application.getInstance(getActivity());
+        for(int i=0; i<servicesView.size();i++){
+            Toast.makeText(getContext(),servicesView.get(i).getName()+" "+servicesView.get(i).getRate() +
+                    " "+servicesView.get(i).getTime(),Toast.LENGTH_SHORT).show();
+        }
         recyclerView.setAdapter(new ServiceViewAdapter(getActivity(),servicesView));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

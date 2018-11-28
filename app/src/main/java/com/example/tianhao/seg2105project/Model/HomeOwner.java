@@ -2,6 +2,7 @@ package com.example.tianhao.seg2105project.Model;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,6 +62,25 @@ public class HomeOwner extends User {
         });
 
     }
+
+    public void bookService(ProvidedService providedService){
+        ProvidedServices.child(providedService.getId()).child("homeOwners").
+                child(getUsername()).child("timeSlot").setValue(providedService.getBookedTimeSlots());
+        Toast.makeText(mContext, "Service Booked", Toast.LENGTH_SHORT).show();
+    }
+
+    public void cancelService(ProvidedService providedService){
+        ProvidedServices.child(providedService.getId()).child("homeOwners").removeValue();
+        Toast.makeText(mContext, "Service Canceled", Toast.LENGTH_SHORT).show();
+    }
+
+    public void rateService(ProvidedService providedService,int rate){
+        ProvidedServices.child(providedService.getId()).child("homeOwners").
+                child(getUsername()).child("rate").setValue(rate);
+        Toast.makeText(mContext, "Service Rated", Toast.LENGTH_SHORT).show();
+    }
+
+
 
     public ArrayList<ProvidedService> getServiceArrayList() {
         return serviceArrayList;

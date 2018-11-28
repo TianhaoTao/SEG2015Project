@@ -18,7 +18,7 @@ public class Application {
     private Context mContext;
 
     private ArrayList<Service> serviceArrayList = new ArrayList<>();
-    private ArrayList<Service> providedServiceArrayList = new ArrayList<>();
+    private ArrayList<ProvidedService> providedServiceArrayList = new ArrayList<>();
 
     private static Application instance;
 
@@ -51,10 +51,7 @@ public class Application {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Service service;
                 for(DataSnapshot data : dataSnapshot.getChildren()){
-                    service = data.child("service").getValue(Service.class);
-                    if(!providedServiceArrayList.contains(service)){
-                        providedServiceArrayList.add(service);
-                    }
+                    providedServiceArrayList.add(data.getValue(ProvidedService.class));
                 }
             }
 
@@ -100,6 +97,14 @@ public class Application {
 
     public ArrayList<Service> getServiceArrayList() {
         return serviceArrayList;
+    }
+
+    public ArrayList<ProvidedService> getProvidedServiceArrayList() {
+        return providedServiceArrayList;
+    }
+
+    public void setProvidedServiceArrayList(ArrayList<ProvidedService> providedServiceArrayList) {
+        this.providedServiceArrayList = providedServiceArrayList;
     }
 
     public User getUser() {

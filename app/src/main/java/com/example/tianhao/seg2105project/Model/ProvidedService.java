@@ -29,6 +29,14 @@ public class ProvidedService {
         this.timeslots = timeslots;
     }
 
+    public ProvidedService(String id, Service service, String serviceProviderName, String timeslots, int rate) {
+        this.id = id;
+        this.service = service;
+        this.serviceProviderName = serviceProviderName;
+        this.timeslots = timeslots;
+        this.rate = rate;
+    }
+
     public ProvidedService(String id, Service service, String serviceProviderName, String timeslots, int rate, long count) {
         this.id = id;
         this.service = service;

@@ -1,0 +1,78 @@
+package com.example.tianhao.seg2105project;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.example.tianhao.seg2105project.Model.Application;
+import com.example.tianhao.seg2105project.Model.ProvidedService;
+
+import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedServiceViewAdapter.ProvidedServiceViewHolder>{
+
+    private static final String TAG = "ProvidedServiceViewAdapter";
+
+    private Context mContext;
+
+    private ArrayList<ProvidedService> providedServiceArrayList;
+
+    private Application application;
+
+    public ProvidedServiceViewAdapter(Context mContext,ArrayList<ProvidedService> providedServiceArrayList){
+        this.mContext=mContext;
+        this.providedServiceArrayList =providedServiceArrayList;
+        application=Application.getInstance(mContext);
+    }
+
+    @NonNull
+    @Override
+    public ProvidedServiceViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_list_search_service, viewGroup, false);
+        ProvidedServiceViewHolder holder = new ProvidedServiceViewHolder(view);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ProvidedServiceViewHolder providedServiceViewHolder, int i) {
+        providedServiceViewHolder.serviceName.setText(providedServiceArrayList.get(i).getService().getName());
+        providedServiceViewHolder.hourlyRate.setText(Double.toString(providedServiceArrayList.get(i).getService()
+                .getHourlyRate()));
+        providedServiceViewHolder.search_service_provider.setText(providedServiceArrayList.get(i).
+                getServiceProviderName());
+        providedServiceViewHolder.search_service_rate.setText(providedServiceArrayList.get(i).getRate());
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
+
+    public class ProvidedServiceViewHolder extends RecyclerView.ViewHolder{
+
+        CircleImageView image;
+        TextView serviceName;
+        TextView hourlyRate;
+        TextView search_service_rate;
+        TextView search_service_provider;
+        ConstraintLayout serviceLayout;
+
+        public ProvidedServiceViewHolder(@NonNull View itemView) {
+            super(itemView);
+            image = itemView.findViewById(R.id.image_search);
+            serviceName = itemView.findViewById(R.id.providedServiceName);
+            serviceLayout = itemView.findViewById(R.id.search_service_layout);
+            search_service_rate=itemView.findViewById(R.id.search_service_rate);
+            search_service_provider=itemView.findViewById(R.id.search_service_provider);
+        }
+    }
+
+}

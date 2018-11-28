@@ -7,20 +7,31 @@
     android:padding="13dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/image"
+        android:id="@+id/image_search"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/home_service" />
 
     <TextView
-        android:id="@+id/serviceName"
+        android:id="@+id/providedServiceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:text="Name of the Service"
         android:textColor="#000"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@+id/image" />
+        android:textSize="17sp"
+        app:layout_constraintLeft_toRightOf="@+id/image_search" />
+    <TextView
+        android:id="@+id/providedHourlyRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="0dp"
+        android:text="houlyRate"
+        android:textColor="#000"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/image_search"
+        app:layout_constraintTop_toBottomOf="@+id/providedServiceName" />
 
     <TextView
         android:id="@+id/search_service_rate"
@@ -30,19 +41,19 @@
         android:layout_marginTop="0dp"
         android:text="rate"
         android:textColor="#000"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/serviceName" />
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/image_search"
+        app:layout_constraintTop_toBottomOf="@+id/providedHourlyRate" />
+
     <TextView
-        android:id="@+id/search_service_time"
+        android:id="@+id/search_service_provider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="0dp"
-        android:text="time"
+        android:text="provider"
         android:textColor="#000"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@+id/image"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toRightOf="@+id/image_search"
         app:layout_constraintTop_toBottomOf="@+id/search_service_rate" />
 
 </android.support.constraint.ConstraintLayout>

@@ -75,7 +75,7 @@ public class ServiceProvider extends User {
 
     public void saveServiceToProfile(Service service,String timeSlots){
         String id = service.getId()+this.getUsername();
-        ProvidedServices.child(id).setValue(new ProvidedService(id,service,this.getUsername(),timeSlots));
+        ProvidedServices.child(id).setValue(new ProvidedService(id,service,this.getUsername(),timeSlots,-1));
         Toast.makeText(mContext, "The Service is saved to the profile", Toast.LENGTH_SHORT).show();
     }
 

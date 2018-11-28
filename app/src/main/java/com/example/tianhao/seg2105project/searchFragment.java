@@ -40,6 +40,7 @@ public class searchFragment extends Fragment {
     public String time,rate,service;
     public ArrayAdapter<String> servicesArray;
     private ArrayList<Service> servicesView;
+
     DatabaseReference providedService;
     DatabaseReference allServices;//including not provided services
     FirebaseDatabase database;

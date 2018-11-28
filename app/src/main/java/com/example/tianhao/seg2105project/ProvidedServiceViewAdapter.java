@@ -65,8 +65,13 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
             @Override
             public void onClick(View v) {
                 myDialog.show();
-
+                ArrayList<String> timeSlots = new ArrayList<>();
                 //加一个spinner，算时间的，让pickedTime的值等于那个
+                String[] parts = providedServiceArrayList.get(i).getTimeslots().split(",");
+                for(int i = 0; i<parts.length ; i++){
+                    timeSlots.add(parts[i]);
+                }
+                
 
                 book = myDialog.findViewById(R.id.delete_time_slot);
                 book.setOnClickListener(new View.OnClickListener() {

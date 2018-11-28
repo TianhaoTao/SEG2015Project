@@ -51,7 +51,15 @@ public class Application {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Service service;
                 for(DataSnapshot data : dataSnapshot.getChildren()){
-                    providedServiceArrayList.add(data.getValue(ProvidedService.class));//may have bug
+                    ProvidedService providedService = new ProvidedService(
+                            data.child("id").getValue().toString(),
+                            data.child("service").getValue(Service.class),
+                            data.child("serviceProviderName").getValue().toString(),
+                            data.child("timeSlots").getValue().toString(),
+                            Integer.valueOf(data.child("rate").getValue().toString()),
+                            Long.valueOf(data.child("homeOwners").getChildrenCount()));
+                    //providedServiceArrayList.add(data.getValue(ProvidedService.class));//may have bug
+                    providedServiceArrayList.add(providedService);
                 }
             }
 

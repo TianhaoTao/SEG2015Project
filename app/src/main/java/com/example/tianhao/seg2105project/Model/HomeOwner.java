@@ -19,7 +19,7 @@ public class HomeOwner extends User {
 
     private Context mContext;
 
-    private ArrayList<ProvidedService> serviceArrayList = new ArrayList<>();
+    private ArrayList<ProvidedService> serviceArrayList;
 
     public HomeOwner(Context context,User user){
         this.mContext=context;
@@ -51,6 +51,7 @@ public class HomeOwner extends User {
                                 child(getUsername()).child("rate").getValue().toString()));
                         providedService.setTimeslots(data.child("homeOwners").
                                 child(getUsername()).child("timeSlot").getValue().toString());
+                        serviceArrayList.add(providedService);
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.tianhao.seg2105project;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -7,9 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tianhao.seg2105project.Model.Application;
+import com.example.tianhao.seg2105project.Model.HomeOwner;
 import com.example.tianhao.seg2105project.Model.ProvidedService;
 
 import java.util.ArrayList;
@@ -22,14 +25,20 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
 
     private Context mContext;
 
+    private Dialog myDialog;
+    private Button book,back;
+    String pickedTime;// to store the selected time slot
+
     private ArrayList<ProvidedService> providedServiceArrayList;
 
     private Application application;
+    private HomeOwner homeOwner;
 
     public ProvidedServiceViewAdapter(Context mContext,ArrayList<ProvidedService> providedServiceArrayList){
         this.mContext=mContext;
         this.providedServiceArrayList =providedServiceArrayList;
         application=Application.getInstance(mContext);
+        homeOwner = (HomeOwner)application.getUser();
     }
 
     @NonNull
@@ -41,18 +50,49 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProvidedServiceViewHolder providedServiceViewHolder, int i) {
+    public void onBindViewHolder(@NonNull ProvidedServiceViewHolder providedServiceViewHolder, final int i) {
         providedServiceViewHolder.serviceName.setText(providedServiceArrayList.get(i).getService().getName());
         providedServiceViewHolder.hourlyRate.setText(Double.toString(providedServiceArrayList.get(i).getService()
                 .getHourlyRate()));
         providedServiceViewHolder.search_service_provider.setText(providedServiceArrayList.get(i).
                 getServiceProviderName());
         providedServiceViewHolder.search_service_rate.setText(providedServiceArrayList.get(i).getRate());
+
+        myDialog = new Dialog(mContext);
+        myDialog.setContentView(R.layout.dialog_booking);
+
+        providedServiceViewHolder.serviceLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.show();
+
+                //加一个spinner，算时间的，让pickedTime的值等于那个
+
+                book = myDialog.findViewById(R.id.delete_time_slot);
+                book.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //setvalue on firebase
+                        homeOwner.bookService(providedServiceArrayList.get(i),pickedTime);
+                        myDialog.dismiss();
+                    }
+                });
+
+                back = myDialog.findViewById(R.id.go_back);
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return providedServiceArrayList.size();
     }
 
 

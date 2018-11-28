@@ -68,6 +68,11 @@ public class HomeOwner extends User {
                 child(getUsername()).child("timeSlot").setValue(providedService.getBookedTimeSlots());
         Toast.makeText(mContext, "Service Booked", Toast.LENGTH_SHORT).show();
     }
+    public void bookService(ProvidedService providedService,String pickedTime){
+        ProvidedServices.child(providedService.getId()).child("homeOwners").
+                child(getUsername()).child("timeSlot").setValue(pickedTime);
+        Toast.makeText(mContext, "Service Booked", Toast.LENGTH_SHORT).show();
+    }
 
     public void cancelService(ProvidedService providedService){
         ProvidedServices.child(providedService.getId()).child("homeOwners").removeValue();

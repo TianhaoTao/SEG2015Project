@@ -51,7 +51,7 @@ public class Application {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Service service;
                 for(DataSnapshot data : dataSnapshot.getChildren()){
-                    providedServiceArrayList.add(data.getValue(ProvidedService.class));
+                    providedServiceArrayList.add(data.getValue(ProvidedService.class));//may have bug
                 }
             }
 

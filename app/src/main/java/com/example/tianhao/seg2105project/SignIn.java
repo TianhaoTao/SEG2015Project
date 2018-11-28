@@ -13,6 +13,7 @@ import android.media.MediaPlayer;
 
 
 import com.example.tianhao.seg2105project.Model.Application;
+import com.example.tianhao.seg2105project.Model.HomeOwner;
 import com.example.tianhao.seg2105project.Model.ServiceProvider;
 import com.example.tianhao.seg2105project.Model.User;
 import com.google.firebase.database.DatabaseReference;
@@ -87,6 +88,9 @@ public class SignIn extends AppCompatActivity {
                             switch (login.getUserType()){
                                 case "Service Provider":
                                     application.setUser(new ServiceProvider(getApplicationContext(),login));
+                                    break;
+                                case "Home Owner":
+                                    application.setUser(new HomeOwner(getApplicationContext(),login));
                                     break;
                                 default:
                                     application.setUser(login);

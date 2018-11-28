@@ -10,9 +10,8 @@ public class Service {
         this.id = id;
     }
 
-    private String name,time,id;
+    private String name,id;
     private double hourlyRate;
-    private int rate;
 
     public Service() {
     }
@@ -22,11 +21,6 @@ public class Service {
         this.hourlyRate = hourlyRate;
     }
 
-    public  Service(String name, int rate, String time){
-        this.name = name;
-        this.rate = rate;
-        this.time = time;
-    }
     public Service(String id, String name, double hourlyRate) {
         this.id = id;
         this.name = name;
@@ -49,13 +43,20 @@ public class Service {
         this.hourlyRate = hourlyRate;
     }
 
-    public int getRate(){return rate;}
-
-    public void setRate(int rate){this.rate=rate;}
-
-    public String getTime(){return time;}
-
-    public void setTime(String time){this.time=time;}
+    @Override
+    public boolean equals(Object other) {
+        if(other == null){
+            return false;
+        }
+        if(other == this){
+            return true;
+        }
+        if(!(other instanceof Service)){
+            return false;
+        }
+        Service otherService = (Service)other;
+        return(this.toString().equals(otherService.toString()));
+    }
 
     @Override
     public String toString() {

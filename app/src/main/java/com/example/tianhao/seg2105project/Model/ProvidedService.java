@@ -8,19 +8,35 @@ public class ProvidedService {
     private String id;
     private Service service;
     private String serviceProviderName;
-    private String TimeSlots;
+    private String timeslots;
+    private int rate;
+    private long count;
+
+
+    private String homeOwnerName;
+    private int individualRate;
+    private String bookedTimeSlots;
+
 
 
     public ProvidedService() {
     }
 
-    public ProvidedService(String id, Service service, String serviceProviderName, String timeSlots) {
+    public ProvidedService(String id, Service service, String serviceProviderName, String timeslots) {
         this.id = id;
         this.service = service;
         this.serviceProviderName = serviceProviderName;
-        TimeSlots = timeSlots;
+        this.timeslots = timeslots;
     }
 
+    public ProvidedService(String id, Service service, String serviceProviderName, String timeslots, int rate, long count) {
+        this.id = id;
+        this.service = service;
+        this.serviceProviderName = serviceProviderName;
+        this.timeslots = timeslots;
+        this.rate = rate;
+        this.count = count;
+    }
 
     public Service getService() {
         return service;
@@ -47,11 +63,51 @@ public class ProvidedService {
         this.serviceProviderName = serviceProviderName;
     }
 
-    public String getTimeSlots() {
-        return TimeSlots;
+    public int getRate() {
+        return rate;
     }
 
-    public void setTimeSlots(String timeSlots) {
-        TimeSlots = timeSlots;
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public String getHomeOwnerName() {
+        return homeOwnerName;
+    }
+
+    public void setHomeOwnerName(String homeOwnerName) {
+        this.homeOwnerName = homeOwnerName;
+    }
+
+    public long getCount() {
+        return count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
+    }
+
+    public int getIndividualRate() {
+        return individualRate;
+    }
+
+    public void setIndividualRate(int individualRate) {
+        this.individualRate = individualRate;
+    }
+
+    public String getBookedTimeSlots() {
+        return bookedTimeSlots;
+    }
+
+    public void setBookedTimeSlots(String bookedTimeSlots) {
+        this.bookedTimeSlots = bookedTimeSlots;
+    }
+
+    public String getTimeslots() {
+        return timeslots;
+    }
+
+    public void setTimeslots(String timeslots) {
+        this.timeslots = timeslots;
     }
 }

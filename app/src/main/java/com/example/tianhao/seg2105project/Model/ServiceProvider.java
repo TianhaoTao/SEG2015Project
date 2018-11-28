@@ -60,7 +60,7 @@ public class ServiceProvider extends User {
                 for(DataSnapshot data : dataSnapshot.getChildren()) {
                     if (data.child("serviceProviderName").getValue().toString().
                             equals(ServiceProvider.this.getUsername())) {
-                        serviceArrayList.add(data.getValue(ProvidedService.class));
+                        serviceArrayList.add(data.getValue(ProvidedService.class));//may cause bug
                     }
                 }
             }

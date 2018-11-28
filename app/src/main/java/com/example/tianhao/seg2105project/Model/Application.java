@@ -18,6 +18,7 @@ public class Application {
     private Context mContext;
 
     private ArrayList<Service> serviceArrayList = new ArrayList<>();
+    private ArrayList<Service> providedServiceArrayList = new ArrayList<>();
 
     private static Application instance;
 
@@ -44,6 +45,26 @@ public class Application {
 
             }
         });
+
+        database.getReference("ProvidedServices").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Service service;
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    service = data.child("service").getValue(Service.class);
+                    if(!providedServiceArrayList.contains(service)){
+                        providedServiceArrayList.add(service);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     public static Application getInstance(Context context) {

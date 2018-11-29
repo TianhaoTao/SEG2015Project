@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import com.example.tianhao.seg2105project.ServiceViewAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -62,7 +61,7 @@ public class Application {
                     providedService.setId(data.child("id").getValue().toString());
                     providedService.setService(service);
                     providedService.setServiceProviderName(data.child("serviceProviderName").getValue().toString());
-                    providedService.setTimeslots(data.child("timeSlots").getValue().toString());
+                    providedService.setTimeSlots(data.child("timeSlots").getValue().toString());
                     if(!(data.child("rate").getValue()==null)){
                         providedService.setRate(Double.valueOf(data.child("rate").getValue().toString()));
                     }else{

@@ -55,7 +55,7 @@ public class HomeOwner extends User {
                             providedService.setIndividualRate(Integer.valueOf(data.child("homeOwners").
                                     child(getUsername()).child("rate").getValue().toString()));
                         }
-                        providedService.setTimeslots(data.child("homeOwners").
+                        providedService.setTimeSlots(data.child("homeOwners").
                                 child(getUsername()).child("timeSlot").getValue().toString());
                         providedService.setCount(data.child("homeOwners").getChildrenCount());
                         serviceArrayList.add(providedService);

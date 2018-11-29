@@ -1,6 +1,5 @@
 package com.example.tianhao.seg2105project;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -76,7 +75,7 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
             providedServiceViewHolder.search_service_rate.setText(
                     "Your rate is "+ String.valueOf(providedServiceArrayList.get(i).getIndividualRate()));
         }
-        providedServiceViewHolder.times_slots.setText(providedServiceArrayList.get(i).getTimeslots());
+        providedServiceViewHolder.times_slots.setText(providedServiceArrayList.get(i).getTimeSlots());
         myDialog = new Dialog(mContext);
 
         if(application.getFragment()==Fragment.FIRST){
@@ -88,7 +87,7 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
                     myDialog.show();
                     ArrayList<String> timeSlots = new ArrayList<>();
                     //加一个spinner，算时间的，让pickedTime的值等于那个
-                    String[] parts = providedServiceArrayList.get(i).getTimeslots().split(",");
+                    String[] parts = providedServiceArrayList.get(i).getTimeSlots().split(",");
                     for(int i = 0; i<parts.length ; i++){
                         timeSlots.add(parts[i]);
                     }//把这个timeslots放到spinner里面

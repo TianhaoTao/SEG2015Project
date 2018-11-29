@@ -1,14 +1,12 @@
 package com.example.tianhao.seg2105project.Model;
 
 
-import java.util.ArrayList;
-
 public class ProvidedService {
 
     private String id;
     private Service service;
     private String serviceProviderName;
-    private String timeslots;
+    private String timeSlots;
     private double rate;
     private long count;
 
@@ -22,18 +20,18 @@ public class ProvidedService {
     public ProvidedService() {
     }
 
-    public ProvidedService(String id, Service service, String serviceProviderName, String timeslots) {
+    public ProvidedService(String id, Service service, String serviceProviderName, String timeSlots) {
         this.id = id;
         this.service = service;
         this.serviceProviderName = serviceProviderName;
-        this.timeslots = timeslots;
+        this.timeSlots = timeSlots;
     }
 
-    public ProvidedService(String id, Service service, String serviceProviderName, String timeslots, int rate) {
+    public ProvidedService(String id, Service service, String serviceProviderName, String timeSlots, int rate) {
         this.id = id;
         this.service = service;
         this.serviceProviderName = serviceProviderName;
-        this.timeslots = timeslots;
+        this.timeSlots = timeSlots;
         this.rate = rate;
     }
 
@@ -103,11 +101,11 @@ public class ProvidedService {
         this.bookedTimeSlots = bookedTimeSlots;
     }
 
-    public String getTimeslots() {
-        return timeslots;
+    public String getTimeSlots() {
+        return timeSlots;
     }
 
-    public void setTimeslots(String timeslots) {
-        this.timeslots = timeslots;
+    public void setTimeSlots(String timeSlots) {
+        this.timeSlots = timeSlots;
     }
 }

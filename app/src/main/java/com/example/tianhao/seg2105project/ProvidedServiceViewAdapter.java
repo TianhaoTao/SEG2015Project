@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tianhao.seg2105project.Model.Application;
 import com.example.tianhao.seg2105project.Model.HomeOwner;
@@ -53,13 +54,17 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
     @Override
     public void onBindViewHolder(@NonNull ProvidedServiceViewHolder providedServiceViewHolder, final int i) {
         Service service = providedServiceArrayList.get(i).getService();
-        providedServiceViewHolder.serviceName.setText(providedServiceArrayList.get(i).getService().toString());
- //       providedServiceViewHolder.hourlyRate.setText(providedServiceArrayList.get(i).getService().getName());
-//        providedServiceViewHolder.hourlyRate.setText(providedServiceArrayList.get(i).getService().getName());
+
+        providedServiceViewHolder.serviceName.setText(providedServiceArrayList.get(i).getService().getName());
+        providedServiceViewHolder.hourlyRate.setText("hourly rate:"+String.valueOf(providedServiceArrayList.get(i).getService().getHourlyRate()));
+
         providedServiceViewHolder.search_service_provider.setText(providedServiceArrayList.get(i).
                 getServiceProviderName());
-        providedServiceViewHolder.search_service_rate.setText(String.valueOf(providedServiceArrayList.get(i).getRate()));
-
+        if(providedServiceArrayList.get(i).getRate()==-1){
+            providedServiceViewHolder.search_service_rate.setText("Not rated yet");
+        }else{
+            providedServiceViewHolder.search_service_rate.setText(String.valueOf(providedServiceArrayList.get(i).getRate()));
+        }
         myDialog = new Dialog(mContext);
         myDialog.setContentView(R.layout.dialog_booking);
 
@@ -116,6 +121,7 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
             super(itemView);
             image = itemView.findViewById(R.id.image_search);
             serviceName = itemView.findViewById(R.id.providedServiceName);
+            hourlyRate = itemView.findViewById(R.id.providedHourlyRate);
             serviceLayout = itemView.findViewById(R.id.search_service_layout);
             search_service_rate=itemView.findViewById(R.id.search_service_rate);
             search_service_provider=itemView.findViewById(R.id.search_service_provider);

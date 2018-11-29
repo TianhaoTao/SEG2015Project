@@ -85,6 +85,7 @@ public class WelcomePage extends AppCompatActivity {
             setFragment(homeFragment);
         }else{
             setFragment(searchFragment);
+            application.setFragment(FIRST);
         }
         mMainNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

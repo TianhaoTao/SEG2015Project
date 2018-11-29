@@ -61,6 +61,7 @@ public class homeFragment extends Fragment {
         return view;
     }
 
+
     @Override
     public void onStart() {
         super.onStart();//refresh the recylerview every time it is brought to the front

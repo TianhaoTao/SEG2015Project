@@ -41,18 +41,23 @@ public class HomeOwner extends User {
                     if(data.child("homeOwners").child(getUsername()).exists()){
                         ProvidedService providedService = new ProvidedService();
                         providedService.setId(data.child("id").getValue().toString());
+                        providedService.setServiceProviderName(data.child("serviceProviderName").getValue().toString());
                         providedService.setService(data.child("service").getValue(Service.class));
-                        providedService.setTimeslots(data.child("timeSlots").getValue().toString());
                         if(!(data.child("rate").getValue()==null)){
                             providedService.setRate(Double.valueOf(data.child("rate").getValue().toString()));
                         }else{
-                            providedService.setRate(-1);
+                            providedService.setRate(0);
                         }
                         providedService.setHomeOwnerName(getUsername());
-                        providedService.setIndividualRate(Integer.valueOf(data.child("homeOwners").
-                                child(getUsername()).child("rate").getValue().toString()));
+                        if(data.child("homeOwners").child(getUsername()).child("rate").getValue()==null){
+                            providedService.setIndividualRate(0);
+                        }else{
+                            providedService.setIndividualRate(Integer.valueOf(data.child("homeOwners").
+                                    child(getUsername()).child("rate").getValue().toString()));
+                        }
                         providedService.setTimeslots(data.child("homeOwners").
                                 child(getUsername()).child("timeSlot").getValue().toString());
+                        providedService.setCount(data.child("homeOwners").getChildrenCount());
                         serviceArrayList.add(providedService);
                     }
                 }
@@ -74,6 +79,8 @@ public class HomeOwner extends User {
     public void bookService(ProvidedService providedService,String pickedTime){
         ProvidedServices.child(providedService.getId()).child("homeOwners").
                 child(getUsername()).child("timeSlot").setValue(pickedTime);
+        ProvidedServices.child(providedService.getId()).child("homeOwners").
+                child(getUsername()).child("rate").setValue(0);
         Toast.makeText(mContext, "Service Booked", Toast.LENGTH_SHORT).show();
     }
 

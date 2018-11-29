@@ -17,6 +17,8 @@ public class Application {
 
     private Context mContext;
 
+    private Fragment fragment;
+
     private ArrayList<Service> serviceArrayList = new ArrayList<>();
     private ArrayList<ProvidedService> providedServiceArrayList = new ArrayList<>();
 
@@ -30,6 +32,7 @@ public class Application {
     private Application(Context context) {
         mContext=context;
         database=FirebaseDatabase.getInstance();
+        fragment=Fragment.FIRST;
         services=database.getReference("Services");
         services.addValueEventListener(new ValueEventListener() {
             @Override
@@ -63,8 +66,9 @@ public class Application {
                     if(!(data.child("rate").getValue()==null)){
                         providedService.setRate(Double.valueOf(data.child("rate").getValue().toString()));
                     }else{
-                        providedService.setRate(-1);
+                        providedService.setRate(0);
                     }
+                    providedService.setCount(data.child("homeOwners").getChildrenCount());
                     providedServiceArrayList.add(providedService);
                 }
             }
@@ -120,6 +124,15 @@ public class Application {
     public void setProvidedServiceArrayList(ArrayList<ProvidedService> providedServiceArrayList) {
         this.providedServiceArrayList = providedServiceArrayList;
     }
+
+    public Fragment getFragment() {
+        return fragment;
+    }
+
+    public void setFragment(Fragment fragment) {
+        this.fragment = fragment;
+    }
+
 
     public User getUser() {
         return user;

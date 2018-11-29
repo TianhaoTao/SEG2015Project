@@ -33,7 +33,7 @@ public class searchFragment extends Fragment {
     private Application application = Application.getInstance(getActivity());
 
     private RecyclerView recyclerView;
-    private Button buttonSearchByTime,buttonSearchByService,buttonSearchByRate;
+    private Button buttonSearchByTime,buttonSearchByService,buttonSearchByRate,buttonRefresh;
     public String time,rate,service;
     public ArrayAdapter<String> servicesArrayAdapter;
     private ArrayList<String> serviceNames = new ArrayList<>();
@@ -51,6 +51,7 @@ public class searchFragment extends Fragment {
         buttonSearchByTime = (Button)view.findViewById(R.id.buttonSearchByTime);
         buttonSearchByService = (Button)view.findViewById(R.id.buttonSearchByService);
         buttonSearchByRate = (Button)view.findViewById(R.id.buttonSearchByRate);
+        buttonRefresh = view.findViewById(R.id.buttonRefresh);
         recyclerView = view.findViewById(R.id.recycler_view);
         for(ProvidedService providedService:providedServiceArrayList){
             String serviceName = providedService.getService().getName();
@@ -211,6 +212,14 @@ public class searchFragment extends Fragment {
                 mDialog.show();
             }
         });
+
+        buttonRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initAdapter(providedServiceArrayList);
+            }
+        });
+
         initAdapter(providedServiceArrayList);
         // Inflate the layout for this fragment
         return view;

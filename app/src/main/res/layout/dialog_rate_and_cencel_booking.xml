@@ -37,6 +37,14 @@
             android:drawableLeft="@drawable/ic_cancel_black_24dp"
             android:text="cancel"
             android:textColor="@color/white" />
+        <Button
+            android:id="@+id/rate"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_keyboard_backspace_black_24dp"
+            android:text="rate"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/go_back"

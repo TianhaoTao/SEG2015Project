@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import static com.example.tianhao.seg2105project.Model.Fragment.*;
 
 
 import com.example.tianhao.seg2105project.Model.Application;
@@ -108,10 +109,12 @@ public class WelcomePage extends AppCompatActivity {
                         return true;
                     case R.id.nav_search:
                         setFragment(searchFragment);
+                        application.setFragment(FIRST);
                         welcome.setText("Search provided services by following");
                         return true;
                     case R.id.nav_booking:
                         setFragment(bookingFragment);
+                        application.setFragment(SECOND);
                         welcome.setText("Your booking list");
                         return true;
                         default:

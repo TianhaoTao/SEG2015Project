@@ -1,5 +1,6 @@
 package com.example.tianhao.seg2105project;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,9 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import com.example.tianhao.seg2105project.Model.Fragment;
+
+
 public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedServiceViewAdapter.ProvidedServiceViewHolder>{
 
     private static final String TAG = "ProvidedServiceViewAdapter";
@@ -28,8 +34,8 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
     private Context mContext;
 
     private Dialog myDialog;
-    private Button book,back;
-    String pickedTime;// to store the selected time slot
+    private Button book,back,rate,cancel;
+    String pickedTime="Tuesday 14:00-16:00";// to store the selected time slot
 
     private ArrayList<ProvidedService> providedServiceArrayList;
 
@@ -60,46 +66,105 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
 
         providedServiceViewHolder.search_service_provider.setText(providedServiceArrayList.get(i).
                 getServiceProviderName());
-        if(providedServiceArrayList.get(i).getRate()==-1){
-            providedServiceViewHolder.search_service_rate.setText("Not rated yet");
-        }else{
-            providedServiceViewHolder.search_service_rate.setText(String.valueOf(providedServiceArrayList.get(i).getRate()));
-        }
-        myDialog = new Dialog(mContext);
-        myDialog.setContentView(R.layout.dialog_booking);
-
-        providedServiceViewHolder.serviceLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.show();
-                ArrayList<String> timeSlots = new ArrayList<>();
-                //加一个spinner，算时间的，让pickedTime的值等于那个
-                String[] parts = providedServiceArrayList.get(i).getTimeslots().split(",");
-                for(int i = 0; i<parts.length ; i++){
-                    timeSlots.add(parts[i]);
-                }
-                
-
-                book = myDialog.findViewById(R.id.Book);
-                book.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //setvalue on firebase
-                        homeOwner.bookService(providedServiceArrayList.get(i),pickedTime);
-                        myDialog.dismiss();
-                    }
-                });
-
-                back = myDialog.findViewById(R.id.go_back);
-                back.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myDialog.dismiss();
-                    }
-                });
+        if(application.getFragment()==Fragment.FIRST){
+            if(providedServiceArrayList.get(i).getRate()==0){
+                providedServiceViewHolder.search_service_rate.setText("Not rated yet");
+            }else{
+                providedServiceViewHolder.search_service_rate.setText(String.valueOf(providedServiceArrayList.get(i).getRate()));
             }
-        });
+        }else if(application.getFragment()==Fragment.SECOND){
+            providedServiceViewHolder.search_service_rate.setText(
+                    "Your rate is "+ String.valueOf(providedServiceArrayList.get(i).getIndividualRate()));
+        }
+        providedServiceViewHolder.times_slots.setText(providedServiceArrayList.get(i).getTimeslots());
+        myDialog = new Dialog(mContext);
 
+        if(application.getFragment()==Fragment.FIRST){
+
+            myDialog.setContentView(R.layout.dialog_booking);
+            providedServiceViewHolder.serviceLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.show();
+                    ArrayList<String> timeSlots = new ArrayList<>();
+                    //加一个spinner，算时间的，让pickedTime的值等于那个
+                    String[] parts = providedServiceArrayList.get(i).getTimeslots().split(",");
+                    for(int i = 0; i<parts.length ; i++){
+                        timeSlots.add(parts[i]);
+                    }//把这个timeslots放到spinner里面
+
+
+                    book = myDialog.findViewById(R.id.Book);
+                    book.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //setvalue on firebase
+                            homeOwner.bookService(providedServiceArrayList.get(i),pickedTime);
+                            myDialog.dismiss();
+                        }
+                    });
+
+                    back = myDialog.findViewById(R.id.go_back);
+                    back.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.dismiss();
+                        }
+                    });
+                }
+            });
+        }else if(application.getFragment()==Fragment.SECOND){
+
+            myDialog.setContentView(R.layout.dialog_rate_and_cencel_booking);
+            providedServiceViewHolder.serviceLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.show();
+                    final Spinner mSpinner_rate =(Spinner) myDialog.findViewById(R.id.spinner_rate);
+                    ArrayAdapter<String> adapter_rate=new ArrayAdapter<String>(mContext,
+                            android.R.layout.simple_spinner_item,
+                            mContext.getResources().getStringArray(R.array.rate));
+                    adapter_rate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mSpinner_rate.setAdapter(adapter_rate);
+
+                    rate=myDialog.findViewById(R.id.rate);
+                    rate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String rate = mSpinner_rate.getSelectedItem().toString();
+                            if(!rate.equals("Please choose a rate...")){
+                                homeOwner.rateService(providedServiceArrayList.get(i),Integer.valueOf(rate));
+                                providedServiceArrayList.get(i).setIndividualRate(Integer.valueOf(rate));
+                                notifyDataSetChanged();
+                                myDialog.dismiss();
+                            }else{
+                                Toast.makeText(mContext, "Please pick a valid rate", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                    cancel=myDialog.findViewById(R.id.cancel_booking);
+                    cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            homeOwner.cancelService(providedServiceArrayList.get(i));
+                            providedServiceArrayList.remove(i);
+                            notifyDataSetChanged();
+                            myDialog.dismiss();
+                        }
+                    });
+
+                    back = myDialog.findViewById(R.id.go_back);
+                    back.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.dismiss();
+                        }
+                    });
+
+                }
+            });
+        }
     }
 
     @Override
@@ -115,6 +180,7 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
         TextView hourlyRate;
         TextView search_service_rate;
         TextView search_service_provider;
+        TextView times_slots;
         ConstraintLayout serviceLayout;
 
         public ProvidedServiceViewHolder(@NonNull View itemView) {
@@ -125,6 +191,7 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
             serviceLayout = itemView.findViewById(R.id.search_service_layout);
             search_service_rate=itemView.findViewById(R.id.search_service_rate);
             search_service_provider=itemView.findViewById(R.id.search_service_provider);
+            times_slots = itemView.findViewById(R.id.time_slots);
         }
     }
 

@@ -67,7 +67,13 @@ public class Application {
                     }else{
                         providedService.setRate(0);
                     }
-                    providedService.setCount(data.child("homeOwners").getChildrenCount());
+
+                    //count
+                    try{
+                        providedService.setCount(data.child("count").getValue(Long.class));
+                    }catch(NullPointerException e){
+                        providedService.setCount(0);
+                    }
                     providedServiceArrayList.add(providedService);
                 }
             }

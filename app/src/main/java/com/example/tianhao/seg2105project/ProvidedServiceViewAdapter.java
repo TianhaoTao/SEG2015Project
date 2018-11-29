@@ -65,20 +65,20 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
 
         providedServiceViewHolder.search_service_provider.setText(providedServiceArrayList.get(i).
                 getServiceProviderName());
+        //the rate of the service, showing differently at different fragment
         if(application.getFragment()==Fragment.FIRST){
             if(providedServiceArrayList.get(i).getRate()==0){
                 providedServiceViewHolder.search_service_rate.setText("Not rated yet");
             }else{
-                providedServiceViewHolder.search_service_rate.setText(String.valueOf(providedServiceArrayList.get(i).getRate()));
+                providedServiceViewHolder.search_service_rate.setText("Rate:"+String.valueOf(providedServiceArrayList.get(i).getRate()));
             }
         }else if(application.getFragment()==Fragment.SECOND){
-            providedServiceViewHolder.search_service_rate.setText(
-                    "Your rate is "+ String.valueOf(providedServiceArrayList.get(i).getIndividualRate()));
+            providedServiceViewHolder.search_service_rate.setText("Your rate is "+ String.valueOf(providedServiceArrayList.get(i).getIndividualRate()));
         }
         providedServiceViewHolder.times_slots.setText(providedServiceArrayList.get(i).getTimeSlots());
         myDialog = new Dialog(mContext);
 
-        if(application.getFragment()==Fragment.FIRST){
+        if(application.getFragment()==Fragment.FIRST){//first fragment
 
             myDialog.setContentView(R.layout.dialog_booking);
             providedServiceViewHolder.serviceLayout.setOnClickListener(new View.OnClickListener() {

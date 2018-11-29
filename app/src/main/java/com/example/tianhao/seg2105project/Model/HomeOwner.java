@@ -57,7 +57,11 @@ public class HomeOwner extends User {
                         }
                         providedService.setTimeSlots(data.child("homeOwners").
                                 child(getUsername()).child("timeSlot").getValue().toString());
-                        providedService.setCount(data.child("homeOwners").getChildrenCount());
+                        try{
+                            providedService.setCount(data.child("count").getValue(Long.class));
+                        }catch(NullPointerException e){
+                            providedService.setCount(0);
+                        }
                         serviceArrayList.add(providedService);
                     }
                 }
@@ -89,9 +93,29 @@ public class HomeOwner extends User {
         Toast.makeText(mContext, "Service Canceled", Toast.LENGTH_SHORT).show();
     }
 
-    public void rateService(ProvidedService providedService,int rate){
+    public void rateService(final ProvidedService providedService, final int rate){
+        if(providedService.getRate()==0 || providedService.getCount()==0){
+            providedService.setRate(rate);
+            providedService.setCount(0);
+        }
+        double newRate;
+
+        if(providedService.getIndividualRate()==0){
+            newRate = (providedService.getCount()*providedService.getRate()+rate)
+                    /(providedService.getCount()+1);
+            providedService.setCount(providedService.getCount()+1);
+        }else{
+            newRate = (providedService.getCount()*providedService.getRate()+rate-providedService.getIndividualRate())
+                    /(providedService.getCount());
+        }
+
+        ProvidedServices.child(providedService.getId()).child("rate").setValue(newRate);
+
+        ProvidedServices.child(providedService.getId()).child("count").setValue(providedService.getCount());
+
         ProvidedServices.child(providedService.getId()).child("homeOwners").
                 child(getUsername()).child("rate").setValue(rate);
+
         Toast.makeText(mContext, "Service Rated", Toast.LENGTH_SHORT).show();
     }
 

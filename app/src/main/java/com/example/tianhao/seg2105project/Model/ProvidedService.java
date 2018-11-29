@@ -14,6 +14,7 @@ public class ProvidedService {
     private String homeOwnerName;
     private int individualRate;
     private String bookedTimeSlots;
+    private String comment;
 
 
 
@@ -107,5 +108,13 @@ public class ProvidedService {
 
     public void setTimeSlots(String timeSlots) {
         this.timeSlots = timeSlots;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

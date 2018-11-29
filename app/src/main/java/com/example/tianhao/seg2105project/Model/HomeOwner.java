@@ -48,6 +48,7 @@ public class HomeOwner extends User {
                         }else{
                             providedService.setRate(0);
                         }
+                        //homeOwner name
                         providedService.setHomeOwnerName(getUsername());
                         if(data.child("homeOwners").child(getUsername()).child("rate").getValue()==null){
                             providedService.setIndividualRate(0);
@@ -55,12 +56,21 @@ public class HomeOwner extends User {
                             providedService.setIndividualRate(Integer.valueOf(data.child("homeOwners").
                                     child(getUsername()).child("rate").getValue().toString()));
                         }
+                        //myTimeSlot
                         providedService.setTimeSlots(data.child("homeOwners").
                                 child(getUsername()).child("timeSlot").getValue().toString());
+                        //Count
                         try{
                             providedService.setCount(data.child("count").getValue(Long.class));
                         }catch(NullPointerException e){
                             providedService.setCount(0);
+                        }
+                        //comment
+                        try{
+                            providedService.setComment(data.child("homeOwners").
+                                    child(getUsername()).child("comment").getValue().toString());
+                        }catch(NullPointerException e){
+                            providedService.setComment("");
                         }
                         serviceArrayList.add(providedService);
                     }
@@ -119,6 +129,11 @@ public class HomeOwner extends User {
         Toast.makeText(mContext, "Service Rated", Toast.LENGTH_SHORT).show();
     }
 
+    public void rateService(final ProvidedService providedService, final int rate,String comment){
+        rateService(providedService, rate);
+        ProvidedServices.child(providedService.getId()).child("homeOwners").
+                child(getUsername()).child("comment").setValue(comment);
+    }
 
 
     public ArrayList<ProvidedService> getServiceArrayList() {

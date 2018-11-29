@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,7 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
 
     private Dialog myDialog;
     private Button book,back,rate,cancel;
-    String pickedTime="Tuesday 14:00-16:00";// to store the selected time slot
+    String pickedTime;// to store the selected time slot
 
     private ArrayList<ProvidedService> providedServiceArrayList;
 
@@ -73,7 +74,11 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
                 providedServiceViewHolder.search_service_rate.setText("Rate:"+String.valueOf(providedServiceArrayList.get(i).getRate()));
             }
         }else if(application.getFragment()==Fragment.SECOND){
-            providedServiceViewHolder.search_service_rate.setText("Your rate is "+ String.valueOf(providedServiceArrayList.get(i).getIndividualRate()));
+            if(providedServiceArrayList.get(i).getIndividualRate()==0){
+                providedServiceViewHolder.search_service_rate.setText("Not rated yet");
+            }else{
+                providedServiceViewHolder.search_service_rate.setText("Your rate is "+ String.valueOf(providedServiceArrayList.get(i).getIndividualRate()));
+            }
         }
         providedServiceViewHolder.times_slots.setText(providedServiceArrayList.get(i).getTimeSlots());
         myDialog = new Dialog(mContext);
@@ -92,12 +97,20 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
                         timeSlots.add(parts[i]);
                     }//把这个timeslots放到spinner里面
 
+                    final Spinner mSpinner_time =(Spinner) myDialog.findViewById(R.id.spinner_time_slots);
+                    ArrayAdapter<String> adapter_time=new ArrayAdapter<String>(mContext,
+                            android.R.layout.simple_spinner_item,
+                            timeSlots);
+                    adapter_time.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mSpinner_time.setAdapter(adapter_time);
+
 
                     book = myDialog.findViewById(R.id.Book);
                     book.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //setvalue on firebase
+                            pickedTime = mSpinner_time.getSelectedItem().toString();
                             homeOwner.bookService(providedServiceArrayList.get(i),pickedTime);
                             myDialog.dismiss();
                         }
@@ -126,13 +139,19 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
                     adapter_rate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinner_rate.setAdapter(adapter_rate);
 
+                    final EditText comment = myDialog.findViewById(R.id.editTextComment);
+                    if(!providedServiceArrayList.get(i).getComment().equals("")){
+                        comment.setText(providedServiceArrayList.get(i).getComment());
+                    }
+
                     rate=myDialog.findViewById(R.id.rate);
                     rate.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             String rate = mSpinner_rate.getSelectedItem().toString();
                             if(!rate.equals("Please choose a rate...")){
-                                homeOwner.rateService(providedServiceArrayList.get(i),Integer.valueOf(rate));
+                                String myComment = comment.getText().toString();
+                                homeOwner.rateService(providedServiceArrayList.get(i),Integer.valueOf(rate),myComment);
                                 providedServiceArrayList.get(i).setIndividualRate(Integer.valueOf(rate));
                                 notifyDataSetChanged();
                                 myDialog.dismiss();

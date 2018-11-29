@@ -49,16 +49,22 @@ public class Application {
         database.getReference("ProvidedServices").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Service service;
+                providedServiceArrayList=new ArrayList<>();
                 for(DataSnapshot data : dataSnapshot.getChildren()){
-                    ProvidedService providedService = new ProvidedService(
-                            data.child("id").getValue().toString(),
-                            data.child("service").getValue(Service.class),
-                            data.child("serviceProviderName").getValue().toString(),
-                            data.child("timeSlots").getValue().toString(),
-                            Integer.valueOf(data.child("rate").getValue().toString()),
-                            Long.valueOf(data.child("homeOwners").getChildrenCount()));
-                    //providedServiceArrayList.add(data.getValue(ProvidedService.class));//may have bug
+                    Service service = new Service(data.child("service").child("id").getValue().toString(),
+                            data.child("service").child("name").getValue().toString(),
+                            Double.valueOf(data.child("service").child("hourlyRate").getValue().toString()));
+//                    Service service = new Service("FAQ",0.101);
+                    ProvidedService providedService = new ProvidedService();
+                    providedService.setId(data.child("id").getValue().toString());
+                    providedService.setService(service);
+                    providedService.setServiceProviderName(data.child("serviceProviderName").getValue().toString());
+                    providedService.setTimeslots(data.child("timeSlots").getValue().toString());
+                    if(!(data.child("rate").getValue()==null)){
+                        providedService.setRate(Double.valueOf(data.child("rate").getValue().toString()));
+                    }else{
+                        providedService.setRate(-1);
+                    }
                     providedServiceArrayList.add(providedService);
                 }
             }

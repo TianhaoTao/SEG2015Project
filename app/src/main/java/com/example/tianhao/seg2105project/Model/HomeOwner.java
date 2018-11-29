@@ -39,13 +39,15 @@ public class HomeOwner extends User {
                 serviceArrayList = new ArrayList<>();
                 for(DataSnapshot data : dataSnapshot.getChildren()) {
                     if(data.child("homeOwners").child(getUsername()).exists()){
-                        ProvidedService providedService = new ProvidedService(
-                                data.child("id").getValue().toString(),
-                                data.child("service").getValue(Service.class),
-                                data.child("serviceProviderName").getValue().toString(),
-                                data.child("timeSlots").getValue().toString(),
-                                Integer.valueOf(data.child("rate").getValue().toString()),
-                                Long.valueOf(data.child("homeOwners").getChildrenCount()));
+                        ProvidedService providedService = new ProvidedService();
+                        providedService.setId(data.child("id").getValue().toString());
+                        providedService.setService(data.child("service").getValue(Service.class));
+                        providedService.setTimeslots(data.child("timeSlots").getValue().toString());
+                        if(!(data.child("rate").getValue()==null)){
+                            providedService.setRate(Double.valueOf(data.child("rate").getValue().toString()));
+                        }else{
+                            providedService.setRate(-1);
+                        }
                         providedService.setHomeOwnerName(getUsername());
                         providedService.setIndividualRate(Integer.valueOf(data.child("homeOwners").
                                 child(getUsername()).child("rate").getValue().toString()));

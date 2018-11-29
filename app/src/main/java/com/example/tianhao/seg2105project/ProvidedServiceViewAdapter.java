@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.tianhao.seg2105project.Model.Application;
 import com.example.tianhao.seg2105project.Model.HomeOwner;
 import com.example.tianhao.seg2105project.Model.ProvidedService;
+import com.example.tianhao.seg2105project.Model.Service;
 
 import java.util.ArrayList;
 
@@ -51,12 +52,13 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
 
     @Override
     public void onBindViewHolder(@NonNull ProvidedServiceViewHolder providedServiceViewHolder, final int i) {
-        providedServiceViewHolder.serviceName.setText(providedServiceArrayList.get(i).getService().getName());
-        providedServiceViewHolder.hourlyRate.setText(Double.toString(providedServiceArrayList.get(i).getService()
-                .getHourlyRate()));
+        Service service = providedServiceArrayList.get(i).getService();
+        providedServiceViewHolder.serviceName.setText(providedServiceArrayList.get(i).getService().toString());
+ //       providedServiceViewHolder.hourlyRate.setText(providedServiceArrayList.get(i).getService().getName());
+//        providedServiceViewHolder.hourlyRate.setText(providedServiceArrayList.get(i).getService().getName());
         providedServiceViewHolder.search_service_provider.setText(providedServiceArrayList.get(i).
                 getServiceProviderName());
-        providedServiceViewHolder.search_service_rate.setText(providedServiceArrayList.get(i).getRate());
+        providedServiceViewHolder.search_service_rate.setText(String.valueOf(providedServiceArrayList.get(i).getRate()));
 
         myDialog = new Dialog(mContext);
         myDialog.setContentView(R.layout.dialog_booking);
@@ -73,7 +75,7 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
                 }
                 
 
-                book = myDialog.findViewById(R.id.delete_time_slot);
+                book = myDialog.findViewById(R.id.Book);
                 book.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -2,8 +2,6 @@ package com.example.tianhao.seg2105project;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -26,7 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class searchFragment extends Fragment {
@@ -38,14 +35,10 @@ public class searchFragment extends Fragment {
     private RecyclerView recyclerView;
     private Button buttonSearchByTime,buttonSearchByService,buttonSearchByRate;
     public String time,rate,service;
-    public ArrayAdapter<String> servicesArray;
-    private ArrayList<Service> servicesView;
-
-    DatabaseReference providedService;
-    DatabaseReference allServices;//including not provided services
-    FirebaseDatabase database;
-
-
+    public ArrayAdapter<String> servicesArrayAdapter;
+    private ArrayList<String> serviceNames = new ArrayList<>();
+    private ArrayList<ProvidedService> providedServiceArrayList;
+    private ArrayList<ProvidedService> selectedServiceArrayList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,30 +46,22 @@ public class searchFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         //buttom and view for homeowner only
+        providedServiceArrayList=application.getProvidedServiceArrayList();
+
         buttonSearchByTime = (Button)view.findViewById(R.id.buttonSearchByTime);
         buttonSearchByService = (Button)view.findViewById(R.id.buttonSearchByService);
         buttonSearchByRate = (Button)view.findViewById(R.id.buttonSearchByRate);
         recyclerView = view.findViewById(R.id.recycler_view);
-        servicesArray=new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item);
-        servicesView=new ArrayList<Service>();
+        for(ProvidedService providedService:providedServiceArrayList){
+            String serviceName = providedService.getService().getName();
+            if(!serviceNames.contains(serviceName)){
+                serviceNames.add(serviceName);
+            }
+        }
+        servicesArrayAdapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,
+                serviceNames);
         service="";
 
-        //about firebase
-        database=FirebaseDatabase.getInstance();
-        allServices=database.getReference("Services");
-        providedService=database.getReference("ProvidedServices");
-
-        //collect all service that set by admin
-        allServices.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot data: dataSnapshot.getChildren()) {
-                    servicesArray.add(data.child("name").getValue().toString());
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
 
         buttonSearchByTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +93,13 @@ public class searchFragment extends Fragment {
                             if(!mSpinner_searchbyday.getSelectedItem().toString().equalsIgnoreCase("")
                                     &&!mSpinner_searchbytime.getSelectedItem().toString().equalsIgnoreCase("")){
                                 time =mSpinner_searchbyday.getSelectedItem().toString()+" "+mSpinner_searchbytime.getSelectedItem().toString();
+                                selectedServiceArrayList=new ArrayList<>();
+                                for(ProvidedService providedService:providedServiceArrayList){
+                                    if(providedService.getTimeslots().contains(time)){
+                                        selectedServiceArrayList.add(providedService);
+                                    }
+                                }
+                                initAdapter(selectedServiceArrayList);
                                 Toast.makeText(getContext(),time,
                                         Toast.LENGTH_SHORT).show();
                                 dialogInterface.dismiss();
@@ -135,55 +127,27 @@ public class searchFragment extends Fragment {
                 mBuilder.setTitle("SearchByService");
                 View mview_day = getLayoutInflater().inflate(R.layout.dialog_searchbyone_spinner,null);
                 final Spinner mSpinner_searchbyservice =(Spinner) mview_day.findViewById(R.id.spinner_searchByOne);
-                servicesArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                mSpinner_searchbyservice.setAdapter(servicesArray);
-                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                servicesArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mSpinner_searchbyservice.setAdapter(servicesArrayAdapter);
+                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int which){
-                        if(!mSpinner_searchbyservice.getSelectedItem().toString().equalsIgnoreCase("")){
-                            service =mSpinner_searchbyservice.getSelectedItem().toString();
-                            Toast.makeText(getContext(),service,
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        if (!mSpinner_searchbyservice.getSelectedItem().toString().equalsIgnoreCase("")) {
+                            service = mSpinner_searchbyservice.getSelectedItem().toString();
+                            selectedServiceArrayList=new ArrayList<>();
+                            for(ProvidedService providedService:providedServiceArrayList){
+                                if(providedService.getService().getName().equals(service)){
+                                    selectedServiceArrayList.add(providedService);
+                                }
+                            }
+                            initAdapter(selectedServiceArrayList);
+                            Toast.makeText(getContext(), service,
                                     Toast.LENGTH_SHORT).show();
                             dialogInterface.dismiss();
                         }
-                        providedService.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if(servicesView.isEmpty()) {
-                                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                        if (data.child("service").child("name").getValue().toString().equals(service)) {
-                                            int rating;
-                                            if(data.child("rate").getValue()==null){ rating=0;}else{
-                                                rating=Integer.parseInt(data.child("rate").getValue().toString());
-                                            }
-                                            String time = data.child("timeSlots").getValue().toString();
-                                            servicesView.add(new Service(service, rating, time));
-                                            Toast.makeText(getContext(),"isempt,added",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }else{
-                                    servicesView.clear();
-                                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                        if (data.child("service").child("name").getValue().toString().equals(service)) {
-                                            int rating;
-                                            if(data.child("rate").getValue()==null){ rating=0;}else{
-                                                rating=Integer.parseInt(data.child("rate").getValue().toString());
-                                            }
-                                            String time = data.child("timeSlots").getValue().toString();
-                                            servicesView.add(new Service(service, rating, time));
-                                            Toast.makeText(getContext(),"isnotempt,added",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {}
-                        });
-
                     }
                 });
+
                 mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -194,7 +158,6 @@ public class searchFragment extends Fragment {
                 mBuilder.setView(mview_day);
                 AlertDialog mDialog=mBuilder.create();
                 mDialog.show();
-                initAdapter();
             }
         });
 
@@ -222,6 +185,13 @@ public class searchFragment extends Fragment {
                         }else{
                             if(!mSpinner_searchbyrate.getSelectedItem().toString().equalsIgnoreCase("")){
                                 rate =mSpinner_searchbyrate.getSelectedItem().toString();
+                                selectedServiceArrayList=new ArrayList<>();
+                                for(ProvidedService providedService:providedServiceArrayList){
+                                    if(providedService.getRate()>=Integer.valueOf(rate)){
+                                        selectedServiceArrayList.add(providedService);
+                                    }
+                                }
+                                initAdapter(selectedServiceArrayList);
                                 Toast.makeText(getContext(),rate,
                                         Toast.LENGTH_SHORT).show();
                                 dialogInterface.dismiss();
@@ -241,17 +211,13 @@ public class searchFragment extends Fragment {
                 mDialog.show();
             }
         });
+        initAdapter(providedServiceArrayList);
         // Inflate the layout for this fragment
         return view;
     }
 
-    public void initAdapter() {
-        application = Application.getInstance(getActivity());
-        for(int i=0; i<servicesView.size();i++){
-            Toast.makeText(getContext(),servicesView.get(i).getName()+" "+servicesView.get(i).getRate() +
-                    " "+servicesView.get(i).getTime(),Toast.LENGTH_SHORT).show();
-        }
-        recyclerView.setAdapter(new ServiceViewAdapter(getActivity(),servicesView));
+    public void initAdapter(ArrayList<ProvidedService> providedServices) {
+        recyclerView.setAdapter(new ProvidedServiceViewAdapter(getActivity(), providedServices));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

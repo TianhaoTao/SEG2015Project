@@ -140,9 +140,7 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
                     mSpinner_rate.setAdapter(adapter_rate);
 
                     final EditText comment = myDialog.findViewById(R.id.editTextComment);
-                    if(!providedServiceArrayList.get(i).getComment().equals("")){
-                        comment.setText(providedServiceArrayList.get(i).getComment());
-                    }
+                    comment.setText(providedServiceArrayList.get(i).getComment());
 
                     rate=myDialog.findViewById(R.id.rate);
                     rate.setOnClickListener(new View.OnClickListener() {

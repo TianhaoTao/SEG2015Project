@@ -150,7 +150,6 @@ public class ProvidedServiceViewAdapter extends  RecyclerView.Adapter<ProvidedSe
                             if(!rate.equals("Please choose a rate...")){
                                 String myComment = comment.getText().toString();
                                 homeOwner.rateService(providedServiceArrayList.get(i),Integer.valueOf(rate),myComment);
-                                providedServiceArrayList.get(i).setIndividualRate(Integer.valueOf(rate));
                                 notifyDataSetChanged();
                                 myDialog.dismiss();
                             }else{

@@ -103,12 +103,12 @@ public class HomeOwner extends User {
         Toast.makeText(mContext, "Service Canceled", Toast.LENGTH_SHORT).show();
     }
 
-    public void rateService(final ProvidedService providedService, final int rate){
+    public void rateService(ProvidedService providedService, int rate){
         if(providedService.getRate()==0 || providedService.getCount()==0){
             providedService.setRate(rate);
             providedService.setCount(0);
         }
-        double newRate;
+        double newRate=0;
 
         if(providedService.getIndividualRate()==0){
             newRate = (providedService.getCount()*providedService.getRate()+rate)
@@ -118,6 +118,10 @@ public class HomeOwner extends User {
             newRate = (providedService.getCount()*providedService.getRate()+rate-providedService.getIndividualRate())
                     /(providedService.getCount());
         }
+
+        providedService.setIndividualRate(rate);
+
+        providedService.setRate(newRate);
 
         ProvidedServices.child(providedService.getId()).child("rate").setValue(newRate);
 
@@ -129,10 +133,11 @@ public class HomeOwner extends User {
         Toast.makeText(mContext, "Service Rated", Toast.LENGTH_SHORT).show();
     }
 
-    public void rateService(final ProvidedService providedService, final int rate,String comment){
+    public void rateService(ProvidedService providedService, int rate,String comment){
         rateService(providedService, rate);
         ProvidedServices.child(providedService.getId()).child("homeOwners").
                 child(getUsername()).child("comment").setValue(comment);
+        providedService.setComment(comment);
     }
 
 

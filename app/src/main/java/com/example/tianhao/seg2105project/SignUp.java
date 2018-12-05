@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -56,6 +58,8 @@ public class SignUp extends AppCompatActivity {
 
     Button buttonSubmit;
 
+    String enPass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,11 +94,12 @@ public class SignUp extends AppCompatActivity {
                 public void onClick(View view){
                     buttonSound.start();
                     if(validateUser()&&validateEmail()&&validatePassword()&& validatePasswordConfirm()){
+                        enPass = computeMD5Hash(editPassword.getEditText().getText().toString());
 
                         final User user = new User(
                                 editUsername.getEditText().getText().toString(),
                                 editEmail.getEditText().getText().toString(),
-                                editPassword.getEditText().getText().toString(),
+                                enPass,
                                 dropdownmenu.getSelectedItem().toString());
 
 
@@ -194,6 +199,27 @@ public class SignUp extends AppCompatActivity {
         }else{
             editpasswordConfirm.setError(null);
             return true;
+        }
+    }
+
+    public String computeMD5Hash(String s) {
+        char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f' };
+        try {
+            byte[] strTemp = s.getBytes();
+            MessageDigest mdTemp = MessageDigest.getInstance("MD5");
+            mdTemp.update(strTemp);
+            byte[] md = mdTemp.digest();
+            int j = md.length;
+            char str[] = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++) {
+                byte byte0 = md[i];
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                str[k++] = hexDigits[byte0 & 0xf];
+            }
+            return new String(str);
+        } catch (Exception e) {
+            return null;
         }
     }
 

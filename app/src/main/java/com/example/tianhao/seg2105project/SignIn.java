@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
+import java.security.MessageDigest;
+
 public class SignIn extends AppCompatActivity {
 
     //sound
@@ -36,6 +38,8 @@ public class SignIn extends AppCompatActivity {
     private TextInputLayout editPassword;
 
     Button buttonSubmit, buttonRegister;
+
+    String enPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +75,8 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonSound2.start();
-                signIn(editUsername.getEditText().getText().toString(),editPassword.getEditText().getText().toString());
+                enPass = computeMD5Hash(editPassword.getEditText().getText().toString());
+                signIn(editUsername.getEditText().getText().toString(),enPass);
             }
         });
 
@@ -112,6 +117,27 @@ public class SignIn extends AppCompatActivity {
                 //write code here
             }
         });
+    }
+
+    public String computeMD5Hash(String s) {
+        char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f' };
+        try {
+            byte[] strTemp = s.getBytes();
+            MessageDigest mdTemp = MessageDigest.getInstance("MD5");
+            mdTemp.update(strTemp);
+            byte[] md = mdTemp.digest();
+            int j = md.length;
+            char str[] = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++) {
+                byte byte0 = md[i];
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                str[k++] = hexDigits[byte0 & 0xf];
+            }
+            return new String(str);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 

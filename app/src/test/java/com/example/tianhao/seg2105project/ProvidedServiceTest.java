@@ -41,7 +41,26 @@ public class ProvidedServiceTest {
         assertEquals("check the rate of provided service", 5, service.getRate(), 0.001);
     }
 
+    @Test
+    public void checkCount(){
+        ProvidedService service = new ProvidedService("123456", service1, "hhh", "12", 5);
+        service.setCount(1234);
+        assertEquals("check the count of provided service", 1234, service.getCount());
+    }
 
+    @Test
+    public void checkHomeOwnerName(){
+        ProvidedService service = new ProvidedService("123456", service1, "hhh", "12", 5);
+        service.setHomeOwnerName("Abc");
+        assertEquals("check the count of provided service", "Abc", service.getHomeOwnerName());
+    }
+
+    @Test
+    public void checkIndividualRate(){
+        ProvidedService service = new ProvidedService("123456", service1, "hhh", "12", 5);
+        service.setIndividualRate(12);
+        assertEquals("check the count of provided service", 12, service.getIndividualRate());
+    }
 
 
 

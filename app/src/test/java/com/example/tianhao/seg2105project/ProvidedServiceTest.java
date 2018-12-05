@@ -52,14 +52,28 @@ public class ProvidedServiceTest {
     public void checkHomeOwnerName(){
         ProvidedService service = new ProvidedService("123456", service1, "hhh", "12", 5);
         service.setHomeOwnerName("Abc");
-        assertEquals("check the count of provided service", "Abc", service.getHomeOwnerName());
+        assertEquals("check the name of home owner", "Abc", service.getHomeOwnerName());
     }
 
     @Test
     public void checkIndividualRate(){
         ProvidedService service = new ProvidedService("123456", service1, "hhh", "12", 5);
         service.setIndividualRate(12);
-        assertEquals("check the count of provided service", 12, service.getIndividualRate());
+        assertEquals("check the individual of provided service", 12, service.getIndividualRate());
+    }
+
+    @Test
+    public void checkBookedTimeSlots(){
+        ProvidedService service = new ProvidedService("123456", service1, "hhh", "12", 5);
+        service.setBookedTimeSlots("33");
+        assertEquals("check the booked time slots of provided service", "33", service.getBookedTimeSlots());
+    }
+
+    @Test
+    public void checkComment(){
+        ProvidedService service = new ProvidedService("123456", service1, "hhh", "12", 5);
+        service.setComment("GOOD.");
+        assertEquals("check the comment of provided service", "GOOD.", service.getComment());
     }
 
 

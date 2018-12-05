@@ -126,7 +126,8 @@ public class searchFragment extends Fragment {
                 mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
-                        if (!mSpinner_searchbyservice.getSelectedItem().toString().equalsIgnoreCase("")) {
+                        if (mSpinner_searchbyservice.getSelectedItem()!=null &&
+                                !mSpinner_searchbyservice.getSelectedItem().toString().equalsIgnoreCase("")) {
                             service = mSpinner_searchbyservice.getSelectedItem().toString();
                             selectedServiceArrayList=new ArrayList<>();
                             for(ProvidedService providedService:providedServiceArrayList){

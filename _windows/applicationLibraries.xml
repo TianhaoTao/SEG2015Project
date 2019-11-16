@@ -1,15 +1,14 @@
 <application>
   <component name="libraryTable">
-    <library name="Python 3.6 (bladder_diary) interpreter library">
+    <library name="Python 3.6 (venv) interpreter library">
       <CLASSES>
         <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/DLLs" />
         <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib" />
         <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32" />
-        <root url="file://D:/GitProjects/bladder_diary/venv" />
-        <root url="file://D:/GitProjects/bladder_diary/venv/Lib/site-packages" />
-        <root url="jar://D:/GitProjects/bladder_diary/venv/Lib/site-packages/setuptools-39.1.0-py3.6.egg!/" />
-        <root url="file://D:/GitProjects/bladder_diary/venv/Lib/site-packages/pip-10.0.1-py3.6.egg" />
-        <root url="file://$USER_HOME$/.AndroidStudio3.4/system/python_stubs/1365875900" />
+        <root url="file://D:/venv" />
+        <root url="file://D:/venv/Lib/site-packages" />
+        <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages" />
+        <root url="file://$USER_HOME$/.AndroidStudio3.4/system/python_stubs/485026630" />
         <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/python-skeletons" />
         <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/3" />
         <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/2and3" />
@@ -21,38 +20,10 @@
         <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/DLLs" />
         <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib" />
         <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32" />
-        <root url="file://D:/GitProjects/bladder_diary/venv" />
-        <root url="file://D:/GitProjects/bladder_diary/venv/Lib/site-packages" />
-        <root url="jar://D:/GitProjects/bladder_diary/venv/Lib/site-packages/setuptools-39.1.0-py3.6.egg!/" />
-        <root url="file://D:/GitProjects/bladder_diary/venv/Lib/site-packages/pip-10.0.1-py3.6.egg" />
-        <root url="file://$USER_HOME$/.AndroidStudio3.4/system/python_stubs/1365875900" />
-        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/python-skeletons" />
-        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/3" />
-        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/2and3" />
-        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/third_party/3" />
-        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/third_party/2and3" />
-      </SOURCES>
-    </library>
-    <library name="Python 3.6 interpreter library">
-      <CLASSES>
-        <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/DLLs" />
-        <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib" />
-        <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32" />
+        <root url="file://D:/venv" />
+        <root url="file://D:/venv/Lib/site-packages" />
         <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages" />
-        <root url="file://$USER_HOME$/.AndroidStudio3.4/system/python_stubs/1562342423" />
-        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/python-skeletons" />
-        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/3" />
-        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/2and3" />
-        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/third_party/3" />
-        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/third_party/2and3" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/DLLs" />
-        <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib" />
-        <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32" />
-        <root url="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages" />
-        <root url="file://$USER_HOME$/.AndroidStudio3.4/system/python_stubs/1562342423" />
+        <root url="file://$USER_HOME$/.AndroidStudio3.4/system/python_stubs/485026630" />
         <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/python-skeletons" />
         <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/3" />
         <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/2and3" />
